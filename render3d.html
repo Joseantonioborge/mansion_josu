@@ -305,26 +305,25 @@ function addBush(x, z, r=0.8, yBase=0) {
 }
 
 // ─── TERRAIN ──────────────────────────────────────────────────────────────
-// Sloped terrain: back (z>15) rises steeply, front (z<-15) drops toward road
-// matching actual photos — sandy dry Mediterranean soil
+// Terrain height function used by vegetation placement
 function terrainHeight(worldZ) {
-  if (worldZ > 15) return (worldZ - 15) * 0.26;   // back rises: +3.9m at z=30
-  if (worldZ < -15) return -((-15 - worldZ) * 0.06); // front slight drop
+  if (worldZ > 15) return (worldZ - 15) * 0.26;
+  if (worldZ < -15) return -((-15 - worldZ) * 0.06);
   return 0;
 }
-const terrainGeo = new THREE.PlaneGeometry(160, 130, 40, 30);
-const pos = terrainGeo.attributes.position;
-for (let i = 0; i < pos.count; i++) {
-  const gy = pos.getY(i); // after rotation: worldZ = -gy
-  const wz = -gy;
-  const h = terrainHeight(wz) + (Math.random() - 0.5) * 0.18;
-  pos.setZ(i, h);
-}
-terrainGeo.computeVertexNormals();
-const terrain = new THREE.Mesh(terrainGeo, matTerrain);
+// Flat main terrain + sloped back section (avoids BufferGeometry vertex bugs)
+const terrain = new THREE.Mesh(new THREE.PlaneGeometry(160, 130), matTerrain);
 terrain.rotation.x = -Math.PI / 2;
+terrain.position.y = -0.5;
 terrain.receiveShadow = true;
 scene.add(terrain);
+// Sloped back terrain ramp (the rising hill visible in photos)
+const rampGeo = new THREE.PlaneGeometry(160, 60);
+const ramp = new THREE.Mesh(rampGeo, matTerrain);
+ramp.rotation.x = -Math.PI / 2 + 0.22; // slope angle ~12°
+ramp.position.set(0, 1.5, 42);
+ramp.receiveShadow = true;
+scene.add(ramp);
 
 // Flat grass/garden area (construction zone: graded flat)
 const grass1 = new THREE.Mesh(new THREE.PlaneGeometry(92, 52), matGrass);
@@ -335,11 +334,10 @@ scene.add(grass1);
 
 // ─── PLOT BOUNDARY WALLS ─────────────────────────────────────────────────
 // Back stone wall — the prominent MURO DE PIEDRA visible in all photos
-// At z=31, terrain is ~4.2m high → wall rises 2.6m above that
-const backWallY = terrainHeight(31) + 1.3;
-box(90, 2.6, 0.7, matStoneWall, 0, backWallY, 31);
+// Elevated on the back ramp at ~y=3.5
+box(90, 3.0, 0.7, matStoneWall, 0, 3.8, 31);
 // Wall cap
-box(90.4, 0.18, 0.85, matStoneWall, 0, backWallY + 1.39, 31);
+box(90.4, 0.2, 0.85, matStoneWall, 0, 5.4, 31);
 
 // Right stone wall (lower)
 box(0.5, 2.0, 70, matStoneWall, 43, 1.0, -2);
@@ -484,14 +482,14 @@ for (let i = 0; i < 5; i++) {
 // ─── VEGETATION ─── matching photos: encinas, cipreses, chumberas ──────────
 
 // ENCINAS (holm oaks) — the trees visible in photos
-// Back elevated zone (sit on raised terrain)
-addEncina(-32, 22, terrainHeight(22), 6.5, 3.0);
-addEncina(-28, 26, terrainHeight(26), 7.5, 3.5);
-addEncina( 36, 20, terrainHeight(20), 6.0, 2.8);
-addEncina( 38, 25, terrainHeight(25), 8.0, 3.8);
-addEncina( 10, 24, terrainHeight(24), 7.0, 3.2);
-addEncina( -8, 26, terrainHeight(26), 6.5, 3.0);
-addEncina( 22, 26, terrainHeight(26), 7.5, 3.4);
+// Back elevated zone (on the ramp ~y=1.8-3.0)
+addEncina(-32, 22, 1.8, 6.5, 3.0);
+addEncina(-28, 26, 2.8, 7.5, 3.5);
+addEncina( 36, 20, 1.8, 6.0, 2.8);
+addEncina( 38, 25, 2.5, 8.0, 3.8);
+addEncina( 10, 24, 2.0, 7.0, 3.2);
+addEncina( -8, 26, 2.5, 6.5, 3.0);
+addEncina( 22, 26, 2.5, 7.5, 3.4);
 
 // Encinas in the middle/front zones (on flat terrain or slight slope)
 addEncina(-36, -10, 0, 7.0, 3.2);
@@ -500,7 +498,7 @@ addEncina( 40, -8,  0, 7.5, 3.4);
 addEncina( 38,  8,  0, 6.5, 2.9);
 
 // Isolated encina visible center-back in photos (the prominent lone tree)
-addEncina( 4, 20, terrainHeight(20), 8.5, 4.0);
+addEncina( 4, 20, 1.3, 8.5, 4.0);
 
 // Garden encinas near house (right side)
 addEncina( 0, 20, 0, 7.0, 3.0);
@@ -514,13 +512,13 @@ addCypress( -5, -32, 0, 8.5);
 addCypress(  6, -32, 0, 8);
 
 // CHUMBERAS (prickly pear) — visible along back/left boundaries in photos
-addChumbera(-38, 24, terrainHeight(24));
-addChumbera(-36, 27, terrainHeight(27));
-addChumbera( 38, 27, terrainHeight(27));
+addChumbera(-38, 24, 2.3);
+addChumbera(-36, 27, 3.1);
+addChumbera( 38, 27, 3.1);
 addChumbera(-40, 12, 0);
 addChumbera(-40, -5, 0);
 addChumbera( 40, 12, 0);
-addChumbera(-3, 28, terrainHeight(28));
+addChumbera(-3, 28, 3.4);
 
 // Low shrubs/matorral around pool edge
 addBush(15, 1, 1, 0); addBush(15, 9, 1, 0);
