@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JOSU MANSION — Render 3D Arquitectónico</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0c0b09;font-family:'Montserrat',sans-serif;color:#e8dcc8;overflow:hidden;}
+#canvas-wrap{position:fixed;inset:0;}
+canvas{display:block;width:100%!important;height:100%!important;}
+
+/* TOP BAR */
+#topbar{position:fixed;top:0;left:0;right:0;height:52px;
+  background:linear-gradient(180deg,rgba(8,7,5,0.97) 0%,rgba(8,7,5,0) 100%);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;z-index:100;pointer-events:none;}
+#topbar-left{display:flex;align-items:center;gap:18px;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;
+  letter-spacing:6px;color:#c8a550;text-transform:uppercase;}
+.logo span{font-style:italic;color:#806a40;font-size:14px;}
+.top-ref{font-size:8px;letter-spacing:3px;color:#3a2e18;text-transform:uppercase;}
+#topbar-right{display:flex;gap:20px;pointer-events:all;}
+.top-stat{text-align:right;}
+.top-stat-v{font-family:'Cormorant Garamond',serif;font-size:18px;color:#c8a550;}
+.top-stat-l{font-size:7px;letter-spacing:3px;color:#4a3820;text-transform:uppercase;}
+
+/* LEFT PANEL */
+#panel-left{position:fixed;left:0;top:52px;bottom:0;width:220px;
+  background:linear-gradient(90deg,rgba(8,7,5,0.95) 0%,rgba(8,7,5,0) 100%);
+  padding:28px 24px;z-index:100;overflow-y:auto;}
+.panel-title{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:#4a3820;margin-bottom:20px;}
+.spec-item{margin-bottom:16px;}
+.spec-v{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#c8a550;line-height:1;}
+.spec-u{font-size:9px;color:#806040;}
+.spec-l{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:#3a2810;margin-top:3px;}
+.divider{width:40px;height:1px;background:linear-gradient(90deg,#c8a550,transparent);margin:20px 0;}
+
+/* BOTTOM CONTROLS */
+#controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:100;}
+.ctrl-btn{background:rgba(8,7,5,0.9);border:1px solid #2a2010;color:#c8a550;
+  font-family:'Montserrat',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  padding:9px 16px;cursor:pointer;transition:all 0.2s;}
+.ctrl-btn:hover,.ctrl-btn.active{background:rgba(200,165,80,0.12);border-color:#c8a550;}
+
+/* RIGHT INFO */
+#info-right{position:fixed;right:20px;bottom:24px;z-index:100;text-align:right;}
+.info-hint{font-size:8px;letter-spacing:2px;color:#3a2810;text-transform:uppercase;margin-top:5px;}
+
+/* FLOOR INDICATOR */
+#floor-legend{position:fixed;right:20px;top:50%;transform:translateY(-50%);
+  z-index:100;display:flex;flex-direction:column;gap:10px;}
+.floor-item{display:flex;align-items:center;gap:8px;justify-content:flex-end;}
+.floor-dot{width:10px;height:10px;border-radius:50%;}
+.floor-lbl{font-size:7px;letter-spacing:3px;color:#4a3820;text-transform:uppercase;}
+
+/* LOADING */
+#loading{position:fixed;inset:0;background:#0c0b09;display:flex;align-items:center;
+  justify-content:center;flex-direction:column;gap:16px;z-index:999;}
+.load-title{font-family:'Cormorant Garamond',serif;font-size:36px;color:#c8a550;letter-spacing:8px;}
+.load-sub{font-size:8px;letter-spacing:4px;color:#4a3820;text-transform:uppercase;}
+.load-bar{width:200px;height:1px;background:#1a1710;position:relative;overflow:hidden;}
+.load-fill{height:100%;background:#c8a550;animation:loadfill 1.5s ease forwards;}
+@keyframes loadfill{from{width:0}to{width:100%}}
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="load-title">JOSU MANSION</div>
+  <div class="load-sub">Cargando render 3D arquitectónico</div>
+  <div class="load-bar"><div class="load-fill"></div></div>
+</div>
+
+<div id="canvas-wrap"><canvas id="c"></canvas></div>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div id="topbar-left">
+    <div class="logo">Josu Mansion <span>— Alcolea, Córdoba</span></div>
+    <div class="top-ref">Ref. Cat. 2714062UH5021S0001IT</div>
+  </div>
+  <div id="topbar-right">
+    <div class="top-stat"><div class="top-stat-v">3.603</div><div class="top-stat-l">m² parcela</div></div>
+    <div class="top-stat"><div class="top-stat-v">420</div><div class="top-stat-l">m² construidos</div></div>
+    <div class="top-stat"><div class="top-stat-v">2</div><div class="top-stat-l">plantas + garage</div></div>
+  </div>
+</div>
+
+<!-- LEFT PANEL -->
+<div id="panel-left">
+  <div class="panel-title">Programa</div>
+
+  <div class="spec-item">
+    <div class="spec-v">420</div>
+    <div class="spec-u">m²</div>
+    <div class="spec-l">Superficie total</div>
+  </div>
+  <div class="spec-item">
+    <div class="spec-v">240</div>
+    <div class="spec-u">m²</div>
+    <div class="spec-l">Planta baja</div>
+  </div>
+  <div class="spec-item">
+    <div class="spec-v">180</div>
+    <div class="spec-u">m²</div>
+    <div class="spec-l">Primera planta</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="spec-item">
+    <div class="spec-v">48</div>
+    <div class="spec-u">m²</div>
+    <div class="spec-l">Garage doble</div>
+  </div>
+  <div class="spec-item">
+    <div class="spec-v">60</div>
+    <div class="spec-u">m²</div>
+    <div class="spec-l">Piscina 12×5m</div>
+  </div>
+  <div class="spec-item">
+    <div class="spec-v">2.400</div>
+    <div class="spec-u">m²</div>
+    <div class="spec-l">Zona ajardinada</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="spec-item">
+    <div class="spec-v">CL Roble 46</div>
+    <div class="spec-l">Alcolea · Córdoba</div>
+  </div>
+</div>
+
+<!-- FLOOR LEGEND -->
+<div id="floor-legend">
+  <div class="floor-item">
+    <div class="floor-lbl">Primera planta</div>
+    <div class="floor-dot" style="background:#c8a550;opacity:0.8;"></div>
+  </div>
+  <div class="floor-item">
+    <div class="floor-lbl">Planta baja</div>
+    <div class="floor-dot" style="background:#e8dcc8;opacity:0.6;"></div>
+  </div>
+  <div class="floor-item">
+    <div class="floor-lbl">Garage</div>
+    <div class="floor-dot" style="background:#806040;opacity:0.7;"></div>
+  </div>
+  <div class="floor-item">
+    <div class="floor-lbl">Piscina</div>
+    <div class="floor-dot" style="background:#4a9fd4;opacity:0.9;"></div>
+  </div>
+  <div class="floor-item">
+    <div class="floor-lbl">Zona verde</div>
+    <div class="floor-dot" style="background:#5a8a40;opacity:0.9;"></div>
+  </div>
+</div>
+
+<!-- BOTTOM CONTROLS -->
+<div id="controls">
+  <button class="ctrl-btn" onclick="setView('perspective')">Perspectiva</button>
+  <button class="ctrl-btn" onclick="setView('front')">Fachada</button>
+  <button class="ctrl-btn" onclick="setView('side')">Lateral</button>
+  <button class="ctrl-btn" onclick="setView('aerial')">Aéreo</button>
+  <button class="ctrl-btn" onclick="setView('garden')">Jardín</button>
+  <button class="ctrl-btn" onclick="toggleNight()" id="btn-night">Noche</button>
+</div>
+
+<div id="info-right">
+  <div class="info-hint">Arrastrar para rotar</div>
+  <div class="info-hint">Scroll para zoom</div>
+  <div class="info-hint">Click derecho para mover</div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ─── SCENE SETUP ───────────────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x87ceeb);
+scene.fog = new THREE.Fog(0x87ceeb, 120, 280);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
+camera.position.set(60, 40, 80);
+camera.lookAt(0, 5, 0);
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.07;
+controls.target.set(0, 5, 0);
+controls.maxPolarAngle = Math.PI / 2.1;
+controls.minDistance = 15;
+controls.maxDistance = 200;
+
+// ─── MATERIALS ─────────────────────────────────────────────────────────────
+const matWall = new THREE.MeshStandardMaterial({ color: 0xf2ede4, roughness: 0.6, metalness: 0.0 });
+const matWallDark = new THREE.MeshStandardMaterial({ color: 0xd4c8b0, roughness: 0.7, metalness: 0.0 });
+const matGlass = new THREE.MeshStandardMaterial({ color: 0x1a2a40, roughness: 0.05, metalness: 0.3, transparent: true, opacity: 0.75 });
+const matRoof = new THREE.MeshStandardMaterial({ color: 0x2a2620, roughness: 0.8, metalness: 0.0 });
+const matConcrete = new THREE.MeshStandardMaterial({ color: 0xb8b0a0, roughness: 0.9, metalness: 0.0 });
+const matGarage = new THREE.MeshStandardMaterial({ color: 0xc0b898, roughness: 0.7, metalness: 0.1 });
+const matGarageDoor = new THREE.MeshStandardMaterial({ color: 0x5a5040, roughness: 0.3, metalness: 0.5 });
+const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x3a8fc4, roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.88 });
+const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xd8cbb0, roughness: 0.5, metalness: 0.0 });
+const matGrass = new THREE.MeshStandardMaterial({ color: 0x4a7a30, roughness: 0.9, metalness: 0.0 });
+const matTerrain = new THREE.MeshStandardMaterial({ color: 0xb89a6a, roughness: 1.0, metalness: 0.0 });
+const matDrive = new THREE.MeshStandardMaterial({ color: 0x8a8070, roughness: 0.8, metalness: 0.0 });
+const matTrunk = new THREE.MeshStandardMaterial({ color: 0x5a3a18, roughness: 1.0 });
+const matLeaf = new THREE.MeshStandardMaterial({ color: 0x386828, roughness: 0.9 });
+const matLeafLight = new THREE.MeshStandardMaterial({ color: 0x558830, roughness: 0.9 });
+const matFence = new THREE.MeshStandardMaterial({ color: 0xd8c890, roughness: 0.6 });
+const matMetal = new THREE.MeshStandardMaterial({ color: 0x888070, roughness: 0.3, metalness: 0.8 });
+const matTerrace = new THREE.MeshStandardMaterial({ color: 0xc8bea8, roughness: 0.6 });
+
+// ─── HELPERS ───────────────────────────────────────────────────────────────
+function box(w, h, d, mat, x, y, z, ry=0) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  m.position.set(x, y, z);
+  m.rotation.y = ry;
+  m.castShadow = true;
+  m.receiveShadow = true;
+  scene.add(m);
+  return m;
+}
+
+function addTree(x, z, h=6, r=2.5, type='round') {
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, h*0.4, 6), matTrunk);
+  trunk.position.set(x, h*0.2, z);
+  trunk.castShadow = true;
+  scene.add(trunk);
+  const mat = Math.random() > 0.5 ? matLeaf : matLeafLight;
+  if (type === 'round') {
+    const canopy = new THREE.Mesh(new THREE.SphereGeometry(r, 8, 6), mat);
+    canopy.position.set(x, h*0.4 + r*0.8, z);
+    canopy.castShadow = true;
+    scene.add(canopy);
+  } else {
+    const canopy = new THREE.Mesh(new THREE.ConeGeometry(r*0.8, h*0.7, 7), mat);
+    canopy.position.set(x, h*0.4 + h*0.35, z);
+    canopy.castShadow = true;
+    scene.add(canopy);
+  }
+}
+
+function addBush(x, z, r=0.8) {
+  const b = new THREE.Mesh(new THREE.SphereGeometry(r, 7, 5), matLeaf);
+  b.position.set(x, r*0.6, z);
+  b.scale.y = 0.7;
+  b.castShadow = true;
+  scene.add(b);
+}
+
+// ─── TERRAIN ──────────────────────────────────────────────────────────────
+// Main terrain plane (slightly sloped)
+const terrainGeo = new THREE.PlaneGeometry(140, 120, 30, 20);
+const pos = terrainGeo.attributes.position;
+for (let i = 0; i < pos.count; i++) {
+  const x = pos.getX(i);
+  const y = pos.getY(i);
+  pos.setZ(i, -x * 0.04 + (Math.random() - 0.5) * 0.15); // slight slope
+}
+terrainGeo.computeVertexNormals();
+const terrain = new THREE.Mesh(terrainGeo, matTerrain);
+terrain.rotation.x = -Math.PI / 2;
+terrain.receiveShadow = true;
+scene.add(terrain);
+
+// Grass area around house
+const grass1 = new THREE.Mesh(new THREE.PlaneGeometry(90, 75), matGrass);
+grass1.rotation.x = -Math.PI / 2;
+grass1.position.set(0, 0.01, 0);
+grass1.receiveShadow = true;
+scene.add(grass1);
+
+// ─── PLOT BOUNDARY WALL ───────────────────────────────────────────────────
+function addWallSegment(x1, z1, x2, z2, h=1.5) {
+  const dx = x2 - x1, dz = z2 - z1;
+  const len = Math.sqrt(dx*dx + dz*dz);
+  const ang = Math.atan2(dx, dz);
+  const w = new THREE.Mesh(new THREE.BoxGeometry(len, h, 0.25), matFence);
+  w.position.set((x1+x2)/2, h/2, (z1+z2)/2);
+  w.rotation.y = ang;
+  w.castShadow = true;
+  w.receiveShadow = true;
+  scene.add(w);
+}
+// Plot perimeter (approximate trapezoid ~3600m², scaled for view)
+addWallSegment(-42, -35, 40, -35); // front
+addWallSegment(40, -35, 45, 32);   // right
+addWallSegment(45, 32, -30, 30);   // back
+addWallSegment(-30, 30, -42, -35); // left
+
+// ─── DRIVEWAY ──────────────────────────────────────────────────────────────
+const drv = new THREE.Mesh(new THREE.PlaneGeometry(8, 28), matDrive);
+drv.rotation.x = -Math.PI / 2;
+drv.position.set(-18, 0.02, -21);
+drv.receiveShadow = true;
+scene.add(drv);
+
+// Gate pillars
+box(0.6, 2.2, 0.6, matFence, -22.5, 1.1, -35, 0);
+box(0.6, 2.2, 0.6, matFence, -13.5, 1.1, -35, 0);
+// Gate bar
+box(9, 0.08, 0.08, matMetal, -18, 1.8, -35, 0);
+
+// ─── MAIN BUILDING — PLANTA BAJA (20×12m) ─────────────────────────────────
+// Ground floor main volume
+box(22, 3.4, 13, matWall, -2, 1.7, 2);
+
+// Ground floor — glass facade (front)
+box(14, 2.4, 0.15, matGlass, -1, 1.8, -4.43);
+// Side glass
+box(0.15, 2.4, 7, matGlass, 9.93, 1.8, 2);
+
+// Ground floor parapet (thin slab on top)
+box(22.4, 0.18, 13.4, matRoof, -2, 3.5, 2);
+
+// Entrance canopy
+box(5, 0.2, 3, matRoof, -2, 3.6, -5.7);
+// Canopy supports
+box(0.12, 3.6, 0.12, matMetal, -4.2, 1.8, -6.2);
+box(0.12, 3.6, 0.12, matMetal, 0.2, 1.8, -6.2);
+
+// Ground floor — window strips (sides)
+box(0.15, 1.6, 4, matGlass, -13.03, 2.0, 2);
+
+// Internal floor slab visible at first floor transition
+box(22.4, 0.25, 13.4, matConcrete, -2, 3.62, 2);
+
+// ─── PRIMERA PLANTA (18×10m, slightly inset) ──────────────────────────────
+box(18, 3.0, 10, matWall, -1, 5.27, 1.5);
+
+// First floor glass facade
+box(11, 2.2, 0.15, matGlass, -0.5, 5.2, -3.53);
+// First floor balcony slab
+box(18.4, 0.2, 3, matTerrace, -1, 3.72, -5.5);
+// Balcony railing
+box(18, 0.9, 0.05, matGlass, -1, 4.17, -7.02);
+// Balcony railing posts
+for (let i = -8; i <= 8; i += 2) {
+  box(0.05, 0.9, 0.05, matMetal, i, 4.17, -7.02);
+}
+
+// Roof parapet first floor
+box(18.4, 0.2, 10.4, matRoof, -1, 6.82, 1.5);
+
+// Roof terrace access box (small penthouse element)
+box(4, 0.8, 3, matWall, 5, 7.12, 0);
+
+// ─── SOLAR PANELS ON ROOF ─────────────────────────────────────────────────
+const panelMat = new THREE.MeshStandardMaterial({ color: 0x1a2840, roughness: 0.2, metalness: 0.6 });
+for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 5; j++) {
+    const p = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.04, 0.9), panelMat);
+    p.position.set(-4 + j*2, 7.04, -1 + i*1.2);
+    p.rotation.x = -0.18;
+    scene.add(p);
+  }
+}
+
+// ─── GARAGE (8×6m) ────────────────────────────────────────────────────────
+box(9, 2.6, 7, matGarage, -18, 1.3, -0.5);
+// Garage roof
+box(9.3, 0.18, 7.3, matRoof, -18, 2.69, -0.5);
+// Garage doors (2 × double doors)
+box(3.6, 2.1, 0.12, matGarageDoor, -16.2, 1.05, -3.63);
+box(3.6, 2.1, 0.12, matGarageDoor, -19.8, 1.05, -3.63);
+// Door panel lines (decorative)
+box(0.04, 2.1, 0.15, matMetal, -14.4, 1.05, -3.62);
+box(0.04, 2.1, 0.15, matMetal, -18, 1.05, -3.62);
+box(0.04, 2.1, 0.15, matMetal, -21.6, 1.05, -3.62);
+
+// Connecting wall between garage and main house
+box(3, 2.6, 0.25, matWall, -10.5, 1.3, -3.63);
+
+// ─── POOL AREA ─────────────────────────────────────────────────────────────
+// Pool surround slab
+box(16, 0.3, 10, matPoolSurround, 22, 0.15, 5);
+// Pool inner water
+box(12, 0.25, 6, matPoolWater, 22, 0.22, 5);
+// Pool walls
+box(12.4, 0.8, 0.3, matPoolSurround, 22, 0.4, 2.15);
+box(12.4, 0.8, 0.3, matPoolSurround, 22, 0.4, 7.85);
+box(0.3, 0.8, 6.4, matPoolSurround, 15.85, 0.4, 5);
+box(0.3, 0.8, 6.4, matPoolSurround, 28.15, 0.4, 5);
+
+// Pool steps
+box(1.2, 0.3, 0.6, matPoolSurround, 16.6, 0.15, 5);
+box(1.2, 0.15, 0.6, matPoolSurround, 16.6, 0.075, 4.4);
+
+// Sun lounger area (flat concrete pad)
+box(7, 0.1, 10, matTerrace, 32, 0.05, 5);
+
+// Sun loungers (simplified)
+for (let i = 0; i < 3; i++) {
+  box(0.7, 0.15, 2, matConcrete, 30.5, 0.18, 2 + i*3);
+  box(0.7, 0.15, 2, matConcrete, 33.5, 0.18, 2 + i*3);
+}
+
+// Pool umbrella
+box(0.06, 2.5, 0.06, matMetal, 31, 1.25, 5);
+const umbMat = new THREE.MeshStandardMaterial({ color: 0xc8a040, roughness: 0.8, side: THREE.DoubleSide });
+const umbGeo = new THREE.ConeGeometry(2, 0.5, 8, 1, true);
+const umb = new THREE.Mesh(umbGeo, umbMat);
+umb.position.set(31, 2.8, 5);
+scene.add(umb);
+
+// ─── OUTDOOR TERRACE beside house ─────────────────────────────────────────
+box(10, 0.1, 12, matTerrace, 9, 0.05, -4);
+// Pergola frame
+box(0.1, 3, 0.1, matMetal, 4.5, 1.5, -9.5);
+box(0.1, 3, 0.1, matMetal, 13.5, 1.5, -9.5);
+box(0.1, 3, 0.1, matMetal, 4.5, 1.5, 1.5);
+box(0.1, 3, 0.1, matMetal, 13.5, 1.5, 1.5);
+box(9, 0.1, 0.1, matMetal, 9, 3.05, -9.5);
+box(9, 0.1, 0.1, matMetal, 9, 3.05, 1.5);
+for (let i = 0; i < 5; i++) {
+  box(0.06, 0.06, 11, matMetal, 4.5 + i*2.25, 3.1, -4);
+}
+
+// ─── STAIRS OUTSIDE ───────────────────────────────────────────────────────
+for (let i = 0; i < 5; i++) {
+  box(2.5, 0.18, 0.35, matConcrete, -2, 0.09 + i*0.18, -4.95 - i*0.35);
+}
+
+// ─── VEGETATION ────────────────────────────────────────────────────────────
+// Trees around plot edges
+addTree(-35, -20, 7, 3, 'round');
+addTree(-38, 10, 8, 3.5, 'round');
+addTree(-32, 25, 6, 2.8, 'round');
+addTree(38, -15, 7, 3, 'round');
+addTree(40, 15, 9, 4, 'round');
+addTree(35, 25, 7, 3.2, 'round');
+addTree(10, 25, 8, 3.5, 'round');
+addTree(-10, 27, 7, 3, 'round');
+addTree(25, -28, 5, 2, 'round');
+addTree(-5, -30, 6, 2.5, 'round');
+
+// Cypress / tall trees at entrance
+addTree(-30, -32, 9, 1.2, 'cone');
+addTree(-24, -32, 8, 1.2, 'cone');
+addTree(-6, -32, 8, 1.2, 'cone');
+
+// Garden focal trees
+addTree(0, 18, 7, 3, 'round');
+addTree(-8, 15, 6, 2.5, 'round');
+addTree(8, 20, 8, 3.5, 'round');
+
+// Bushes around pool
+addBush(15, 1, 1); addBush(15, 9, 1);
+addBush(29, 1, 0.9); addBush(29, 9, 0.9);
+addBush(22, -0.5, 0.8); addBush(22, 10.5, 0.8);
+
+// Hedge row along left edge of plot
+for (let z = -28; z < 28; z += 2.5) {
+  addBush(-40, z, 1.1);
+}
+
+// Decorative hedge along pool area
+for (let x = 14; x < 36; x += 2) {
+  addBush(x, -0.5, 0.7);
+}
+
+// Garden bushes
+for (let i = 0; i < 12; i++) {
+  addBush(
+    -5 + Math.cos(i * 0.7) * 15,
+    18 + Math.sin(i * 0.9) * 8,
+    0.6 + Math.random() * 0.5
+  );
+}
+
+// ─── LIGHTING ──────────────────────────────────────────────────────────────
+const ambient = new THREE.AmbientLight(0xfff8e8, 0.5);
+scene.add(ambient);
+
+const sun = new THREE.DirectionalLight(0xfff0d0, 2.5);
+sun.position.set(60, 80, 40);
+sun.castShadow = true;
+sun.shadow.mapSize.width = 4096;
+sun.shadow.mapSize.height = 4096;
+sun.shadow.camera.near = 1;
+sun.shadow.camera.far = 300;
+sun.shadow.camera.left = -100;
+sun.shadow.camera.right = 100;
+sun.shadow.camera.top = 100;
+sun.shadow.camera.bottom = -100;
+sun.shadow.bias = -0.001;
+scene.add(sun);
+
+const hemi = new THREE.HemisphereLight(0x87ceeb, 0xb89a6a, 0.6);
+scene.add(hemi);
+
+// ─── SKY GRADIENT ──────────────────────────────────────────────────────────
+// Sky dome
+const skyGeo = new THREE.SphereGeometry(250, 16, 8);
+const skyMat = new THREE.MeshBasicMaterial({
+  color: 0x87ceeb,
+  side: THREE.BackSide
+});
+const sky = new THREE.Mesh(skyGeo, skyMat);
+scene.add(sky);
+
+// ─── NIGHT MODE ────────────────────────────────────────────────────────────
+let isNight = false;
+
+window.toggleNight = function() {
+  isNight = !isNight;
+  const btn = document.getElementById('btn-night');
+  if (isNight) {
+    scene.background = new THREE.Color(0x050810);
+    scene.fog = new THREE.Fog(0x050810, 80, 200);
+    sky.material.color.set(0x050810);
+    ambient.color.set(0x1a2840);
+    ambient.intensity = 0.2;
+    sun.color.set(0x4060c0);
+    sun.intensity = 0.3;
+    hemi.intensity = 0.1;
+
+    // Add warm interior lights
+    const l1 = new THREE.PointLight(0xffd080, 3, 20);
+    l1.position.set(0, 2, 0);
+    scene.add(l1);
+    const l2 = new THREE.PointLight(0xffd080, 2, 15);
+    l2.position.set(-15, 2, 0);
+    scene.add(l2);
+    const lPool = new THREE.PointLight(0x40b0ff, 2, 15);
+    lPool.position.set(22, 0.5, 5);
+    scene.add(lPool);
+
+    btn.textContent = 'Día';
+    btn.classList.add('active');
+  } else {
+    scene.background = new THREE.Color(0x87ceeb);
+    scene.fog = new THREE.Fog(0x87ceeb, 120, 280);
+    sky.material.color.set(0x87ceeb);
+    ambient.color.set(0xfff8e8);
+    ambient.intensity = 0.5;
+    sun.color.set(0xfff0d0);
+    sun.intensity = 2.5;
+    hemi.intensity = 0.6;
+    btn.textContent = 'Noche';
+    btn.classList.remove('active');
+  }
+};
+
+// ─── CAMERA PRESETS ────────────────────────────────────────────────────────
+window.setView = function(v) {
+  document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+  event && event.target && event.target.classList.add('active');
+
+  const dur = 120;
+  const views = {
+    perspective: { pos: [60, 38, 78], tgt: [0, 5, 0] },
+    front:       { pos: [0, 12, -90], tgt: [0, 4, 0] },
+    side:        { pos: [-90, 20, 5], tgt: [0, 5, 5] },
+    aerial:      { pos: [0, 110, 0.1], tgt: [0, 0, 0] },
+    garden:      { pos: [30, 8, 40],  tgt: [10, 3, 5] },
+  };
+  const t = views[v];
+  if (!t) return;
+
+  let step = 0;
+  const sp = camera.position.clone();
+  const st = controls.target.clone();
+  const ep = new THREE.Vector3(...t.pos);
+  const et = new THREE.Vector3(...t.tgt);
+  function animate() {
+    if (step++ >= dur) return;
+    const k = step / dur;
+    const ease = k < 0.5 ? 2*k*k : -1+(4-2*k)*k;
+    camera.position.lerpVectors(sp, ep, ease);
+    controls.target.lerpVectors(st, et, ease);
+    controls.update();
+    requestAnimationFrame(animate);
+  }
+  animate();
+};
+
+// ─── RENDER LOOP ───────────────────────────────────────────────────────────
+function tick() {
+  requestAnimationFrame(tick);
+  controls.update();
+  renderer.render(scene, camera);
+}
+tick();
+
+// ─── RESIZE ────────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ─── HIDE LOADING ──────────────────────────────────────────────────────────
+setTimeout(() => {
+  const el = document.getElementById('loading');
+  el.style.transition = 'opacity 0.8s';
+  el.style.opacity = '0';
+  setTimeout(() => el.style.display = 'none', 800);
+}, 1600);
+
+</script>
+</body>
+</html>
