@@ -191,6 +191,11 @@ setTimeout(window.__hideLoading, 6000); // fallback after 6s
 import * as THREE from 'https://esm.sh/three@0.163.0';
 import { OrbitControls } from 'https://esm.sh/three@0.163.0/examples/jsm/controls/OrbitControls';
 
+// ─── TERRAIN HEIGHT FUNCTION ────────────────────────────────────────────────
+// Plot slopes from street/front (z=-42, y=0) up to back boundary (z=+42, y≈13.4m)
+// 16% grade — matches the clear hillside visible in site photos
+function tH(z) { return Math.max(0, (z + 42) * 0.16); }
+
 // ─── SCENE SETUP ───────────────────────────────────────────────────────────
 const canvas = document.getElementById('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -202,20 +207,21 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.2;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x5aaee0); // bright Andalusian summer sky
-scene.fog = new THREE.Fog(0x7ec8f0, 130, 300);
+scene.background = new THREE.Color(0x5aaee0);
+scene.fog = new THREE.Fog(0x7ec8f0, 160, 380);
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
-camera.position.set(60, 40, 80);
-camera.lookAt(0, 5, 0);
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 600);
+// View from road/front looking uphill — shows house on the hillside
+camera.position.set(-70, 18, -75);
+camera.lookAt(0, 9, 0);
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.dampingFactor = 0.07;
-controls.target.set(0, 5, 0);
-controls.maxPolarAngle = Math.PI / 2.1;
+controls.target.set(0, 9, 0);
+controls.maxPolarAngle = Math.PI / 2.05;
 controls.minDistance = 15;
-controls.maxDistance = 200;
+controls.maxDistance = 300;
 
 // ─── MATERIALS ─────────────────────────────────────────────────────────────
 const matWall = new THREE.MeshStandardMaterial({ color: 0xf2ede4, roughness: 0.6, metalness: 0.0 });
@@ -238,6 +244,8 @@ const matFence = new THREE.MeshStandardMaterial({ color: 0x9a8a6a, roughness: 0.
 const matCactus = new THREE.MeshStandardMaterial({ color: 0x6a7830, roughness: 0.8 }); // chumbera
 const matMetal = new THREE.MeshStandardMaterial({ color: 0x888070, roughness: 0.3, metalness: 0.8 });
 const matTerrace = new THREE.MeshStandardMaterial({ color: 0xc8bea8, roughness: 0.6 });
+const matRetaining = new THREE.MeshStandardMaterial({ color: 0xa09880, roughness: 0.88, metalness: 0.0 });
+const matRoad = new THREE.MeshStandardMaterial({ color: 0x706860, roughness: 0.9, metalness: 0.0 });
 
 // ─── HELPERS ───────────────────────────────────────────────────────────────
 function box(w, h, d, mat, x, y, z, ry=0) {
@@ -304,238 +312,227 @@ function addBush(x, z, r=0.8, yBase=0) {
   scene.add(b);
 }
 
-// ─── TERRAIN ──────────────────────────────────────────────────────────────
-// Terrain height function used by vegetation placement
-function terrainHeight(worldZ) {
-  if (worldZ > 15) return (worldZ - 15) * 0.26;
-  if (worldZ < -15) return -((-15 - worldZ) * 0.06);
-  return 0;
+// ─── TERRAIN (vertex-deformed — rises from street front to back) ───────────
+// PlaneGeometry lies in XY, after rotateX(-π/2): X→X, Y→Z, Z→Y
+// So pos.getZ(i) = world Z, and pos.setY(i, tH(z)) sets height correctly
+const terrGeo = new THREE.PlaneGeometry(160, 110, 64, 44);
+terrGeo.rotateX(-Math.PI / 2);
+const tp = terrGeo.attributes.position;
+for (let i = 0; i < tp.count; i++) {
+  tp.setY(i, tH(tp.getZ(i)));
 }
-// Flat main terrain + sloped back section (avoids BufferGeometry vertex bugs)
-const terrain = new THREE.Mesh(new THREE.PlaneGeometry(160, 130), matTerrain);
-terrain.rotation.x = -Math.PI / 2;
-terrain.position.y = -0.5;
+tp.needsUpdate = true;
+terrGeo.computeVertexNormals();
+const terrain = new THREE.Mesh(terrGeo, matTerrain);
 terrain.receiveShadow = true;
 scene.add(terrain);
-// Sloped back terrain ramp (the rising hill visible in photos)
-const rampGeo = new THREE.PlaneGeometry(160, 60);
-const ramp = new THREE.Mesh(rampGeo, matTerrain);
-ramp.rotation.x = -Math.PI / 2 + 0.22; // slope angle ~12°
-ramp.position.set(0, 1.5, 42);
-ramp.receiveShadow = true;
-scene.add(ramp);
 
-// Flat grass/garden area (construction zone: graded flat)
-const grass1 = new THREE.Mesh(new THREE.PlaneGeometry(92, 52), matGrass);
-grass1.rotation.x = -Math.PI / 2;
-grass1.position.set(0, 0.02, 2);
-grass1.receiveShadow = true;
-scene.add(grass1);
+// Road along front (CL Roble 46)
+const roadGeo = new THREE.PlaneGeometry(140, 14);
+roadGeo.rotateX(-Math.PI / 2);
+const road = new THREE.Mesh(roadGeo, matRoad);
+road.position.set(0, 0.08, -50);
+road.receiveShadow = true;
+scene.add(road);
 
-// ─── PLOT BOUNDARY WALLS ─────────────────────────────────────────────────
-// Back stone wall — the prominent MURO DE PIEDRA visible in all photos
-// Elevated on the back ramp at ~y=3.5
-box(90, 3.0, 0.7, matStoneWall, 0, 3.8, 31);
-// Wall cap
-box(90.4, 0.2, 0.85, matStoneWall, 0, 5.4, 31);
+// ─── PLATFORM CONSTANTS ────────────────────────────────────────────────────
+// House platform sits at tH(0) — the terrain height at the centre of the plot
+const PY = tH(0); // ≈ 6.72m above street level
 
-// Right stone wall (lower)
-box(0.5, 2.0, 70, matStoneWall, 43, 1.0, -2);
-// Left stone wall
-box(0.5, 2.0, 68, matStoneWall, -42, 1.0, -4);
-// Front boundary (low wall / road edge)
-box(88, 0.6, 0.4, matFence, 0, 0.3, -35);
+// ─── PLOT BOUNDARY WALLS ──────────────────────────────────────────────────
+// Back stone retaining wall at top of slope (z=+40)
+const bwH = 3.5;
+box(92, bwH, 0.8, matStoneWall, 0, tH(40) + bwH * 0.5, 40);
+box(92.5, 0.28, 1.0, matStoneWall, 0, tH(40) + bwH, 40);
 
-// ─── DRIVEWAY ──────────────────────────────────────────────────────────────
-const drv = new THREE.Mesh(new THREE.PlaneGeometry(8, 28), matDrive);
-drv.rotation.x = -Math.PI / 2;
-drv.position.set(-18, 0.02, -21);
-drv.receiveShadow = true;
-scene.add(drv);
-
-// Gate pillars
-box(0.6, 2.2, 0.6, matFence, -22.5, 1.1, -35, 0);
-box(0.6, 2.2, 0.6, matFence, -13.5, 1.1, -35, 0);
-// Gate bar
-box(9, 0.08, 0.08, matMetal, -18, 1.8, -35, 0);
-
-// ─── MAIN BUILDING — PLANTA BAJA (20×12m) ─────────────────────────────────
-// Ground floor main volume
-box(22, 3.4, 13, matWall, -2, 1.7, 2);
-
-// Ground floor — glass facade (front)
-box(14, 2.4, 0.15, matGlass, -1, 1.8, -4.43);
-// Side glass
-box(0.15, 2.4, 7, matGlass, 9.93, 1.8, 2);
-
-// Ground floor parapet (thin slab on top)
-box(22.4, 0.18, 13.4, matRoof, -2, 3.5, 2);
-
-// Entrance canopy
-box(5, 0.2, 3, matRoof, -2, 3.6, -5.7);
-// Canopy supports
-box(0.12, 3.6, 0.12, matMetal, -4.2, 1.8, -6.2);
-box(0.12, 3.6, 0.12, matMetal, 0.2, 1.8, -6.2);
-
-// Ground floor — window strips (sides)
-box(0.15, 1.6, 4, matGlass, -13.03, 2.0, 2);
-
-// Internal floor slab visible at first floor transition
-box(22.4, 0.25, 13.4, matConcrete, -2, 3.62, 2);
-
-// ─── PRIMERA PLANTA (18×10m, slightly inset) ──────────────────────────────
-box(18, 3.0, 10, matWall, -1, 5.27, 1.5);
-
-// First floor glass facade
-box(11, 2.2, 0.15, matGlass, -0.5, 5.2, -3.53);
-// First floor balcony slab
-box(18.4, 0.2, 3, matTerrace, -1, 3.72, -5.5);
-// Balcony railing
-box(18, 0.9, 0.05, matGlass, -1, 4.17, -7.02);
-// Balcony railing posts
-for (let i = -8; i <= 8; i += 2) {
-  box(0.05, 0.9, 0.05, matMetal, i, 4.17, -7.02);
+// Side walls (stepped segments matching the slope)
+for (let seg = 0; seg < 9; seg++) {
+  const sz = -40 + seg * 9 + 4.5;
+  const sh = tH(sz) + 1.8;
+  box(0.55, 1.8, 9.5, matStoneWall, -44, sh - 0.9, sz);
+  box(0.55, 1.8, 9.5, matStoneWall,  44, sh - 0.9, sz);
 }
+// Front boundary (low kerb at road edge)
+box(90, 0.55, 0.5, matFence, 0, tH(-40) + 0.28, -40);
 
-// Roof parapet first floor
-box(18.4, 0.2, 10.4, matRoof, -1, 6.82, 1.5);
+// ─── MAIN PLATFORM RETAINING WALL (the face you see from the road) ────────
+// Platform is flat at PY; front retaining face at z=-18
+const fretH = PY - tH(-18) + 0.4;
+box(95, fretH, 0.7, matRetaining, 0, tH(-18) + fretH * 0.5 - 0.2, -18);
+// Platform slab (flat area where house + pool sit)
+box(95, 0.38, 30, matConcrete, 0, PY - 0.19, -3);
+// Side retaining walls of platform
+box(0.6, fretH, 30, matRetaining, -47, tH(-18) + fretH * 0.5 - 0.2, -3);
+box(0.6, fretH, 30, matRetaining,  47, tH(-18) + fretH * 0.5 - 0.2, -3);
+// Back-cut retaining wall where hill meets platform rear (z=+12)
+const bret = tH(12) - PY;
+if (bret > 0) box(95, bret + 0.4, 0.7, matRetaining, 0, PY + bret * 0.5, 12);
 
-// Roof terrace access box (small penthouse element)
-box(4, 0.8, 3, matWall, 5, 7.12, 0);
+// ─── DRIVEWAY (runs uphill from road to garage) ───────────────────────────
+for (let i = 0; i < 14; i++) {
+  const dz = -42 + i * 1.8;
+  box(8.5, 0.14, 1.85, matDrive, -22, tH(dz + 0.9) + 0.07, dz + 0.9);
+}
+// Gate pillars at road level
+box(0.7, 2.6, 0.7, matFence, -26.5, tH(-42) + 1.3, -42);
+box(0.7, 2.6, 0.7, matFence, -17.5, tH(-42) + 1.3, -42);
+box(9, 0.09, 0.09, matMetal,  -22,  tH(-42) + 2.4,  -42);
 
-// ─── SOLAR PANELS ON ROOF ─────────────────────────────────────────────────
+// ─── GARAGE (lower terrace level, z≈-16, on slope) ────────────────────────
+const GY = tH(-16) + 0.12;
+box(10, 2.8, 8, matGarage, -22, GY + 1.4, -14);
+box(10.4, 0.22, 8.4, matRoof, -22, GY + 2.91, -14);
+// Garage doors face the driveway (front = -z side)
+box(3.9, 2.2, 0.14, matGarageDoor, -19.9, GY + 1.1, -17.94);
+box(3.9, 2.2, 0.14, matGarageDoor, -24.1, GY + 1.1, -17.94);
+box(0.06, 2.2, 0.18, matMetal, -17.95, GY + 1.1, -17.93);
+box(0.06, 2.2, 0.18, matMetal, -22,    GY + 1.1, -17.93);
+box(0.06, 2.2, 0.18, matMetal, -26.05, GY + 1.1, -17.93);
+// Retaining wall between garage terrace and main platform
+box(0.4, PY - GY + 0.2, 8.4, matRetaining, -12.4, (PY + GY) * 0.5, -14);
+// Connecting covered walkway (garage → house)
+box(10, 0.18, 0.12, matRoof, -17, PY + 3.0, -9);
+box(0.12, 3.0, 0.12, matMetal, -12.5, PY + 1.5, -9);
+box(0.12, 3.0, 0.12, matMetal, -21.5, PY + 1.5, -9);
+
+// ─── MAIN BUILDING — PLANTA BAJA (base at PY) ─────────────────────────────
+box(22, 3.6, 14, matWall, -2, PY + 1.8, 0);
+// Glass façade (faces downhill = -Z direction)
+box(14, 2.6, 0.15, matGlass, -1, PY + 1.85, -7.08);
+// Side glass strip
+box(0.15, 2.6, 7, matGlass, 10.08, PY + 1.85, 0);
+// Ground floor parapet slab
+box(22.5, 0.2, 14.5, matRoof, -2, PY + 3.7, 0);
+// Entrance canopy
+box(5.5, 0.22, 3.5, matRoof, -2, PY + 3.82, -8.85);
+box(0.12, 3.6, 0.12, matMetal, -4.5, PY + 1.8, -9.5);
+box(0.12, 3.6, 0.12, matMetal,  0.5, PY + 1.8, -9.5);
+// Side window
+box(0.15, 1.8, 4.5, matGlass, -13.08, PY + 2.2, 0);
+// Slab between floors
+box(22.5, 0.28, 14.5, matConcrete, -2, PY + 3.84, 0);
+// Back retaining reveal (hillside meets house)
+box(22.5, 3.8, 0.6, matRetaining, -2, PY + 1.9, 7.55);
+
+// ─── PRIMERA PLANTA (base at PY+3.84+0.28) ───────────────────────────────
+const F1 = PY + 3.9;
+box(18, 3.2, 11, matWall, -1, F1 + 1.6, -0.5);
+// First floor glass
+box(12, 2.4, 0.15, matGlass, -0.5, F1 + 1.65, -6.08);
+// Balcony slab
+box(18.6, 0.22, 3.2, matTerrace, -1, F1 + 0.11, -7.68);
+// Balcony railing
+box(18, 1.0, 0.06, matGlass, -1, F1 + 0.61, -9.3);
+for (let i = -8; i <= 8; i += 2) {
+  box(0.05, 1.0, 0.06, matMetal, i, F1 + 0.61, -9.3);
+}
+// Roof parapet
+box(18.5, 0.22, 11.5, matRoof, -1, F1 + 3.31, -0.5);
+// Penthouse volume
+box(4.5, 0.9, 3.5, matWall, 5, F1 + 3.62, -0.5);
+
+// ─── SOLAR PANELS ─────────────────────────────────────────────────────────
 const panelMat = new THREE.MeshStandardMaterial({ color: 0x1a2840, roughness: 0.2, metalness: 0.6 });
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 5; j++) {
-    const p = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.04, 0.9), panelMat);
-    p.position.set(-4 + j*2, 7.04, -1 + i*1.2);
+    const p = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.05, 1.0), panelMat);
+    p.position.set(-4 + j * 2.1, F1 + 3.45, -1 + i * 1.3);
     p.rotation.x = -0.18;
     scene.add(p);
   }
 }
 
-// ─── GARAGE (8×6m) ────────────────────────────────────────────────────────
-box(9, 2.6, 7, matGarage, -18, 1.3, -0.5);
-// Garage roof
-box(9.3, 0.18, 7.3, matRoof, -18, 2.69, -0.5);
-// Garage doors (2 × double doors)
-box(3.6, 2.1, 0.12, matGarageDoor, -16.2, 1.05, -3.63);
-box(3.6, 2.1, 0.12, matGarageDoor, -19.8, 1.05, -3.63);
-// Door panel lines (decorative)
-box(0.04, 2.1, 0.15, matMetal, -14.4, 1.05, -3.62);
-box(0.04, 2.1, 0.15, matMetal, -18, 1.05, -3.62);
-box(0.04, 2.1, 0.15, matMetal, -21.6, 1.05, -3.62);
-
-// Connecting wall between garage and main house
-box(3, 2.6, 0.25, matWall, -10.5, 1.3, -3.63);
-
-// ─── POOL AREA ─────────────────────────────────────────────────────────────
-// Pool surround slab
-box(16, 0.3, 10, matPoolSurround, 22, 0.15, 5);
-// Pool inner water
-box(12, 0.25, 6, matPoolWater, 22, 0.22, 5);
-// Pool walls
-box(12.4, 0.8, 0.3, matPoolSurround, 22, 0.4, 2.15);
-box(12.4, 0.8, 0.3, matPoolSurround, 22, 0.4, 7.85);
-box(0.3, 0.8, 6.4, matPoolSurround, 15.85, 0.4, 5);
-box(0.3, 0.8, 6.4, matPoolSurround, 28.15, 0.4, 5);
-
-// Pool steps
-box(1.2, 0.3, 0.6, matPoolSurround, 16.6, 0.15, 5);
-box(1.2, 0.15, 0.6, matPoolSurround, 16.6, 0.075, 4.4);
-
-// Sun lounger area (flat concrete pad)
-box(7, 0.1, 10, matTerrace, 32, 0.05, 5);
-
-// Sun loungers (simplified)
-for (let i = 0; i < 3; i++) {
-  box(0.7, 0.15, 2, matConcrete, 30.5, 0.18, 2 + i*3);
-  box(0.7, 0.15, 2, matConcrete, 33.5, 0.18, 2 + i*3);
+// ─── EXTERIOR STAIRS (platform face → front terrace) ──────────────────────
+for (let i = 0; i < 7; i++) {
+  box(3.0, 0.2, 0.4, matConcrete, -4, PY - i * 0.2 + 0.1, -18.5 - i * 0.4);
 }
 
-// Pool umbrella
-box(0.06, 2.5, 0.06, matMetal, 31, 1.25, 5);
+// ─── POOL + TERRACE (on platform, right of house) ─────────────────────────
+box(17, 0.34, 12, matPoolSurround, 23, PY + 0.17, 2);
+box(12, 0.28, 7, matPoolWater, 23, PY + 0.22, 2);
+box(12.5, 0.85, 0.32, matPoolSurround, 23, PY + 0.43, -1.34);
+box(12.5, 0.85, 0.32, matPoolSurround, 23, PY + 0.43,  5.34);
+box(0.32, 0.85, 7.7, matPoolSurround, 17.16, PY + 0.43, 2);
+box(0.32, 0.85, 7.7, matPoolSurround, 28.84, PY + 0.43, 2);
+box(1.3, 0.34, 0.7, matPoolSurround, 17.9, PY + 0.17, 2);
+// Sun lounger area
+box(8.5, 0.12, 12, matTerrace, 35, PY + 0.06, 2);
+for (let i = 0; i < 3; i++) {
+  box(0.75, 0.16, 2.2, matConcrete, 33, PY + 0.22, -1 + i * 3.8);
+  box(0.75, 0.16, 2.2, matConcrete, 36.5, PY + 0.22, -1 + i * 3.8);
+}
+box(0.07, 2.8, 0.07, matMetal, 35, PY + 1.4, 2);
 const umbMat = new THREE.MeshStandardMaterial({ color: 0xc8a040, roughness: 0.8, side: THREE.DoubleSide });
-const umbGeo = new THREE.ConeGeometry(2, 0.5, 8, 1, true);
-const umb = new THREE.Mesh(umbGeo, umbMat);
-umb.position.set(31, 2.8, 5);
+const umb = new THREE.Mesh(new THREE.ConeGeometry(2.2, 0.55, 8, 1, true), umbMat);
+umb.position.set(35, PY + 3.0, 2);
 scene.add(umb);
 
-// ─── OUTDOOR TERRACE beside house ─────────────────────────────────────────
-box(10, 0.1, 12, matTerrace, 9, 0.05, -4);
-// Pergola frame
-box(0.1, 3, 0.1, matMetal, 4.5, 1.5, -9.5);
-box(0.1, 3, 0.1, matMetal, 13.5, 1.5, -9.5);
-box(0.1, 3, 0.1, matMetal, 4.5, 1.5, 1.5);
-box(0.1, 3, 0.1, matMetal, 13.5, 1.5, 1.5);
-box(9, 0.1, 0.1, matMetal, 9, 3.05, -9.5);
-box(9, 0.1, 0.1, matMetal, 9, 3.05, 1.5);
+// ─── OUTDOOR TERRACE + PERGOLA (front-right of house) ─────────────────────
+box(11, 0.12, 15, matTerrace, 10, PY + 0.06, -4);
+box(0.12, 3.2, 0.12, matMetal,  5, PY + 1.6, -11);
+box(0.12, 3.2, 0.12, matMetal, 15, PY + 1.6, -11);
+box(0.12, 3.2, 0.12, matMetal,  5, PY + 1.6, 3.5);
+box(0.12, 3.2, 0.12, matMetal, 15, PY + 1.6, 3.5);
+box(10, 0.12, 0.12, matMetal, 10, PY + 3.26, -11);
+box(10, 0.12, 0.12, matMetal, 10, PY + 3.26, 3.5);
 for (let i = 0; i < 5; i++) {
-  box(0.06, 0.06, 11, matMetal, 4.5 + i*2.25, 3.1, -4);
+  box(0.06, 0.06, 14.6, matMetal, 5 + i * 2.5, PY + 3.3, -3.75);
 }
 
-// ─── STAIRS OUTSIDE ───────────────────────────────────────────────────────
-for (let i = 0; i < 5; i++) {
-  box(2.5, 0.18, 0.35, matConcrete, -2, 0.09 + i*0.18, -4.95 - i*0.35);
+// ─── GARDEN (green area on platform, behind house) ────────────────────────
+const gardenGeo = new THREE.PlaneGeometry(24, 22);
+gardenGeo.rotateX(-Math.PI / 2);
+const garden = new THREE.Mesh(gardenGeo, matGrass);
+garden.position.set(0, PY + 0.04, 16);
+garden.receiveShadow = true;
+scene.add(garden);
+
+// ─── VEGETATION ─── heights use tH(z) on slope, PY on platform ────────────
+// Prominent encina cluster on slope (visible in photos from road)
+addEncina(-40,   5, tH(5),  8.5, 4.0);
+addEncina(-36, -10, tH(-10), 7.0, 3.2);
+addEncina(-38,  12, tH(12), 8.0, 3.6);
+addEncina( 42,  -8, tH(-8), 7.5, 3.4);
+addEncina( 40,   8, tH(8),  6.5, 2.9);
+// Back elevated zone
+addEncina(-33,  22, tH(22), 7.0, 3.2);
+addEncina(-28,  30, tH(30), 8.0, 3.8);
+addEncina( 36,  22, tH(22), 6.5, 3.0);
+addEncina( 40,  32, tH(32), 8.5, 4.0);
+addEncina( 12,  26, tH(26), 7.5, 3.4);
+addEncina( -8,  30, tH(30), 7.0, 3.2);
+addEncina( 24,  30, tH(30), 8.0, 3.6);
+addEncina(  3,  22, tH(22), 8.5, 4.0); // prominent lone tree centre-back
+// Garden encinas on platform
+addEncina( -9,  14, PY, 6.0, 2.6);
+addEncina(  6,  18, PY, 7.0, 3.0);
+addEncina(-12,  20, PY + (tH(20)-PY)*0.5, 7.5, 3.3);
+
+// Cypress at entrance gate
+addCypress(-30, -40, tH(-40), 9);
+addCypress(-24, -40, tH(-40), 8);
+addCypress( -8, -40, tH(-40), 8.5);
+addCypress(  4, -40, tH(-40), 8);
+
+// Chumberas (prickly pear) — prominent in site photos
+addChumbera(-40, 26, tH(26));
+addChumbera(-38, 30, tH(30));
+addChumbera( 42, 28, tH(28));
+addChumbera(-42, 10, tH(10));
+addChumbera(-42, -2, tH(-2));
+addChumbera( 42, 14, tH(14));
+addChumbera( -4, 32, tH(32));
+
+// Boundary bushes following the slope
+for (let z = -38; z < 38; z += 3.0) {
+  addBush(-43, z, 0.85 + Math.random() * 0.3, tH(z));
+  addBush( 43, z, 0.85 + Math.random() * 0.3, tH(z));
 }
-
-// ─── VEGETATION ─── matching photos: encinas, cipreses, chumberas ──────────
-
-// ENCINAS (holm oaks) — the trees visible in photos
-// Back elevated zone (on the ramp ~y=1.8-3.0)
-addEncina(-32, 22, 1.8, 6.5, 3.0);
-addEncina(-28, 26, 2.8, 7.5, 3.5);
-addEncina( 36, 20, 1.8, 6.0, 2.8);
-addEncina( 38, 25, 2.5, 8.0, 3.8);
-addEncina( 10, 24, 2.0, 7.0, 3.2);
-addEncina( -8, 26, 2.5, 6.5, 3.0);
-addEncina( 22, 26, 2.5, 7.5, 3.4);
-
-// Encinas in the middle/front zones (on flat terrain or slight slope)
-addEncina(-36, -10, 0, 7.0, 3.2);
-addEncina(-38,  8,  0, 8.0, 3.6);
-addEncina( 40, -8,  0, 7.5, 3.4);
-addEncina( 38,  8,  0, 6.5, 2.9);
-
-// Isolated encina visible center-back in photos (the prominent lone tree)
-addEncina( 4, 20, 1.3, 8.5, 4.0);
-
-// Garden encinas near house (right side)
-addEncina( 0, 20, 0, 7.0, 3.0);
-addEncina(-6, 17, 0, 6.0, 2.6);
-addEncina( 8, 22, 0, 7.5, 3.3);
-
-// Cypress at entrance (flanking gate)
-addCypress(-30, -32, 0, 9);
-addCypress(-23, -32, 0, 8);
-addCypress( -5, -32, 0, 8.5);
-addCypress(  6, -32, 0, 8);
-
-// CHUMBERAS (prickly pear) — visible along back/left boundaries in photos
-addChumbera(-38, 24, 2.3);
-addChumbera(-36, 27, 3.1);
-addChumbera( 38, 27, 3.1);
-addChumbera(-40, 12, 0);
-addChumbera(-40, -5, 0);
-addChumbera( 40, 12, 0);
-addChumbera(-3, 28, 3.4);
-
-// Low shrubs/matorral around pool edge
-addBush(15, 1, 1, 0); addBush(15, 9, 1, 0);
-addBush(29, 1, 0.9, 0); addBush(29, 9, 0.9, 0);
-addBush(22, -0.5, 0.8, 0); addBush(22, 10.5, 0.8, 0);
-
-// Hedge row along left boundary
-for (let z = -26; z < 20; z += 2.8) {
-  addBush(-41, z, 0.9 + Math.random()*0.3);
-}
-// Decorative hedge along pool
-for (let x = 14; x < 36; x += 2) {
-  addBush(x, -0.5, 0.65, 0);
-}
-// Garden bushes
-for (let i = 0; i < 10; i++) {
-  addBush(-4 + Math.cos(i*0.7)*14, 19 + Math.sin(i*0.9)*7, 0.6 + Math.random()*0.4);
+// Platform edge hedge (pool side)
+for (let x = 16; x < 40; x += 2) { addBush(x, -1.5, 0.65, PY); }
+// Garden bushes on platform
+for (let i = 0; i < 9; i++) {
+  addBush(-5 + Math.cos(i * 0.8) * 11, 14 + Math.sin(i * 1.0) * 5, 0.65 + Math.random() * 0.35, PY);
 }
 
 // ─── LIGHTING ──────────────────────────────────────────────────────────────
@@ -543,16 +540,16 @@ const ambient = new THREE.AmbientLight(0xfff8e8, 0.5);
 scene.add(ambient);
 
 const sun = new THREE.DirectionalLight(0xfff0d0, 2.5);
-sun.position.set(60, 80, 40);
+sun.position.set(60, 90, 30);
 sun.castShadow = true;
 sun.shadow.mapSize.width = 4096;
 sun.shadow.mapSize.height = 4096;
 sun.shadow.camera.near = 1;
-sun.shadow.camera.far = 300;
-sun.shadow.camera.left = -100;
-sun.shadow.camera.right = 100;
-sun.shadow.camera.top = 100;
-sun.shadow.camera.bottom = -100;
+sun.shadow.camera.far = 450;
+sun.shadow.camera.left = -130;
+sun.shadow.camera.right = 130;
+sun.shadow.camera.top = 130;
+sun.shadow.camera.bottom = -130;
 sun.shadow.bias = -0.001;
 scene.add(sun);
 
@@ -586,14 +583,14 @@ window.toggleNight = function() {
     hemi.intensity = 0.1;
 
     // Add warm interior lights
-    const l1 = new THREE.PointLight(0xffd080, 3, 20);
-    l1.position.set(0, 2, 0);
+    const l1 = new THREE.PointLight(0xffd080, 3, 22);
+    l1.position.set(0, PY + 2.5, 0);
     scene.add(l1);
-    const l2 = new THREE.PointLight(0xffd080, 2, 15);
-    l2.position.set(-15, 2, 0);
+    const l2 = new THREE.PointLight(0xffd080, 2, 18);
+    l2.position.set(-14, PY + 2.5, 0);
     scene.add(l2);
-    const lPool = new THREE.PointLight(0x40b0ff, 2, 15);
-    lPool.position.set(22, 0.5, 5);
+    const lPool = new THREE.PointLight(0x40b0ff, 2.5, 18);
+    lPool.position.set(23, PY + 0.5, 2);
     scene.add(lPool);
 
     btn.textContent = 'Día';
@@ -619,11 +616,11 @@ window.setView = function(v) {
 
   const dur = 120;
   const views = {
-    perspective: { pos: [60, 38, 78], tgt: [0, 5, 0] },
-    front:       { pos: [0, 12, -90], tgt: [0, 4, 0] },
-    side:        { pos: [-90, 20, 5], tgt: [0, 5, 5] },
-    aerial:      { pos: [0, 110, 0.1], tgt: [0, 0, 0] },
-    garden:      { pos: [30, 8, 40],  tgt: [10, 3, 5] },
+    perspective: { pos: [-70, 18, -75], tgt: [0, 9, 0] },  // road level, uphill view
+    front:       { pos: [0,  16, -95],  tgt: [0, 9, 0] },  // front elevation facing hill
+    side:        { pos: [-95, 22,  5],  tgt: [0, 11, 0] }, // left side showing slope
+    aerial:      { pos: [0, 130,  10],  tgt: [0,  6, 0] }, // overhead
+    garden:      { pos: [32, 16,  25],  tgt: [10, 9, 0] }, // pool & garden terrace
   };
   const t = views[v];
   if (!t) return;
