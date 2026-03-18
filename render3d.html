@@ -84,7 +84,7 @@ canvas{display:block;width:100%!important;height:100%!important;}
   </div>
   <div id="topbar-right">
     <div class="top-stat"><div class="top-stat-v">3.603</div><div class="top-stat-l">m² parcela</div></div>
-    <div class="top-stat"><div class="top-stat-v">420</div><div class="top-stat-l">m² construidos</div></div>
+    <div class="top-stat"><div class="top-stat-v">350</div><div class="top-stat-l">m² construidos</div></div>
     <div class="top-stat"><div class="top-stat-v">2</div><div class="top-stat-l">plantas + garage</div></div>
   </div>
 </div>
@@ -94,17 +94,17 @@ canvas{display:block;width:100%!important;height:100%!important;}
   <div class="panel-title">Programa</div>
 
   <div class="spec-item">
-    <div class="spec-v">420</div>
+    <div class="spec-v">350</div>
     <div class="spec-u">m²</div>
     <div class="spec-l">Superficie total</div>
   </div>
   <div class="spec-item">
-    <div class="spec-v">240</div>
+    <div class="spec-v">210</div>
     <div class="spec-u">m²</div>
     <div class="spec-l">Planta baja</div>
   </div>
   <div class="spec-item">
-    <div class="spec-v">180</div>
+    <div class="spec-v">140</div>
     <div class="spec-u">m²</div>
     <div class="spec-l">Primera planta</div>
   </div>
@@ -224,15 +224,16 @@ controls.minDistance = 15;
 controls.maxDistance = 300;
 
 // ─── MATERIALS ─────────────────────────────────────────────────────────────
-const matWall = new THREE.MeshStandardMaterial({ color: 0xf2ede4, roughness: 0.6, metalness: 0.0 });
-const matWallDark = new THREE.MeshStandardMaterial({ color: 0xd4c8b0, roughness: 0.7, metalness: 0.0 });
-const matGlass = new THREE.MeshStandardMaterial({ color: 0x1a2a40, roughness: 0.05, metalness: 0.3, transparent: true, opacity: 0.75 });
-const matRoof = new THREE.MeshStandardMaterial({ color: 0x2a2620, roughness: 0.8, metalness: 0.0 });
-const matConcrete = new THREE.MeshStandardMaterial({ color: 0xb8b0a0, roughness: 0.9, metalness: 0.0 });
-const matGarage = new THREE.MeshStandardMaterial({ color: 0xc0b898, roughness: 0.7, metalness: 0.1 });
-const matGarageDoor = new THREE.MeshStandardMaterial({ color: 0x5a5040, roughness: 0.3, metalness: 0.5 });
-const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x0090d0, roughness: 0.02, metalness: 0.18, transparent: true, opacity: 0.92 });
-const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xe0d4bc, roughness: 0.45, metalness: 0.0 });
+const matWall = new THREE.MeshStandardMaterial({ color: 0xfafaf8, roughness: 0.35, metalness: 0.0 }); // bright white plaster
+const matWallDark = new THREE.MeshStandardMaterial({ color: 0xedebe6, roughness: 0.4, metalness: 0.0 });
+const matGlass = new THREE.MeshStandardMaterial({ color: 0x1a2840, roughness: 0.04, metalness: 0.4, transparent: true, opacity: 0.65 });
+const matRoof = new THREE.MeshStandardMaterial({ color: 0x252220, roughness: 0.75, metalness: 0.05 });
+const matConcrete = new THREE.MeshStandardMaterial({ color: 0xc8c0b0, roughness: 0.85, metalness: 0.0 });
+const matGarage = new THREE.MeshStandardMaterial({ color: 0xf0ede6, roughness: 0.4, metalness: 0.0 }); // white like main house
+const matGarageDoor = new THREE.MeshStandardMaterial({ color: 0x383430, roughness: 0.25, metalness: 0.65 }); // dark aluminium
+const matStoneClad = new THREE.MeshStandardMaterial({ color: 0xd8d2c4, roughness: 0.92, metalness: 0.0 }); // stone cladding like photo
+const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x00aaee, roughness: 0.01, metalness: 0.25, transparent: true, opacity: 0.95 });
+const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xf2ede4, roughness: 0.38, metalness: 0.0 }); // bright limestone
 const matGrass = new THREE.MeshStandardMaterial({ color: 0x4a8828, roughness: 0.85, metalness: 0.0 });
 const matGrassLight = new THREE.MeshStandardMaterial({ color: 0x5a9c32, roughness: 0.85, metalness: 0.0 });
 const matPoolTile = new THREE.MeshStandardMaterial({ color: 0xc8e8f0, roughness: 0.3, metalness: 0.1 });
@@ -397,57 +398,115 @@ box(10, 0.18, 0.12, matRoof, -17, PY + 3.0, -9);
 box(0.12, 3.0, 0.12, matMetal, -12.5, PY + 1.5, -9);
 box(0.12, 3.0, 0.12, matMetal, -21.5, PY + 1.5, -9);
 
-// ─── MAIN BUILDING — PLANTA BAJA (base at PY) ─────────────────────────────
-box(22, 3.6, 14, matWall, -2, PY + 1.8, 0);
-// Glass façade (faces downhill = -Z direction)
-box(14, 2.6, 0.15, matGlass, -1, PY + 1.85, -7.08);
-// Side glass strip
-box(0.15, 2.6, 7, matGlass, 10.08, PY + 1.85, 0);
-// Ground floor parapet slab
-box(22.5, 0.2, 14.5, matRoof, -2, PY + 3.7, 0);
-// Entrance canopy
-box(5.5, 0.22, 3.5, matRoof, -2, PY + 3.82, -8.85);
-box(0.12, 3.6, 0.12, matMetal, -4.5, PY + 1.8, -9.5);
-box(0.12, 3.6, 0.12, matMetal,  0.5, PY + 1.8, -9.5);
-// Side window
-box(0.15, 1.8, 4.5, matGlass, -13.08, PY + 2.2, 0);
-// Slab between floors
-box(22.5, 0.28, 14.5, matConcrete, -2, PY + 3.84, 0);
-// Back retaining reveal (hillside meets house)
-box(22.5, 3.8, 0.6, matRetaining, -2, PY + 1.9, 7.55);
+// ─── MAIN BUILDING — PLANTA BAJA 210m² (20×10.5m) ────────────────────────
+// Main white volume
+box(21, 3.6, 12, matWall, -1, PY + 1.8, 0);
+// Large glass façade facing downhill (dark aluminium frames)
+box(13, 3.0, 0.15, matGlass, -1, PY + 1.8, -6.08);
+// Glass side (right/pool side)
+box(0.15, 3.0, 6, matGlass, 9.58, PY + 1.8, 0);
 
-// ─── PRIMERA PLANTA (base at PY+3.84+0.28) ───────────────────────────────
-const F1 = PY + 3.9;
-box(18, 3.2, 11, matWall, -1, F1 + 1.6, -0.5);
-// First floor glass
-box(12, 2.4, 0.15, matGlass, -0.5, F1 + 1.65, -6.08);
-// Balcony slab
-box(18.6, 0.22, 3.2, matTerrace, -1, F1 + 0.11, -7.68);
-// Balcony railing
-box(18, 1.0, 0.06, matGlass, -1, F1 + 0.61, -9.3);
-for (let i = -8; i <= 8; i += 2) {
-  box(0.05, 1.0, 0.06, matMetal, i, F1 + 0.61, -9.3);
+// ── Stone cladding columns on façade (like reference photo) ──
+for (const cx of [-9.5, -5, 0, 5]) {
+  box(0.9, 3.6, 0.28, matStoneClad, cx, PY + 1.8, -6.15);
 }
-// Roof parapet
-box(18.5, 0.22, 11.5, matRoof, -1, F1 + 3.31, -0.5);
-// Penthouse volume
-box(4.5, 0.9, 3.5, matWall, 5, F1 + 3.62, -0.5);
+// Stone cladding on corners
+box(0.9, 3.6, 12.3, matStoneClad, -10.45, PY + 1.8, 0);
+box(0.9, 3.6, 0.5,  matStoneClad,  9.55,  PY + 1.8, 6.05);
+
+// Brise-soleil horizontal fins over ground floor windows
+for (let fi = 0; fi < 5; fi++) {
+  box(13.5, 0.08, 0.9, matWall, -1, PY + 1.5 + fi * 0.55, -6.6);
+}
+
+// Ground floor flat roof slab (prominent overhang — modern style)
+box(23, 0.22, 15, matRoof, -1, PY + 3.7, 0);
+// Overhang extension (projects forward)
+box(23, 0.22, 3.5, matRoof, -1, PY + 3.72, -9.0);
+
+// Entrance canopy — slim floating slab
+box(6, 0.16, 2.8, matWall, -2, PY + 3.74, -9.2);
+// Canopy support pillars (thin steel)
+box(0.1, 3.6, 0.1, matMetal, -4.8, PY + 1.8, -9.8);
+box(0.1, 3.6, 0.1, matMetal,  0.8, PY + 1.8, -9.8);
+
+// Side window strip
+box(0.15, 2.0, 5, matGlass, -10.55, PY + 2.2, 0);
+// Slab between floors
+box(22, 0.3, 12.5, matConcrete, -1, PY + 3.82, 0);
+// Back cut reveal (hillside meets house)
+box(22, 3.8, 0.6, matRetaining, -1, PY + 1.9, 6.55);
+
+// ─── PRIMERA PLANTA 140m² (17×8m, setback) ───────────────────────────────
+const F1 = PY + 3.9;
+// Upper floor volume (set back from facade — characteristic modern design)
+box(17, 3.2, 9, matWall, -1, F1 + 1.6, 0.5);
+// Full-height corner glass — left side (panoramic like reference)
+box(0.15, 3.2, 9.1, matGlass, -8.58, F1 + 1.6, 0.5);
+// Wide glass facade first floor
+box(14, 2.8, 0.15, matGlass, -0.5, F1 + 1.7, -4.08);
+
+// Balcony slab (deep overhang)
+box(19, 0.22, 3.8, matTerrace, -1, F1 + 0.11, -7.0);
+// Balcony glass railing
+box(16.5, 1.0, 0.06, matGlass, -0.5, F1 + 0.62, -8.92);
+for (let i = -7; i <= 7; i += 2) {
+  box(0.05, 1.0, 0.06, matMetal, i, F1 + 0.62, -8.92);
+}
+// Stone cladding columns first floor
+for (const cx of [-7.5, -2.5, 3.5]) {
+  box(0.85, 3.2, 0.25, matStoneClad, cx, F1 + 1.6, -4.18);
+}
+// Roof parapet (flat roof with slight thickness)
+box(17.5, 0.24, 9.5, matRoof, -1, F1 + 3.32, 0.5);
+// Chimney / service volume on roof
+box(1.2, 1.4, 1.0, matWall, 6.5, F1 + 3.55, 2.0);
 
 // ─── SOLAR PANELS ─────────────────────────────────────────────────────────
-const panelMat = new THREE.MeshStandardMaterial({ color: 0x1a2840, roughness: 0.2, metalness: 0.6 });
+const panelMat = new THREE.MeshStandardMaterial({ color: 0x1a2840, roughness: 0.18, metalness: 0.65 });
 for (let i = 0; i < 3; i++) {
-  for (let j = 0; j < 5; j++) {
+  for (let j = 0; j < 4; j++) {
     const p = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.05, 1.0), panelMat);
-    p.position.set(-4 + j * 2.1, F1 + 3.45, -1 + i * 1.3);
-    p.rotation.x = -0.18;
+    p.position.set(-4 + j * 2.2, F1 + 3.46, 1 + i * 1.3);
+    p.rotation.x = -0.16;
     scene.add(p);
   }
 }
 
-// ─── EXTERIOR STAIRS (platform face → front terrace) ──────────────────────
+// ─── EXTERIOR STAIRS (platform face → front entrance) ─────────────────────
 for (let i = 0; i < 7; i++) {
-  box(3.0, 0.2, 0.4, matConcrete, -4, PY - i * 0.2 + 0.1, -18.5 - i * 0.4);
+  box(3.2, 0.2, 0.4, matConcrete, -3, PY - i * 0.2 + 0.1, -9.5 - i * 0.4);
 }
+
+// ─── VEHICLE AT GARAGE (dark SUV — identifies garage location) ────────────
+const matCar = new THREE.MeshStandardMaterial({ color: 0x1c1c28, roughness: 0.25, metalness: 0.8 });
+const matCarGlass = new THREE.MeshStandardMaterial({ color: 0x304878, roughness: 0.04, metalness: 0.3, transparent: true, opacity: 0.55 });
+const matWheel = new THREE.MeshStandardMaterial({ color: 0x0e0e0e, roughness: 0.9, metalness: 0.1 });
+const matRim = new THREE.MeshStandardMaterial({ color: 0xc0c0c8, roughness: 0.2, metalness: 0.9 });
+// Car body
+box(4.6, 0.75, 1.9, matCar, -22, GY + 0.82, -20.5);
+// Car upper cabin
+box(2.9, 0.72, 1.78, matCar, -21.6, GY + 1.53, -20.5);
+// Windscreen
+box(0.1, 0.62, 1.62, matCarGlass, -19.62, GY + 1.58, -20.5);
+// Rear window
+box(0.1, 0.62, 1.62, matCarGlass, -23.62, GY + 1.58, -20.5);
+// Side windows
+box(2.9, 0.56, 0.08, matCarGlass, -21.6, GY + 1.6, -19.63);
+box(2.9, 0.56, 0.08, matCarGlass, -21.6, GY + 1.6, -21.37);
+// Wheels
+const wGeo = new THREE.CylinderGeometry(0.34, 0.34, 0.22, 14);
+const rGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.24, 10);
+for (const [wx, wz] of [[-20.4,-19.6],[-23.6,-19.6],[-20.4,-21.4],[-23.6,-21.4]]) {
+  const w = new THREE.Mesh(wGeo, matWheel);
+  w.rotation.z = Math.PI / 2; w.position.set(wx, GY + 0.34, wz);
+  scene.add(w);
+  const r = new THREE.Mesh(rGeo, matRim);
+  r.rotation.z = Math.PI / 2; r.position.set(wx, GY + 0.34, wz);
+  scene.add(r);
+}
+// Headlights
+box(0.06, 0.18, 0.5, matMetal, -19.32, GY + 0.9, -20.5);
 
 // ─── LAWN (césped verde) covering the platform ─────────────────────────────
 function addLawn(cx, cz, w, d, mat) {
@@ -465,61 +524,55 @@ addLawn( 0, -14, 15,  8, matGrassLight); // entrance green strip
 addLawn( 8,  10, 22, 10, matGrass);      // pool side lawn
 addLawn(-18,-10, 16, 14, matGrassLight); // garage approach lawn
 
-// ─── SWIMMING POOL — exterior, 14×6 m ────────────────────────────────────
-// Full pool deck (travertine-style surround)
-box(26, 0.32, 16, matPoolSurround, 23, PY + 0.16, 2);
+// ─── SWIMMING POOL — 12×5m, right beside house (visible from main view) ───
+// Pool+deck zone: X=11 to 36, Z=-7 to +5 (front-right of house)
+// Wide limestone deck
+box(28, 0.32, 15, matPoolSurround, 22.5, PY + 0.16, -1);
 
-// Pool basin walls (visible tiled interior — 1.5m deep)
-const PD = 1.5; // pool depth
-box(14.4, PD, 0.28, matPoolTile, 23, PY - PD*0.5, -1.86); // front wall
-box(14.4, PD, 0.28, matPoolTile, 23, PY - PD*0.5,  5.86); // back wall
-box(0.28, PD, 6.4,  matPoolTile, 16.14, PY - PD*0.5, 2);  // left wall
-box(0.28, PD, 6.4,  matPoolTile, 29.86, PY - PD*0.5, 2);  // right wall (infinity)
-// Pool floor (bottom)
-box(14, 0.2, 6, matPoolTile, 23, PY - PD - 0.1, 2);
-// Water surface
-box(14, 0.12, 6, matPoolWater, 23, PY + 0.04, 2);
+// Pool basin — 12×5m with visible depth
+const PD = 1.6;
+const PX = 22, PZ = -1; // pool centre
+box(12.4, PD, 0.28, matPoolTile, PX, PY - PD*0.5, PZ - 2.64); // near edge
+box(12.4, PD, 0.28, matPoolTile, PX, PY - PD*0.5, PZ + 2.64); // far edge
+box(0.28, PD, 5.3,  matPoolTile, PX - 6.14, PY - PD*0.5, PZ); // left
+box(0.28, PD, 5.3,  matPoolTile, PX + 6.14, PY - PD*0.5, PZ); // right (infinity)
+box(12, 0.22, 5, matPoolTile, PX, PY - PD - 0.11, PZ);  // floor
+// Water surface — vivid blue
+box(12, 0.14, 5, matPoolWater, PX, PY + 0.06, PZ);
 
-// Pool coping (rim/border)
-box(14.8, 0.18, 0.35, matPoolSurround, 23, PY + 0.25, -2.18);
-box(14.8, 0.18, 0.35, matPoolSurround, 23, PY + 0.25,  6.18);
-box(0.35, 0.18, 6.7,  matPoolSurround, 15.83, PY + 0.25, 2);
-box(0.35, 0.18, 6.7,  matPoolSurround, 30.17, PY + 0.25, 2);
+// Pool coping — bright white limestone lip
+box(12.8, 0.2, 0.38, matPoolSurround, PX, PY + 0.28, PZ - 2.8);
+box(12.8, 0.2, 0.38, matPoolSurround, PX, PY + 0.28, PZ + 2.8);
+box(0.38, 0.2, 5.8,  matPoolSurround, PX - 6.3, PY + 0.28, PZ);
+box(0.38, 0.2, 5.8,  matPoolSurround, PX + 6.3, PY + 0.28, PZ); // infinity overflow edge
 
-// Steps into pool
-box(1.4, 0.32, 0.6, matPoolSurround, 16.9, PY + 0.16, 2);
-box(1.4, 0.32, 0.6, matPoolSurround, 16.9, PY - 0.14, 2);
+// Pool steps (stone steps into water)
+box(1.4, 0.32, 0.65, matPoolSurround, PX - 5.4, PY + 0.16, PZ);
+box(1.4, 0.24, 0.65, matPoolSurround, PX - 5.4, PY - 0.16, PZ);
 
-// Infinity overflow channel (far right edge)
-box(0.4, 0.16, 6.4, matPoolWater, 30.2, PY - 0.04, 2);
+// Infinity overflow tray
+box(0.35, 0.14, 5.0, matPoolWater, PX + 6.22, PY - 0.08, PZ);
 
 // ─── POOL DECK — loungers + umbrellas ─────────────────────────────────────
-// Stone deck pad
-box(12, 0.12, 16, matTerrace, 36, PY + 0.06, 2);
-
-// Loungers (4 pairs)
-const umbMat = new THREE.MeshStandardMaterial({ color: 0xf8f0d8, roughness: 0.7, side: THREE.DoubleSide });
-for (let i = 0; i < 4; i++) {
-  const lz = -4 + i * 3.5;
-  box(0.72, 0.14, 2.1, matConcrete, 33.5, PY + 0.2, lz);
-  box(0.72, 0.14, 2.1, matConcrete, 37.5, PY + 0.2, lz);
-  // Lounger cushion
-  box(0.65, 0.08, 2.0, matPoolSurround, 33.5, PY + 0.25, lz);
-  box(0.65, 0.08, 2.0, matPoolSurround, 37.5, PY + 0.25, lz);
+const umbMat = new THREE.MeshStandardMaterial({ color: 0xf5eed8, roughness: 0.65, side: THREE.DoubleSide });
+// Lounger pairs along the pool
+for (let i = 0; i < 3; i++) {
+  const lz = -5 + i * 2.5;
+  box(2.1, 0.12, 0.7, matConcrete, 30, PY + 0.2, lz);
+  box(2.1, 0.12, 0.7, matConcrete, 33, PY + 0.2, lz);
+  box(2.0, 0.07, 0.65, matPoolSurround, 30, PY + 0.26, lz);
+  box(2.0, 0.07, 0.65, matPoolSurround, 33, PY + 0.26, lz);
 }
 // Two umbrellas
-for (const [ux, uz] of [[34.5, -2.5], [36.5, 5.5]]) {
+for (const [ux, uz] of [[31, -4.5], [32, 2.5]]) {
   box(0.07, 3.0, 0.07, matMetal, ux, PY + 1.5, uz);
-  const uGeo = new THREE.ConeGeometry(2.4, 0.55, 8, 1, true);
-  const uMesh = new THREE.Mesh(uGeo, umbMat);
-  uMesh.position.set(ux, PY + 3.2, uz);
-  scene.add(uMesh);
+  const uMesh = new THREE.Mesh(new THREE.ConeGeometry(2.3, 0.5, 8, 1, true), umbMat);
+  uMesh.position.set(ux, PY + 3.15, uz); scene.add(uMesh);
 }
 
-// Hedge border around pool deck
-for (let hx = 12; hx <= 44; hx += 2.2) { addBush(hx, -10.5, 0.7, PY); }
-for (let hx = 12; hx <= 44; hx += 2.2) { addBush(hx,  10.5, 0.7, PY); }
-for (let hz = -10; hz <= 10; hz += 2.2) { addBush(44.5, hz, 0.7, PY); }
+// Low hedge framing pool zone (near side = visible from road)
+for (let hx = 12; hx <= 36; hx += 2.1) { addBush(hx, -9.2, 0.62, PY); }
+for (let hz = -8; hz <= 4; hz += 2.1)   { addBush(36.5, hz, 0.62, PY); }
 
 // ─── OUTDOOR TERRACE + PERGOLA (front-right of house) ─────────────────────
 box(11, 0.12, 15, matTerrace, 10, PY + 0.06, -4);
