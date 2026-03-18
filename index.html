@@ -232,7 +232,7 @@ const matConcrete = new THREE.MeshStandardMaterial({ color: 0xc8c0b0, roughness:
 const matGarage = new THREE.MeshStandardMaterial({ color: 0xf0ede6, roughness: 0.4, metalness: 0.0 }); // white like main house
 const matGarageDoor = new THREE.MeshStandardMaterial({ color: 0x383430, roughness: 0.25, metalness: 0.65 }); // dark aluminium
 const matStoneClad = new THREE.MeshStandardMaterial({ color: 0xd8d2c4, roughness: 0.92, metalness: 0.0 }); // stone cladding like photo
-const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x00c8ff, roughness: 0.0, metalness: 0.35, transparent: true, opacity: 0.97 });
+const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x0055ee, roughness: 0.0, metalness: 0.4, transparent: true, opacity: 0.98 });
 const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xf2ede4, roughness: 0.38, metalness: 0.0 }); // bright limestone
 const matGrass = new THREE.MeshStandardMaterial({ color: 0x3a8020, roughness: 0.9, metalness: 0.0 });
 const matGrassLight = new THREE.MeshStandardMaterial({ color: 0x4a9428, roughness: 0.88, metalness: 0.0 });
@@ -462,6 +462,48 @@ box(17.5, 0.24, 9.5, matRoof, -1, F1 + 3.32, 0.5);
 // Chimney / service volume on roof
 box(1.2, 1.4, 1.0, matWall, 6.5, F1 + 3.55, 2.0);
 
+// ─── VENTANAS ADICIONALES (paredes laterales y traseras) ──────────────────
+const matFrame = new THREE.MeshStandardMaterial({ color: 0x282420, roughness: 0.35, metalness: 0.7 });
+const matGlassWarm = new THREE.MeshStandardMaterial({ color: 0x2a3850, roughness: 0.04, metalness: 0.35, transparent: true, opacity: 0.72 });
+
+// Planta baja — pared trasera (z≈+6.1), 3 ventanas de habitaciones
+for (const wx of [-6.5, -0.5, 5.0]) {
+  box(1.72, 0.12, 1.52, matFrame, wx, PY + 2.1, 6.14);
+  box(1.48, 0.08, 1.28, matGlassWarm, wx, PY + 2.1, 6.12);
+}
+
+// Planta baja — pared lateral derecha (x≈+9.6), 2 ventanas traseras
+for (const wz of [2.8, 4.8]) {
+  box(0.12, 1.72, 1.52, matFrame, 9.62, PY + 2.1, wz);
+  box(0.08, 1.48, 1.28, matGlassWarm, 9.62, PY + 2.1, wz);
+}
+
+// Planta baja — pared lateral izquierda (x≈-10.5), 2 ventanas adicionales
+for (const wz of [-3.5, 3.5]) {
+  box(0.12, 1.72, 1.52, matFrame, -10.54, PY + 2.1, wz);
+  box(0.08, 1.48, 1.28, matGlassWarm, -10.54, PY + 2.1, wz);
+}
+
+// Primera planta — pared trasera (z≈+5.1), 2 ventanas de dormitorios
+for (const wx of [-5.0, 2.5]) {
+  box(1.62, 0.12, 1.32, matFrame, wx, F1 + 1.9, 5.12);
+  box(1.38, 0.08, 1.08, matGlassWarm, wx, F1 + 1.9, 5.12);
+}
+
+// Primera planta — pared lateral derecha (x≈+7.6), 3 ventanas
+for (const wz of [-2.5, 0.5, 3.5]) {
+  box(0.12, 1.32, 1.62, matFrame, 7.62, F1 + 1.9, wz);
+  box(0.08, 1.08, 1.38, matGlassWarm, 7.62, F1 + 1.9, wz);
+}
+
+// Luces cálidas de interior para dar aspecto habitado
+const intL1 = new THREE.PointLight(0xffe4a0, 1.8, 14);
+intL1.position.set(-3, PY + 2.2, 0); scene.add(intL1);
+const intL2 = new THREE.PointLight(0xffdd90, 1.5, 12);
+intL2.position.set(5, PY + 2.2, 2); scene.add(intL2);
+const intL3 = new THREE.PointLight(0xffd880, 1.4, 12);
+intL3.position.set(-2, F1 + 1.8, 0); scene.add(intL3);
+
 // ─── SOLAR PANELS ─────────────────────────────────────────────────────────
 const panelMat = new THREE.MeshStandardMaterial({ color: 0x1a2840, roughness: 0.18, metalness: 0.65 });
 for (let i = 0; i < 3; i++) {
@@ -545,14 +587,16 @@ for (const sx of [-40, 40]) {
   sm.receiveShadow = true; scene.add(sm);
 }
 
-// Pool light — destaca el agua con luz submarina cyan
-const poolLight = new THREE.PointLight(0x00d8ff, 6.0, 16);
-poolLight.position.set(22, PY - 0.5, -1);
+// Pool light — destaca el agua con luz submarina azul intensa
+const poolLight = new THREE.PointLight(0x0066ff, 9.0, 18);
+poolLight.position.set(22, PY - 0.4, -1);
 scene.add(poolLight);
-// Second pool light for even coverage
-const poolLight2 = new THREE.PointLight(0x00b8ff, 4.0, 14);
-poolLight2.position.set(22, PY - 0.5, -3.5);
+const poolLight2 = new THREE.PointLight(0x0044dd, 6.0, 16);
+poolLight2.position.set(22, PY - 0.4, -3.5);
 scene.add(poolLight2);
+const poolLight3 = new THREE.PointLight(0x0088ff, 4.0, 14);
+poolLight3.position.set(22, PY - 0.4, 1.5);
+scene.add(poolLight3);
 
 // ─── SWIMMING POOL — 12×5m, right beside house (visible from main view) ───
 // Pool+deck zone: X=11 to 36, Z=-7 to +5 (front-right of house)
