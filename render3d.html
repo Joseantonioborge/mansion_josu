@@ -231,9 +231,11 @@ const matRoof = new THREE.MeshStandardMaterial({ color: 0x2a2620, roughness: 0.8
 const matConcrete = new THREE.MeshStandardMaterial({ color: 0xb8b0a0, roughness: 0.9, metalness: 0.0 });
 const matGarage = new THREE.MeshStandardMaterial({ color: 0xc0b898, roughness: 0.7, metalness: 0.1 });
 const matGarageDoor = new THREE.MeshStandardMaterial({ color: 0x5a5040, roughness: 0.3, metalness: 0.5 });
-const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x3a8fc4, roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.88 });
-const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xd8cbb0, roughness: 0.5, metalness: 0.0 });
-const matGrass = new THREE.MeshStandardMaterial({ color: 0x4a7228, roughness: 0.9, metalness: 0.0 });
+const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x0090d0, roughness: 0.02, metalness: 0.18, transparent: true, opacity: 0.92 });
+const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xe0d4bc, roughness: 0.45, metalness: 0.0 });
+const matGrass = new THREE.MeshStandardMaterial({ color: 0x4a8828, roughness: 0.85, metalness: 0.0 });
+const matGrassLight = new THREE.MeshStandardMaterial({ color: 0x5a9c32, roughness: 0.85, metalness: 0.0 });
+const matPoolTile = new THREE.MeshStandardMaterial({ color: 0xc8e8f0, roughness: 0.3, metalness: 0.1 });
 const matTerrain = new THREE.MeshStandardMaterial({ color: 0xc0966a, roughness: 1.0, metalness: 0.0 }); // sandy dry earth
 const matDrive = new THREE.MeshStandardMaterial({ color: 0x8a8070, roughness: 0.8, metalness: 0.0 });
 const matTrunk = new THREE.MeshStandardMaterial({ color: 0x4a2e10, roughness: 1.0 });
@@ -447,25 +449,77 @@ for (let i = 0; i < 7; i++) {
   box(3.0, 0.2, 0.4, matConcrete, -4, PY - i * 0.2 + 0.1, -18.5 - i * 0.4);
 }
 
-// ─── POOL + TERRACE (on platform, right of house) ─────────────────────────
-box(17, 0.34, 12, matPoolSurround, 23, PY + 0.17, 2);
-box(12, 0.28, 7, matPoolWater, 23, PY + 0.22, 2);
-box(12.5, 0.85, 0.32, matPoolSurround, 23, PY + 0.43, -1.34);
-box(12.5, 0.85, 0.32, matPoolSurround, 23, PY + 0.43,  5.34);
-box(0.32, 0.85, 7.7, matPoolSurround, 17.16, PY + 0.43, 2);
-box(0.32, 0.85, 7.7, matPoolSurround, 28.84, PY + 0.43, 2);
-box(1.3, 0.34, 0.7, matPoolSurround, 17.9, PY + 0.17, 2);
-// Sun lounger area
-box(8.5, 0.12, 12, matTerrace, 35, PY + 0.06, 2);
-for (let i = 0; i < 3; i++) {
-  box(0.75, 0.16, 2.2, matConcrete, 33, PY + 0.22, -1 + i * 3.8);
-  box(0.75, 0.16, 2.2, matConcrete, 36.5, PY + 0.22, -1 + i * 3.8);
+// ─── LAWN (césped verde) covering the platform ─────────────────────────────
+function addLawn(cx, cz, w, d, mat) {
+  const g = new THREE.PlaneGeometry(w, d);
+  g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, mat);
+  m.position.set(cx, PY + 0.04, cz);
+  m.receiveShadow = true;
+  scene.add(m);
 }
-box(0.07, 2.8, 0.07, matMetal, 35, PY + 1.4, 2);
-const umbMat = new THREE.MeshStandardMaterial({ color: 0xc8a040, roughness: 0.8, side: THREE.DoubleSide });
-const umb = new THREE.Mesh(new THREE.ConeGeometry(2.2, 0.55, 8, 1, true), umbMat);
-umb.position.set(35, PY + 3.0, 2);
-scene.add(umb);
+// Main lawn — behind and around house
+addLawn(0,  17, 90, 22, matGrass);       // big rear lawn
+addLawn(-25, 1, 14, 22, matGrass);       // left side of house
+addLawn( 0, -14, 15,  8, matGrassLight); // entrance green strip
+addLawn( 8,  10, 22, 10, matGrass);      // pool side lawn
+addLawn(-18,-10, 16, 14, matGrassLight); // garage approach lawn
+
+// ─── SWIMMING POOL — exterior, 14×6 m ────────────────────────────────────
+// Full pool deck (travertine-style surround)
+box(26, 0.32, 16, matPoolSurround, 23, PY + 0.16, 2);
+
+// Pool basin walls (visible tiled interior — 1.5m deep)
+const PD = 1.5; // pool depth
+box(14.4, PD, 0.28, matPoolTile, 23, PY - PD*0.5, -1.86); // front wall
+box(14.4, PD, 0.28, matPoolTile, 23, PY - PD*0.5,  5.86); // back wall
+box(0.28, PD, 6.4,  matPoolTile, 16.14, PY - PD*0.5, 2);  // left wall
+box(0.28, PD, 6.4,  matPoolTile, 29.86, PY - PD*0.5, 2);  // right wall (infinity)
+// Pool floor (bottom)
+box(14, 0.2, 6, matPoolTile, 23, PY - PD - 0.1, 2);
+// Water surface
+box(14, 0.12, 6, matPoolWater, 23, PY + 0.04, 2);
+
+// Pool coping (rim/border)
+box(14.8, 0.18, 0.35, matPoolSurround, 23, PY + 0.25, -2.18);
+box(14.8, 0.18, 0.35, matPoolSurround, 23, PY + 0.25,  6.18);
+box(0.35, 0.18, 6.7,  matPoolSurround, 15.83, PY + 0.25, 2);
+box(0.35, 0.18, 6.7,  matPoolSurround, 30.17, PY + 0.25, 2);
+
+// Steps into pool
+box(1.4, 0.32, 0.6, matPoolSurround, 16.9, PY + 0.16, 2);
+box(1.4, 0.32, 0.6, matPoolSurround, 16.9, PY - 0.14, 2);
+
+// Infinity overflow channel (far right edge)
+box(0.4, 0.16, 6.4, matPoolWater, 30.2, PY - 0.04, 2);
+
+// ─── POOL DECK — loungers + umbrellas ─────────────────────────────────────
+// Stone deck pad
+box(12, 0.12, 16, matTerrace, 36, PY + 0.06, 2);
+
+// Loungers (4 pairs)
+const umbMat = new THREE.MeshStandardMaterial({ color: 0xf8f0d8, roughness: 0.7, side: THREE.DoubleSide });
+for (let i = 0; i < 4; i++) {
+  const lz = -4 + i * 3.5;
+  box(0.72, 0.14, 2.1, matConcrete, 33.5, PY + 0.2, lz);
+  box(0.72, 0.14, 2.1, matConcrete, 37.5, PY + 0.2, lz);
+  // Lounger cushion
+  box(0.65, 0.08, 2.0, matPoolSurround, 33.5, PY + 0.25, lz);
+  box(0.65, 0.08, 2.0, matPoolSurround, 37.5, PY + 0.25, lz);
+}
+// Two umbrellas
+for (const [ux, uz] of [[34.5, -2.5], [36.5, 5.5]]) {
+  box(0.07, 3.0, 0.07, matMetal, ux, PY + 1.5, uz);
+  const uGeo = new THREE.ConeGeometry(2.4, 0.55, 8, 1, true);
+  const uMesh = new THREE.Mesh(uGeo, umbMat);
+  uMesh.position.set(ux, PY + 3.2, uz);
+  scene.add(uMesh);
+}
+
+// Hedge border around pool deck
+for (let hx = 12; hx <= 44; hx += 2.2) { addBush(hx, -10.5, 0.7, PY); }
+for (let hx = 12; hx <= 44; hx += 2.2) { addBush(hx,  10.5, 0.7, PY); }
+for (let hz = -10; hz <= 10; hz += 2.2) { addBush(44.5, hz, 0.7, PY); }
 
 // ─── OUTDOOR TERRACE + PERGOLA (front-right of house) ─────────────────────
 box(11, 0.12, 15, matTerrace, 10, PY + 0.06, -4);
@@ -478,14 +532,6 @@ box(10, 0.12, 0.12, matMetal, 10, PY + 3.26, 3.5);
 for (let i = 0; i < 5; i++) {
   box(0.06, 0.06, 14.6, matMetal, 5 + i * 2.5, PY + 3.3, -3.75);
 }
-
-// ─── GARDEN (green area on platform, behind house) ────────────────────────
-const gardenGeo = new THREE.PlaneGeometry(24, 22);
-gardenGeo.rotateX(-Math.PI / 2);
-const garden = new THREE.Mesh(gardenGeo, matGrass);
-garden.position.set(0, PY + 0.04, 16);
-garden.receiveShadow = true;
-scene.add(garden);
 
 // ─── VEGETATION ─── heights use tH(z) on slope, PY on platform ────────────
 // Prominent encina cluster on slope (visible in photos from road)
@@ -528,12 +574,12 @@ for (let z = -38; z < 38; z += 3.0) {
   addBush(-43, z, 0.85 + Math.random() * 0.3, tH(z));
   addBush( 43, z, 0.85 + Math.random() * 0.3, tH(z));
 }
-// Platform edge hedge (pool side)
-for (let x = 16; x < 40; x += 2) { addBush(x, -1.5, 0.65, PY); }
-// Garden bushes on platform
+// Garden bushes scattered on rear lawn
 for (let i = 0; i < 9; i++) {
   addBush(-5 + Math.cos(i * 0.8) * 11, 14 + Math.sin(i * 1.0) * 5, 0.65 + Math.random() * 0.35, PY);
 }
+// Low flowering border along front of retaining wall
+for (let x = -40; x <= 40; x += 2.8) { addBush(x, -18.5, 0.55, PY); }
 
 // ─── LIGHTING ──────────────────────────────────────────────────────────────
 const ambient = new THREE.AmbientLight(0xfff8e8, 0.5);
