@@ -232,10 +232,10 @@ const matConcrete = new THREE.MeshStandardMaterial({ color: 0xc8c0b0, roughness:
 const matGarage = new THREE.MeshStandardMaterial({ color: 0xf0ede6, roughness: 0.4, metalness: 0.0 }); // white like main house
 const matGarageDoor = new THREE.MeshStandardMaterial({ color: 0x383430, roughness: 0.25, metalness: 0.65 }); // dark aluminium
 const matStoneClad = new THREE.MeshStandardMaterial({ color: 0xd8d2c4, roughness: 0.92, metalness: 0.0 }); // stone cladding like photo
-const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x00aaee, roughness: 0.01, metalness: 0.25, transparent: true, opacity: 0.95 });
+const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x00c8ff, roughness: 0.0, metalness: 0.35, transparent: true, opacity: 0.97 });
 const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xf2ede4, roughness: 0.38, metalness: 0.0 }); // bright limestone
-const matGrass = new THREE.MeshStandardMaterial({ color: 0x4a8828, roughness: 0.85, metalness: 0.0 });
-const matGrassLight = new THREE.MeshStandardMaterial({ color: 0x5a9c32, roughness: 0.85, metalness: 0.0 });
+const matGrass = new THREE.MeshStandardMaterial({ color: 0x3a8020, roughness: 0.9, metalness: 0.0 });
+const matGrassLight = new THREE.MeshStandardMaterial({ color: 0x4a9428, roughness: 0.88, metalness: 0.0 });
 const matPoolTile = new THREE.MeshStandardMaterial({ color: 0xc8e8f0, roughness: 0.3, metalness: 0.1 });
 const matTerrain = new THREE.MeshStandardMaterial({ color: 0xc0966a, roughness: 1.0, metalness: 0.0 }); // sandy dry earth
 const matDrive = new THREE.MeshStandardMaterial({ color: 0x8a8070, roughness: 0.8, metalness: 0.0 });
@@ -478,51 +478,81 @@ for (let i = 0; i < 7; i++) {
   box(3.2, 0.2, 0.4, matConcrete, -3, PY - i * 0.2 + 0.1, -9.5 - i * 0.4);
 }
 
-// ─── VEHICLE AT GARAGE (dark SUV — identifies garage location) ────────────
-const matCar = new THREE.MeshStandardMaterial({ color: 0x1c1c28, roughness: 0.25, metalness: 0.8 });
+// ─── VEHICLE AT GARAGE (SUV aparcado en la puerta) ────────────────────────
+const matCar = new THREE.MeshStandardMaterial({ color: 0x1c1c28, roughness: 0.22, metalness: 0.85 });
 const matCarGlass = new THREE.MeshStandardMaterial({ color: 0x304878, roughness: 0.04, metalness: 0.3, transparent: true, opacity: 0.55 });
 const matWheel = new THREE.MeshStandardMaterial({ color: 0x0e0e0e, roughness: 0.9, metalness: 0.1 });
-const matRim = new THREE.MeshStandardMaterial({ color: 0xc0c0c8, roughness: 0.2, metalness: 0.9 });
-// Car body
-box(4.6, 0.75, 1.9, matCar, -22, GY + 0.82, -20.5);
-// Car upper cabin
-box(2.9, 0.72, 1.78, matCar, -21.6, GY + 1.53, -20.5);
-// Windscreen
-box(0.1, 0.62, 1.62, matCarGlass, -19.62, GY + 1.58, -20.5);
-// Rear window
-box(0.1, 0.62, 1.62, matCarGlass, -23.62, GY + 1.58, -20.5);
+const matRim = new THREE.MeshStandardMaterial({ color: 0xd0d0d8, roughness: 0.18, metalness: 0.95 });
+// Correct Y: car sits on the driveway surface at its actual Z position
+const CX = -22, CZ = -21;                      // car centre position
+const CY = tH(CZ) + 0.1;                        // surface height at car Z
+const CR = 0.36;                                 // wheel radius
+// Car body (low sleek SUV)
+box(4.7, 0.78, 1.92, matCar, CX, CY + CR + 0.39, CZ);
+// Cabin
+box(2.95, 0.74, 1.80, matCar, CX + 0.15, CY + CR + 0.78 + 0.37, CZ);
+// Windscreen + rear glass
+box(0.08, 0.65, 1.64, matCarGlass, CX + 1.55, CY + CR + 1.1, CZ);
+box(0.08, 0.65, 1.64, matCarGlass, CX - 1.2,  CY + CR + 1.1, CZ);
 // Side windows
-box(2.9, 0.56, 0.08, matCarGlass, -21.6, GY + 1.6, -19.63);
-box(2.9, 0.56, 0.08, matCarGlass, -21.6, GY + 1.6, -21.37);
-// Wheels
-const wGeo = new THREE.CylinderGeometry(0.34, 0.34, 0.22, 14);
-const rGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.24, 10);
-for (const [wx, wz] of [[-20.4,-19.6],[-23.6,-19.6],[-20.4,-21.4],[-23.6,-21.4]]) {
-  const w = new THREE.Mesh(wGeo, matWheel);
-  w.rotation.z = Math.PI / 2; w.position.set(wx, GY + 0.34, wz);
-  scene.add(w);
-  const r = new THREE.Mesh(rGeo, matRim);
-  r.rotation.z = Math.PI / 2; r.position.set(wx, GY + 0.34, wz);
-  scene.add(r);
+box(2.95, 0.6, 0.06, matCarGlass, CX + 0.15, CY + CR + 1.1, CZ - 0.92);
+box(2.95, 0.6, 0.06, matCarGlass, CX + 0.15, CY + CR + 1.1, CZ + 0.92);
+// Wheels (4)
+const wGeo = new THREE.CylinderGeometry(CR, CR, 0.24, 14);
+const rGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.26, 10);
+for (const [wx, wz] of [[CX+1.6, CZ-0.98],[CX-1.6, CZ-0.98],[CX+1.6, CZ+0.98],[CX-1.6, CZ+0.98]]) {
+  const w = new THREE.Mesh(wGeo, matWheel); w.rotation.z = Math.PI/2;
+  w.position.set(wx, CY + CR, wz); scene.add(w);
+  const r = new THREE.Mesh(rGeo, matRim);   r.rotation.z = Math.PI/2;
+  r.position.set(wx, CY + CR, wz); scene.add(r);
 }
-// Headlights
-box(0.06, 0.18, 0.5, matMetal, -19.32, GY + 0.9, -20.5);
+// Headlights glow
+box(0.06, 0.16, 0.55, matMetal, CX + 2.32, CY + CR + 0.4, CZ);
 
-// ─── LAWN (césped verde) covering the platform ─────────────────────────────
-function addLawn(cx, cz, w, d, mat) {
-  const g = new THREE.PlaneGeometry(w, d);
-  g.rotateX(-Math.PI / 2);
-  const m = new THREE.Mesh(g, mat);
-  m.position.set(cx, PY + 0.04, cz);
-  m.receiveShadow = true;
-  scene.add(m);
+// ─── CÉSPED — cubre toda la finca completa ─────────────────────────────────
+// 1) Plano plano sobre la plataforma (área construida/jardín principal)
+const flatGrassGeo = new THREE.PlaneGeometry(94, 32);
+flatGrassGeo.rotateX(-Math.PI / 2);
+const flatGrass = new THREE.Mesh(flatGrassGeo, matGrass);
+flatGrass.position.set(0, PY + 0.05, -3);
+flatGrass.receiveShadow = true;
+scene.add(flatGrass);
+
+// 2) Manto verde que sigue el perfil del talud trasero (deformado = mismo tH)
+// cubre Z≈+10 a +42 siguiendo exactamente la pendiente del terreno
+const slopeGeo = new THREE.PlaneGeometry(90, 34, 44, 16);
+slopeGeo.rotateX(-Math.PI / 2);
+const sg = slopeGeo.attributes.position;
+const SZ = 26; // mesh origin at world Z=26 → local Z range −17..+17 → world Z 9..43
+for (let i = 0; i < sg.count; i++) {
+  sg.setY(i, tH(sg.getZ(i) + SZ) + 0.06);
 }
-// Main lawn — behind and around house
-addLawn(0,  17, 90, 22, matGrass);       // big rear lawn
-addLawn(-25, 1, 14, 22, matGrass);       // left side of house
-addLawn( 0, -14, 15,  8, matGrassLight); // entrance green strip
-addLawn( 8,  10, 22, 10, matGrass);      // pool side lawn
-addLawn(-18,-10, 16, 14, matGrassLight); // garage approach lawn
+sg.needsUpdate = true; slopeGeo.computeVertexNormals();
+const slopeGrass = new THREE.Mesh(slopeGeo, matGrass);
+slopeGrass.position.set(0, 0, SZ);
+slopeGrass.receiveShadow = true;
+scene.add(slopeGrass);
+
+// 3) Franjas verdes en los taludes laterales (siguen la pendiente)
+for (const sx of [-40, 40]) {
+  const sgL = new THREE.PlaneGeometry(8, 82, 4, 35);
+  sgL.rotateX(-Math.PI / 2);
+  const sp = sgL.attributes.position;
+  for (let i = 0; i < sp.count; i++) sp.setY(i, tH(sp.getZ(i)) + 0.07);
+  sp.needsUpdate = true; sgL.computeVertexNormals();
+  const sm = new THREE.Mesh(sgL, matGrassLight);
+  sm.position.set(sx, 0, 0);
+  sm.receiveShadow = true; scene.add(sm);
+}
+
+// Pool light — destaca el agua con luz submarina cyan
+const poolLight = new THREE.PointLight(0x00d8ff, 6.0, 16);
+poolLight.position.set(22, PY - 0.5, -1);
+scene.add(poolLight);
+// Second pool light for even coverage
+const poolLight2 = new THREE.PointLight(0x00b8ff, 4.0, 14);
+poolLight2.position.set(22, PY - 0.5, -3.5);
+scene.add(poolLight2);
 
 // ─── SWIMMING POOL — 12×5m, right beside house (visible from main view) ───
 // Pool+deck zone: X=11 to 36, Z=-7 to +5 (front-right of house)
