@@ -664,6 +664,87 @@ for (let i = 0; i < 9; i++) {
 // Low flowering border along front of retaining wall
 for (let x = -40; x <= 40; x += 2.8) { addBush(x, -18.5, 0.55, PY); }
 
+// ─── PARQUE INFANTIL (zona izquierda de la finca) ─────────────────────────
+const PGX = -26, PGZ = 16; // centro del parque
+const matRubber = new THREE.MeshStandardMaterial({ color: 0xd04820, roughness: 0.95, metalness: 0.0 });
+const matPole   = new THREE.MeshStandardMaterial({ color: 0x2060c0, roughness: 0.3, metalness: 0.7 });
+const matSeat   = new THREE.MeshStandardMaterial({ color: 0xf0c020, roughness: 0.7, metalness: 0.0 });
+const matSlide  = new THREE.MeshStandardMaterial({ color: 0xe03030, roughness: 0.4, metalness: 0.2 });
+const matFenceP = new THREE.MeshStandardMaterial({ color: 0x50a050, roughness: 0.5, metalness: 0.1 });
+const matSand   = new THREE.MeshStandardMaterial({ color: 0xe8d898, roughness: 1.0,  metalness: 0.0 });
+
+// Suelo de caucho naranja
+box(18, 0.15, 14, matRubber, PGX, PY + 0.15, PGZ);
+
+// Valla perimetral
+for (let fx = PGX - 9; fx <= PGX + 9; fx += 2.4) {
+  box(0.1, 0.9, 0.1, matFenceP, fx, PY + 0.65, PGZ - 7.2);
+  box(0.1, 0.9, 0.1, matFenceP, fx, PY + 0.65, PGZ + 7.2);
+}
+for (let fz = PGZ - 7; fz <= PGZ + 7; fz += 2.4) {
+  box(0.1, 0.9, 0.1, matFenceP, PGX - 9.2, PY + 0.65, fz);
+  box(0.1, 0.9, 0.1, matFenceP, PGX + 9.2, PY + 0.65, fz);
+}
+box(18.5, 0.08, 0.08, matFenceP, PGX, PY + 0.55, PGZ - 7.2);
+box(18.5, 0.08, 0.08, matFenceP, PGX, PY + 0.55, PGZ + 7.2);
+box(0.08, 0.08, 14.5, matFenceP, PGX - 9.2, PY + 0.55, PGZ);
+box(0.08, 0.08, 14.5, matFenceP, PGX + 9.2, PY + 0.55, PGZ);
+
+// ── COLUMPIOS (dos pórticos en A) ──
+function addSwingSet(cx, cz) {
+  const h = 3.2, fw = 3.8;
+  // cuatro patas inclinadas
+  for (const [sx, sz] of [[-fw/2,-0.5],[fw/2,-0.5],[-fw/2,0.5],[fw/2,0.5]]) {
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.07, h + 0.3, 8), matPole);
+    leg.position.set(cx + sx, PY + h/2 + 0.18, cz + sz);
+    leg.rotation.z = sx < 0 ? 0.13 : -0.13;
+    leg.castShadow = true; scene.add(leg);
+  }
+  // barra superior
+  const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, fw + 1.4, 8), matPole);
+  bar.rotation.z = Math.PI / 2;
+  bar.position.set(cx, PY + h + 0.15, cz);
+  bar.castShadow = true; scene.add(bar);
+  // tres asientos colgantes
+  for (let s = -1; s <= 1; s++) {
+    const chainH = 2.1;
+    for (const csz of [-0.18, 0.18]) {
+      const chain = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, chainH, 4), matPole);
+      chain.position.set(cx + s*(fw/3), PY + h - chainH/2 + 0.1, cz + csz);
+      chain.castShadow = true; scene.add(chain);
+    }
+    box(0.44, 0.07, 0.38, matSeat, cx + s*(fw/3), PY + h - chainH + 0.04, cz);
+  }
+}
+addSwingSet(PGX - 4.5, PGZ - 2.5);
+addSwingSet(PGX + 3.5, PGZ - 2.5);
+
+// ── TOBOGÁN ──
+box(1.6, 2.2, 1.6, matPole, PGX - 5.5, PY + 1.25, PGZ + 4);
+box(1.8, 0.12, 1.8, matRubber, PGX - 5.5, PY + 2.36, PGZ + 4);
+const slideMesh = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.09, 3.5), matSlide);
+slideMesh.position.set(PGX - 5.5, PY + 1.55, PGZ + 1.9);
+slideMesh.rotation.x = 0.58; slideMesh.castShadow = true; scene.add(slideMesh);
+for (const sx of [-0.56, 0.56]) {
+  const side = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.3, 3.5), matPole);
+  side.position.set(PGX - 5.5 + sx, PY + 1.6, PGZ + 1.9);
+  side.rotation.x = 0.58; scene.add(side);
+}
+for (let step = 0; step < 5; step++) {
+  box(0.55, 0.07, 1.55, matPole, PGX - 5.5, PY + 0.3 + step*0.42, PGZ + 5.1);
+}
+box(0.06, 2.3, 0.06, matPole, PGX - 5.3, PY + 1.15, PGZ + 5.12);
+box(0.06, 2.3, 0.06, matPole, PGX - 5.7, PY + 1.15, PGZ + 5.12);
+
+// ── BALANCÍN ──
+box(0.1, 0.42, 0.1, matPole, PGX + 5.5, PY + 0.38, PGZ + 4);
+box(0.12, 0.1, 4.4, matSlide, PGX + 5.5, PY + 0.72, PGZ + 4);
+box(0.45, 0.2, 0.38, matSeat, PGX + 5.5, PY + 0.86, PGZ + 2.1);
+box(0.45, 0.2, 0.38, matSeat, PGX + 5.5, PY + 0.86, PGZ + 5.9);
+
+// ── CAJÓN DE ARENA bajo los columpios ──
+box(9, 0.1, 5.5, matSand, PGX, PY + 0.25, PGZ - 2.5);
+
 // ─── LIGHTING ──────────────────────────────────────────────────────────────
 const ambient = new THREE.AmbientLight(0xfff8e8, 0.5);
 scene.add(ambient);
