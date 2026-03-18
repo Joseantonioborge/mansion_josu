@@ -190,8 +190,8 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.2;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x87ceeb);
-scene.fog = new THREE.Fog(0x87ceeb, 120, 280);
+scene.background = new THREE.Color(0x5aaee0); // bright Andalusian summer sky
+scene.fog = new THREE.Fog(0x7ec8f0, 130, 300);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 500);
 camera.position.set(60, 40, 80);
@@ -215,13 +215,15 @@ const matGarage = new THREE.MeshStandardMaterial({ color: 0xc0b898, roughness: 0
 const matGarageDoor = new THREE.MeshStandardMaterial({ color: 0x5a5040, roughness: 0.3, metalness: 0.5 });
 const matPoolWater = new THREE.MeshStandardMaterial({ color: 0x3a8fc4, roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.88 });
 const matPoolSurround = new THREE.MeshStandardMaterial({ color: 0xd8cbb0, roughness: 0.5, metalness: 0.0 });
-const matGrass = new THREE.MeshStandardMaterial({ color: 0x4a7a30, roughness: 0.9, metalness: 0.0 });
-const matTerrain = new THREE.MeshStandardMaterial({ color: 0xb89a6a, roughness: 1.0, metalness: 0.0 });
+const matGrass = new THREE.MeshStandardMaterial({ color: 0x4a7228, roughness: 0.9, metalness: 0.0 });
+const matTerrain = new THREE.MeshStandardMaterial({ color: 0xc0966a, roughness: 1.0, metalness: 0.0 }); // sandy dry earth
 const matDrive = new THREE.MeshStandardMaterial({ color: 0x8a8070, roughness: 0.8, metalness: 0.0 });
-const matTrunk = new THREE.MeshStandardMaterial({ color: 0x5a3a18, roughness: 1.0 });
-const matLeaf = new THREE.MeshStandardMaterial({ color: 0x386828, roughness: 0.9 });
-const matLeafLight = new THREE.MeshStandardMaterial({ color: 0x558830, roughness: 0.9 });
-const matFence = new THREE.MeshStandardMaterial({ color: 0xd8c890, roughness: 0.6 });
+const matTrunk = new THREE.MeshStandardMaterial({ color: 0x4a2e10, roughness: 1.0 });
+const matLeaf = new THREE.MeshStandardMaterial({ color: 0x2a4818, roughness: 0.9 }); // dark encina green
+const matLeafLight = new THREE.MeshStandardMaterial({ color: 0x3a5822, roughness: 0.9 });
+const matStoneWall = new THREE.MeshStandardMaterial({ color: 0x8a7860, roughness: 0.9, metalness: 0.0 }); // stone
+const matFence = new THREE.MeshStandardMaterial({ color: 0x9a8a6a, roughness: 0.8 });
+const matCactus = new THREE.MeshStandardMaterial({ color: 0x6a7830, roughness: 0.8 }); // chumbera
 const matMetal = new THREE.MeshStandardMaterial({ color: 0x888070, roughness: 0.3, metalness: 0.8 });
 const matTerrace = new THREE.MeshStandardMaterial({ color: 0xc8bea8, roughness: 0.6 });
 
@@ -236,41 +238,75 @@ function box(w, h, d, mat, x, y, z, ry=0) {
   return m;
 }
 
-function addTree(x, z, h=6, r=2.5, type='round') {
-  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, h*0.4, 6), matTrunk);
-  trunk.position.set(x, h*0.2, z);
+// Encina / holm oak — asymmetric multi-sphere canopy like in photos
+function addEncina(x, z, yBase=0, h=5.5, r=2.8) {
+  const trunkH = h * 0.38;
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.28, trunkH, 6), matTrunk);
+  trunk.position.set(x, yBase + trunkH * 0.5, z);
+  trunk.rotation.z = (Math.random()-0.5)*0.18; // slight lean
   trunk.castShadow = true;
   scene.add(trunk);
-  const mat = Math.random() > 0.5 ? matLeaf : matLeafLight;
-  if (type === 'round') {
-    const canopy = new THREE.Mesh(new THREE.SphereGeometry(r, 8, 6), mat);
-    canopy.position.set(x, h*0.4 + r*0.8, z);
-    canopy.castShadow = true;
-    scene.add(canopy);
-  } else {
-    const canopy = new THREE.Mesh(new THREE.ConeGeometry(r*0.8, h*0.7, 7), mat);
-    canopy.position.set(x, h*0.4 + h*0.35, z);
-    canopy.castShadow = true;
-    scene.add(canopy);
-  }
+  const mat = Math.random() > 0.4 ? matLeaf : matLeafLight;
+  const baseY = yBase + trunkH + r * 0.55;
+  // Main canopy sphere
+  const c1 = new THREE.Mesh(new THREE.SphereGeometry(r, 8, 6), mat);
+  c1.position.set(x, baseY, z);
+  c1.scale.set(1, 0.75, 1);
+  c1.castShadow = true; scene.add(c1);
+  // Secondary overlapping lobes (asymmetric like encinas)
+  const offsets = [[r*0.6, r*0.1, r*0.3], [-r*0.5, r*0.05, -r*0.25], [r*0.1, r*0.2, -r*0.5]];
+  offsets.forEach(([ox,oy,oz]) => {
+    const c = new THREE.Mesh(new THREE.SphereGeometry(r*0.65, 7, 5), mat);
+    c.position.set(x+ox, baseY+oy, z+oz);
+    c.scale.set(1, 0.72, 1);
+    c.castShadow = true; scene.add(c);
+  });
 }
 
-function addBush(x, z, r=0.8) {
+// Cypress
+function addCypress(x, z, yBase=0, h=8) {
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, h*0.35, 5), matTrunk);
+  trunk.position.set(x, yBase + h*0.175, z);
+  trunk.castShadow = true; scene.add(trunk);
+  const canopy = new THREE.Mesh(new THREE.ConeGeometry(0.9, h*0.75, 6), matLeaf);
+  canopy.position.set(x, yBase + h*0.35 + h*0.375, z);
+  canopy.castShadow = true; scene.add(canopy);
+}
+
+// Chumbera (prickly pear cactus) — visible in photos along boundaries
+function addChumbera(x, z, yBase=0) {
+  const pads = [[0,0,0], [0.6,0.5,0.2], [-0.5,0.6,-0.1], [0.1,1.0,0.1], [-0.2,0.4,0.6], [0.5,0.9,-0.3]];
+  pads.forEach(([ox,oy,oz]) => {
+    const pad = new THREE.Mesh(new THREE.SphereGeometry(0.45, 7, 5), matCactus);
+    pad.position.set(x+ox, yBase+oy+0.4, z+oz);
+    pad.scale.set(1, 0.35, 0.85);
+    pad.castShadow = true; scene.add(pad);
+  });
+}
+
+function addBush(x, z, r=0.8, yBase=0) {
   const b = new THREE.Mesh(new THREE.SphereGeometry(r, 7, 5), matLeaf);
-  b.position.set(x, r*0.6, z);
+  b.position.set(x, yBase + r*0.6, z);
   b.scale.y = 0.7;
   b.castShadow = true;
   scene.add(b);
 }
 
 // ─── TERRAIN ──────────────────────────────────────────────────────────────
-// Main terrain plane (slightly sloped)
-const terrainGeo = new THREE.PlaneGeometry(140, 120, 30, 20);
+// Sloped terrain: back (z>15) rises steeply, front (z<-15) drops toward road
+// matching actual photos — sandy dry Mediterranean soil
+function terrainHeight(worldZ) {
+  if (worldZ > 15) return (worldZ - 15) * 0.26;   // back rises: +3.9m at z=30
+  if (worldZ < -15) return -((-15 - worldZ) * 0.06); // front slight drop
+  return 0;
+}
+const terrainGeo = new THREE.PlaneGeometry(160, 130, 40, 30);
 const pos = terrainGeo.attributes.position;
 for (let i = 0; i < pos.count; i++) {
-  const x = pos.getX(i);
-  const y = pos.getY(i);
-  pos.setZ(i, -x * 0.04 + (Math.random() - 0.5) * 0.15); // slight slope
+  const gy = pos.getY(i); // after rotation: worldZ = -gy
+  const wz = -gy;
+  const h = terrainHeight(wz) + (Math.random() - 0.5) * 0.18;
+  pos.setZ(i, h);
 }
 terrainGeo.computeVertexNormals();
 const terrain = new THREE.Mesh(terrainGeo, matTerrain);
@@ -278,30 +314,27 @@ terrain.rotation.x = -Math.PI / 2;
 terrain.receiveShadow = true;
 scene.add(terrain);
 
-// Grass area around house
-const grass1 = new THREE.Mesh(new THREE.PlaneGeometry(90, 75), matGrass);
+// Flat grass/garden area (construction zone: graded flat)
+const grass1 = new THREE.Mesh(new THREE.PlaneGeometry(92, 52), matGrass);
 grass1.rotation.x = -Math.PI / 2;
-grass1.position.set(0, 0.01, 0);
+grass1.position.set(0, 0.02, 2);
 grass1.receiveShadow = true;
 scene.add(grass1);
 
-// ─── PLOT BOUNDARY WALL ───────────────────────────────────────────────────
-function addWallSegment(x1, z1, x2, z2, h=1.5) {
-  const dx = x2 - x1, dz = z2 - z1;
-  const len = Math.sqrt(dx*dx + dz*dz);
-  const ang = Math.atan2(dx, dz);
-  const w = new THREE.Mesh(new THREE.BoxGeometry(len, h, 0.25), matFence);
-  w.position.set((x1+x2)/2, h/2, (z1+z2)/2);
-  w.rotation.y = ang;
-  w.castShadow = true;
-  w.receiveShadow = true;
-  scene.add(w);
-}
-// Plot perimeter (approximate trapezoid ~3600m², scaled for view)
-addWallSegment(-42, -35, 40, -35); // front
-addWallSegment(40, -35, 45, 32);   // right
-addWallSegment(45, 32, -30, 30);   // back
-addWallSegment(-30, 30, -42, -35); // left
+// ─── PLOT BOUNDARY WALLS ─────────────────────────────────────────────────
+// Back stone wall — the prominent MURO DE PIEDRA visible in all photos
+// At z=31, terrain is ~4.2m high → wall rises 2.6m above that
+const backWallY = terrainHeight(31) + 1.3;
+box(90, 2.6, 0.7, matStoneWall, 0, backWallY, 31);
+// Wall cap
+box(90.4, 0.18, 0.85, matStoneWall, 0, backWallY + 1.39, 31);
+
+// Right stone wall (lower)
+box(0.5, 2.0, 70, matStoneWall, 43, 1.0, -2);
+// Left stone wall
+box(0.5, 2.0, 68, matStoneWall, -42, 1.0, -4);
+// Front boundary (low wall / road edge)
+box(88, 0.6, 0.4, matFence, 0, 0.3, -35);
 
 // ─── DRIVEWAY ──────────────────────────────────────────────────────────────
 const drv = new THREE.Mesh(new THREE.PlaneGeometry(8, 28), matDrive);
@@ -436,51 +469,63 @@ for (let i = 0; i < 5; i++) {
   box(2.5, 0.18, 0.35, matConcrete, -2, 0.09 + i*0.18, -4.95 - i*0.35);
 }
 
-// ─── VEGETATION ────────────────────────────────────────────────────────────
-// Trees around plot edges
-addTree(-35, -20, 7, 3, 'round');
-addTree(-38, 10, 8, 3.5, 'round');
-addTree(-32, 25, 6, 2.8, 'round');
-addTree(38, -15, 7, 3, 'round');
-addTree(40, 15, 9, 4, 'round');
-addTree(35, 25, 7, 3.2, 'round');
-addTree(10, 25, 8, 3.5, 'round');
-addTree(-10, 27, 7, 3, 'round');
-addTree(25, -28, 5, 2, 'round');
-addTree(-5, -30, 6, 2.5, 'round');
+// ─── VEGETATION ─── matching photos: encinas, cipreses, chumberas ──────────
 
-// Cypress / tall trees at entrance
-addTree(-30, -32, 9, 1.2, 'cone');
-addTree(-24, -32, 8, 1.2, 'cone');
-addTree(-6, -32, 8, 1.2, 'cone');
+// ENCINAS (holm oaks) — the trees visible in photos
+// Back elevated zone (sit on raised terrain)
+addEncina(-32, 22, terrainHeight(22), 6.5, 3.0);
+addEncina(-28, 26, terrainHeight(26), 7.5, 3.5);
+addEncina( 36, 20, terrainHeight(20), 6.0, 2.8);
+addEncina( 38, 25, terrainHeight(25), 8.0, 3.8);
+addEncina( 10, 24, terrainHeight(24), 7.0, 3.2);
+addEncina( -8, 26, terrainHeight(26), 6.5, 3.0);
+addEncina( 22, 26, terrainHeight(26), 7.5, 3.4);
 
-// Garden focal trees
-addTree(0, 18, 7, 3, 'round');
-addTree(-8, 15, 6, 2.5, 'round');
-addTree(8, 20, 8, 3.5, 'round');
+// Encinas in the middle/front zones (on flat terrain or slight slope)
+addEncina(-36, -10, 0, 7.0, 3.2);
+addEncina(-38,  8,  0, 8.0, 3.6);
+addEncina( 40, -8,  0, 7.5, 3.4);
+addEncina( 38,  8,  0, 6.5, 2.9);
 
-// Bushes around pool
-addBush(15, 1, 1); addBush(15, 9, 1);
-addBush(29, 1, 0.9); addBush(29, 9, 0.9);
-addBush(22, -0.5, 0.8); addBush(22, 10.5, 0.8);
+// Isolated encina visible center-back in photos (the prominent lone tree)
+addEncina( 4, 20, terrainHeight(20), 8.5, 4.0);
 
-// Hedge row along left edge of plot
-for (let z = -28; z < 28; z += 2.5) {
-  addBush(-40, z, 1.1);
+// Garden encinas near house (right side)
+addEncina( 0, 20, 0, 7.0, 3.0);
+addEncina(-6, 17, 0, 6.0, 2.6);
+addEncina( 8, 22, 0, 7.5, 3.3);
+
+// Cypress at entrance (flanking gate)
+addCypress(-30, -32, 0, 9);
+addCypress(-23, -32, 0, 8);
+addCypress( -5, -32, 0, 8.5);
+addCypress(  6, -32, 0, 8);
+
+// CHUMBERAS (prickly pear) — visible along back/left boundaries in photos
+addChumbera(-38, 24, terrainHeight(24));
+addChumbera(-36, 27, terrainHeight(27));
+addChumbera( 38, 27, terrainHeight(27));
+addChumbera(-40, 12, 0);
+addChumbera(-40, -5, 0);
+addChumbera( 40, 12, 0);
+addChumbera(-3, 28, terrainHeight(28));
+
+// Low shrubs/matorral around pool edge
+addBush(15, 1, 1, 0); addBush(15, 9, 1, 0);
+addBush(29, 1, 0.9, 0); addBush(29, 9, 0.9, 0);
+addBush(22, -0.5, 0.8, 0); addBush(22, 10.5, 0.8, 0);
+
+// Hedge row along left boundary
+for (let z = -26; z < 20; z += 2.8) {
+  addBush(-41, z, 0.9 + Math.random()*0.3);
 }
-
-// Decorative hedge along pool area
+// Decorative hedge along pool
 for (let x = 14; x < 36; x += 2) {
-  addBush(x, -0.5, 0.7);
+  addBush(x, -0.5, 0.65, 0);
 }
-
 // Garden bushes
-for (let i = 0; i < 12; i++) {
-  addBush(
-    -5 + Math.cos(i * 0.7) * 15,
-    18 + Math.sin(i * 0.9) * 8,
-    0.6 + Math.random() * 0.5
-  );
+for (let i = 0; i < 10; i++) {
+  addBush(-4 + Math.cos(i*0.7)*14, 19 + Math.sin(i*0.9)*7, 0.6 + Math.random()*0.4);
 }
 
 // ─── LIGHTING ──────────────────────────────────────────────────────────────
@@ -501,14 +546,14 @@ sun.shadow.camera.bottom = -100;
 sun.shadow.bias = -0.001;
 scene.add(sun);
 
-const hemi = new THREE.HemisphereLight(0x87ceeb, 0xb89a6a, 0.6);
+const hemi = new THREE.HemisphereLight(0x5aaee0, 0xc09060, 0.7);
 scene.add(hemi);
 
 // ─── SKY GRADIENT ──────────────────────────────────────────────────────────
 // Sky dome
 const skyGeo = new THREE.SphereGeometry(250, 16, 8);
 const skyMat = new THREE.MeshBasicMaterial({
-  color: 0x87ceeb,
+  color: 0x5aaee0,
   side: THREE.BackSide
 });
 const sky = new THREE.Mesh(skyGeo, skyMat);
@@ -544,9 +589,9 @@ window.toggleNight = function() {
     btn.textContent = 'Día';
     btn.classList.add('active');
   } else {
-    scene.background = new THREE.Color(0x87ceeb);
-    scene.fog = new THREE.Fog(0x87ceeb, 120, 280);
-    sky.material.color.set(0x87ceeb);
+    scene.background = new THREE.Color(0x5aaee0);
+    scene.fog = new THREE.Fog(0x7ec8f0, 130, 300);
+    sky.material.color.set(0x5aaee0);
     ambient.color.set(0xfff8e8);
     ambient.intensity = 0.5;
     sun.color.set(0xfff0d0);
