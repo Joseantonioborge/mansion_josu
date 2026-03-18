@@ -7,1294 +7,1228 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#0e0d0b;font-family:'Montserrat',sans-serif;color:#e8dcc8;overflow-x:hidden;}
+body{background:#0c0b09;font-family:'Montserrat',sans-serif;color:#e8dcc8;overflow-x:hidden;}
 svg{display:block;width:100%;height:auto;}
-
-/* COVER */
 .cover{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:linear-gradient(160deg,#0e0d0b 0%,#1c1810 50%,#0e0d0b 100%);
+  background:linear-gradient(160deg,#0c0b09 0%,#1a160e 50%,#0c0b09 100%);
   padding:80px 40px;text-align:center;position:relative;}
 .cover::after{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 35% 50%,rgba(180,140,60,0.07) 0%,transparent 60%),
-             radial-gradient(ellipse at 65% 50%,rgba(80,130,190,0.04) 0%,transparent 60%);
-  pointer-events:none;}
-.cover-badge{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:#907050;margin-bottom:28px;}
+  background:radial-gradient(ellipse at 40% 50%,rgba(200,160,60,0.07) 0%,transparent 60%);pointer-events:none;}
+.badge{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:#806040;margin-bottom:28px;}
 .cover-title{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,8vw,100px);
-  font-weight:300;letter-spacing:0.15em;color:#c8a55a;line-height:1;text-transform:uppercase;}
+  font-weight:300;letter-spacing:0.16em;color:#c8a550;line-height:1;text-transform:uppercase;}
 .cover-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2vw,22px);
-  font-weight:300;font-style:italic;color:#907060;margin-top:10px;letter-spacing:0.1em;}
-.cover-hr{width:60px;height:1px;background:linear-gradient(90deg,transparent,#c8a55a,transparent);margin:36px auto;}
-.cover-addr{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#d0c0a0;}
-.cover-ref{font-size:9px;letter-spacing:2px;color:#403020;margin-top:8px;}
-.cover-stats{display:flex;gap:70px;margin-top:64px;padding-top:36px;border-top:1px solid #201e18;}
+  font-weight:300;font-style:italic;color:#806a40;margin-top:10px;letter-spacing:0.1em;}
+.hr{width:55px;height:1px;background:linear-gradient(90deg,transparent,#c8a550,transparent);margin:34px auto;}
+.cover-addr{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ccc0a0;}
+.cover-ref{font-size:9px;letter-spacing:2px;color:#3a2e18;margin-top:7px;}
+.stats{display:flex;gap:60px;margin-top:60px;padding-top:34px;border-top:1px solid #1c1a12;}
 .stat{text-align:center;}
-.stat-v{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#c8a55a;line-height:1;}
-.stat-u{font-size:13px;color:#806040;}
-.stat-l{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:#504030;margin-top:6px;}
-
-/* SECTIONS */
-.section{padding:72px 60px;}
-.section+.section{border-top:1px solid #1a1814;}
-.sec-hdr{display:flex;align-items:center;gap:18px;margin-bottom:32px;}
-.sec-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:#181610;line-height:1;user-select:none;}
-.sec-info h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:400;
-  letter-spacing:4px;text-transform:uppercase;color:#c8a55a;}
-.sec-info p{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#544030;margin-top:5px;}
-
-/* RENDER CARD */
-.rcard{background:#080706;border:1px solid #1c1a14;border-radius:2px;overflow:hidden;
-  box-shadow:0 24px 70px rgba(0,0,0,0.65);}
-.rcard+.rcard{margin-top:28px;}
-.rhdr{padding:10px 18px;background:#080706;border-bottom:1px solid #1c1a14;
-  display:flex;justify-content:space-between;align-items:center;}
-.rtitle{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c8a55a;}
-.rscale{font-size:8px;letter-spacing:2px;color:#352810;}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:24px;}
-
-/* CONCEPT GRID */
-.cgrid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #1c1a14;margin-top:36px;}
-.citem{padding:28px;border-right:1px solid #1c1a14;}
-.citem:last-child{border-right:none;}
-.citem h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:#c8a55a;margin-bottom:14px;}
-.citem li{list-style:none;font-size:10px;letter-spacing:1px;color:#806050;padding:5px 0;
-  border-bottom:1px solid #16140e;line-height:1.7;}
-.citem li::before{content:'— ';color:#503020;}
-
-/* FOOTER */
-.footer{padding:22px 60px;border-top:1px solid #1a1814;display:flex;justify-content:space-between;align-items:center;}
-.footer span{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#252010;}
+.sv{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:#c8a550;line-height:1;}
+.su{font-size:12px;color:#706040;}
+.sl{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:#483810;margin-top:6px;}
+.section{padding:70px 60px;}
+.section+.section{border-top:1px solid #181510;}
+.shdr{display:flex;align-items:center;gap:18px;margin-bottom:32px;}
+.snum{font-family:'Cormorant Garamond',serif;font-size:70px;font-weight:300;color:#141208;line-height:1;user-select:none;}
+.sinfo h2{font-family:'Cormorant Garamond',serif;font-size:29px;font-weight:400;
+  letter-spacing:4px;text-transform:uppercase;color:#c8a550;}
+.sinfo p{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#4a3410;margin-top:5px;}
+.rcard{background:#080705;border:1px solid #1a1710;border-radius:2px;overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,0.7);}
+.rcard+.rcard{margin-top:26px;}
+.rhdr{padding:10px 18px;border-bottom:1px solid #1a1710;display:flex;justify-content:space-between;align-items:center;}
+.rt{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#c8a550;}
+.rs{font-size:8px;letter-spacing:2px;color:#302410;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:22px;}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #1a1710;margin-top:34px;}
+.ci{padding:28px;border-right:1px solid #1a1710;}
+.ci:last-child{border-right:none;}
+.ci h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:#c8a550;margin-bottom:13px;}
+.ci li{list-style:none;font-size:10px;letter-spacing:1px;color:#726050;padding:5px 0;
+  border-bottom:1px solid #141208;line-height:1.7;}
+.ci li::before{content:'— ';color:#4a2e14;}
+.footer{padding:22px 60px;border-top:1px solid #181510;display:flex;justify-content:space-between;align-items:center;}
+.footer span{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#201a08;}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════ COVER -->
+<!-- ══ COVER ══════════════════════════════════════════ -->
 <div class="cover">
-  <div class="cover-badge">Anteproyecto · Render Conceptual · 2026</div>
+  <div class="badge">Anteproyecto Conceptual · Perspectiva 3D · 2026</div>
   <div class="cover-title">Josu Mansion</div>
-  <div class="cover-sub">Villa Mediterránea Contemporánea en Ladera</div>
-  <div class="cover-hr"></div>
+  <div class="cover-sub">Villa Mediterránea Contemporánea · 2 Plantas + Garaje</div>
+  <div class="hr"></div>
   <div class="cover-addr">Calle Roble, 46 · Alcolea · Córdoba</div>
-  <div class="cover-ref">Ref. Catastral 2714062UH5021S0001IT · 3.603 m² · Suelo Sin Edificar</div>
-  <div class="cover-stats">
-    <div class="stat"><div class="stat-v">3.603</div><div class="stat-u"> m²</div><div class="stat-l">Parcela</div></div>
-    <div class="stat"><div class="stat-v">3</div><div class="stat-u"> plantas</div><div class="stat-l">Niveles en Ladera</div></div>
-    <div class="stat"><div class="stat-v">~680</div><div class="stat-u"> m²</div><div class="stat-l">Superficie Const.</div></div>
-    <div class="stat"><div class="stat-v">10×4</div><div class="stat-u"> m</div><div class="stat-l">Piscina</div></div>
+  <div class="cover-ref">Ref. Catastral 2714062UH5021S0001IT · Parcela 3.603 m² · Ladera Sur</div>
+  <div class="stats">
+    <div class="stat"><div class="sv">3.603</div><div class="su"> m²</div><div class="sl">Parcela</div></div>
+    <div class="stat"><div class="sv">2</div><div class="su"> plantas</div><div class="sl">+ Garaje</div></div>
+    <div class="stat"><div class="sv">320</div><div class="su"> m²</div><div class="sl">Construidos</div></div>
+    <div class="stat"><div class="sv">10×4</div><div class="su"> m</div><div class="sl">Piscina</div></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ 01 FACHADA JARDÍN -->
+<!-- ══ 01 VISTA JARDÍN — HERO RENDER (Perspectiva 3/4 SE, Hora Dorada) ══ -->
 <div class="section">
-  <div class="sec-hdr">
-    <div class="sec-num">01</div>
-    <div class="sec-info"><h2>Fachada Jardín</h2><p>Vista Sur · Render Principal desde Piscina</p></div>
+  <div class="shdr">
+    <div class="snum">01</div>
+    <div class="sinfo"><h2>Vista Jardín &amp; Piscina</h2><p>Perspectiva SE · Hora Dorada · Render Principal</p></div>
   </div>
   <div class="rcard">
-    <div class="rhdr"><span class="rtitle">Fachada Sur — Vista desde Jardín y Piscina</span><span class="rscale">Escala Conceptual · Render E:1/100</span></div>
-    <svg viewBox="0 0 1600 750" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#2a6fa8"/>
-          <stop offset="45%" stop-color="#5b9fd4"/>
-          <stop offset="100%" stop-color="#c0dff5"/>
-        </linearGradient>
-        <linearGradient id="wall1" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#f0eae0"/>
-          <stop offset="55%" stop-color="#fafaf8"/>
-          <stop offset="100%" stop-color="#ddd5c5"/>
-        </linearGradient>
-        <linearGradient id="wall2" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#f4efe6"/>
-          <stop offset="60%" stop-color="#ffffff"/>
-          <stop offset="100%" stop-color="#e0d8ca"/>
-        </linearGradient>
-        <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#d2c09a"/>
-          <stop offset="100%" stop-color="#b49c70"/>
-        </linearGradient>
-        <linearGradient id="pool" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#22bce8"/>
-          <stop offset="100%" stop-color="#0a82b0"/>
-        </linearGradient>
-        <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#58b030"/>
-          <stop offset="100%" stop-color="#3a7a1a"/>
-        </linearGradient>
-        <linearGradient id="pave" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#ddd0b0"/>
-          <stop offset="100%" stop-color="#c4ae88"/>
-        </linearGradient>
-        <linearGradient id="glass1" x1="0.1" y1="0" x2="0.9" y2="1">
-          <stop offset="0%" stop-color="#d5eaf8" stop-opacity="0.92"/>
-          <stop offset="50%" stop-color="#9ecce8" stop-opacity="0.85"/>
-          <stop offset="100%" stop-color="#6ab8e0" stop-opacity="0.78"/>
-        </linearGradient>
-        <linearGradient id="refl" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="white" stop-opacity="0.45"/>
-          <stop offset="100%" stop-color="white" stop-opacity="0"/>
-        </linearGradient>
-        <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#a07830"/>
-          <stop offset="100%" stop-color="#7a5818"/>
-        </linearGradient>
-        <linearGradient id="hillg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#5a9040"/>
-          <stop offset="100%" stop-color="#3a6a20"/>
-        </linearGradient>
-        <filter id="dshadow"><feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.22)"/></filter>
-        <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
-        <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
-      </defs>
+    <div class="rhdr"><span class="rt">Vista Sur-Este desde Piscina — Golden Hour</span><span class="rs">Perspectiva 3D · Hora Dorada</span></div>
+    <svg viewBox="0 0 1600 820" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- SKY: dark blue top → sky blue → amber at horizon -->
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0d2040"/>
+        <stop offset="28%" stop-color="#1a4878"/>
+        <stop offset="55%" stop-color="#4a88c0"/>
+        <stop offset="78%" stop-color="#c07828"/>
+        <stop offset="90%" stop-color="#e89820"/>
+        <stop offset="100%" stop-color="#f0b030"/>
+      </linearGradient>
+      <!-- Horizon glow -->
+      <radialGradient id="hglow" cx="55%" cy="100%" r="55%">
+        <stop offset="0%" stop-color="#ffcc40" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="#ffcc40" stop-opacity="0"/>
+      </radialGradient>
+      <!-- Ground grass -->
+      <linearGradient id="gnd" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5aaa28"/>
+        <stop offset="100%" stop-color="#3a7810"/>
+      </linearGradient>
+      <!-- Pool water -->
+      <linearGradient id="pw" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#10d8f8"/>
+        <stop offset="60%" stop-color="#08a8d0"/>
+        <stop offset="100%" stop-color="#047898"/>
+      </linearGradient>
+      <!-- Pool bottom light -->
+      <linearGradient id="pbl" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#20eaff" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#10b0d0" stop-opacity="0.2"/>
+      </linearGradient>
+      <!-- White stucco south face -->
+      <linearGradient id="ws" x1="0" y1="0" x2="1" y2="0.3">
+        <stop offset="0%" stop-color="#f2ece0"/>
+        <stop offset="60%" stop-color="#faf8f3"/>
+        <stop offset="100%" stop-color="#ece5d5"/>
+      </linearGradient>
+      <!-- White stucco upper floor -->
+      <linearGradient id="wu" x1="0" y1="0" x2="1" y2="0.3">
+        <stop offset="0%" stop-color="#f5f0e5"/>
+        <stop offset="65%" stop-color="#ffffff"/>
+        <stop offset="100%" stop-color="#e8e0d0"/>
+      </linearGradient>
+      <!-- East face (shadow) -->
+      <linearGradient id="ef" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#d8d0b8"/>
+        <stop offset="100%" stop-color="#b8b098"/>
+      </linearGradient>
+      <!-- Wood cladding (upper left feature) -->
+      <linearGradient id="wc" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#a07830"/>
+        <stop offset="100%" stop-color="#7a5618"/>
+      </linearGradient>
+      <!-- Stone plinth -->
+      <linearGradient id="sp" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#d0be90"/>
+        <stop offset="100%" stop-color="#b09a68"/>
+      </linearGradient>
+      <!-- Glass (golden hour) -->
+      <linearGradient id="gl" x1="0" y1="0" x2="0.8" y2="1">
+        <stop offset="0%" stop-color="#d8eef8" stop-opacity="0.82"/>
+        <stop offset="35%" stop-color="#c8e0f0" stop-opacity="0.78"/>
+        <stop offset="65%" stop-color="#f8d890" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#f0b840" stop-opacity="0.48"/>
+      </linearGradient>
+      <!-- Glass reflection -->
+      <linearGradient id="gr" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
+        <stop offset="50%" stop-color="white" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </linearGradient>
+      <!-- Interior warm glow -->
+      <linearGradient id="ig" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffe090" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#ff8c20" stop-opacity="0.25"/>
+      </linearGradient>
+      <!-- Pool deck travertine -->
+      <linearGradient id="pd" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#e0d4b0"/>
+        <stop offset="100%" stop-color="#c8bc90"/>
+      </linearGradient>
+      <!-- Shadow on ground -->
+      <linearGradient id="shg" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="rgba(20,30,60,0.55)"/>
+        <stop offset="100%" stop-color="rgba(20,30,60,0)"/>
+      </linearGradient>
+      <!-- Soft blur filter for shadows and glows -->
+      <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+      <filter id="blur12"><feGaussianBlur stdDeviation="12"/></filter>
+      <filter id="blur3"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="dshadow">
+        <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="rgba(10,20,50,0.4)"/>
+      </filter>
+      <!-- Wood slat pattern -->
+      <pattern id="woodslat" x="0" y="0" width="1" height="12" patternUnits="userSpaceOnUse">
+        <rect width="300" height="10" fill="#9a7228"/>
+        <rect y="10" width="300" height="2" fill="#7a5010" opacity="0.5"/>
+      </pattern>
+      <!-- Paving pattern -->
+      <pattern id="paving" x="0" y="0" width="60" height="30" patternUnits="userSpaceOnUse">
+        <rect width="60" height="30" fill="#ddd0a8"/>
+        <rect width="60" height="30" fill="none" stroke="#c8bc90" stroke-width="1" opacity="0.6"/>
+      </pattern>
+    </defs>
 
-      <!-- SKY -->
-      <rect width="1600" height="750" fill="url(#sky)"/>
+    <!-- ══ SKY ══ -->
+    <rect width="1600" height="820" fill="url(#sky)"/>
+    <rect width="1600" height="820" fill="url(#hglow)"/>
 
-      <!-- Clouds -->
-      <ellipse cx="220" cy="90" rx="130" ry="38" fill="white" opacity="0.65" filter="url(#blur8)"/>
-      <ellipse cx="310" cy="78" rx="85" ry="28" fill="white" opacity="0.6"/>
-      <ellipse cx="1150" cy="105" rx="150" ry="42" fill="white" opacity="0.55" filter="url(#blur8)"/>
-      <ellipse cx="1260" cy="92" rx="95" ry="30" fill="white" opacity="0.5"/>
-      <ellipse cx="720" cy="130" rx="110" ry="32" fill="white" opacity="0.45" filter="url(#blur8)"/>
+    <!-- Clouds (subtle, golden-lit) -->
+    <ellipse cx="250" cy="110" rx="160" ry="40" fill="white" opacity="0.12" filter="url(#blur12)"/>
+    <ellipse cx="340" cy="98" rx="100" ry="32" fill="white" opacity="0.10" filter="url(#blur6)"/>
+    <ellipse cx="1100" cy="130" rx="180" ry="48" fill="white" opacity="0.10" filter="url(#blur12)"/>
+    <ellipse cx="1220" cy="112" rx="110" ry="34" fill="white" opacity="0.08" filter="url(#blur6)"/>
+    <ellipse cx="680" cy="150" rx="130" ry="36" fill="#ffd870" opacity="0.08" filter="url(#blur12)"/>
+    <!-- Cloud lit by golden sun -->
+    <ellipse cx="1100" cy="130" rx="160" ry="38" fill="#ffc060" opacity="0.15" filter="url(#blur12)"/>
+    <ellipse cx="280" cy="105" rx="140" ry="36" fill="#ffb040" opacity="0.12" filter="url(#blur12)"/>
 
-      <!-- Distant hills -->
-      <path d="M0,260 Q200,215 450,232 Q700,250 900,218 Q1100,186 1350,220 Q1500,240 1600,228 L1600,310 L0,310Z" fill="url(#hillg)" opacity="0.30"/>
-      <path d="M0,290 Q300,260 600,272 Q900,285 1200,262 Q1400,248 1600,265 L1600,320 L0,320Z" fill="#70a840" opacity="0.18"/>
+    <!-- Distant hills (hazy, atmospheric perspective) -->
+    <path d="M0,310 Q200,268 400,280 Q600,292 800,265 Q1000,238 1200,272 Q1400,295 1600,278 L1600,330 L0,330Z"
+          fill="#526838" opacity="0.28"/>
+    <path d="M0,328 Q300,305 600,315 Q900,325 1200,302 Q1400,290 1600,308 L1600,345 L0,345Z"
+          fill="#6a8048" opacity="0.20"/>
 
-      <!-- ═══ LOWER LEVEL (Planta Baja - Garden) y=408-535 ═══ -->
-      <rect x="50" y="408" width="1500" height="127" fill="url(#wall1)" filter="url(#dshadow)"/>
-      <!-- Stone plinth lower -->
-      <rect x="50" y="530" width="1500" height="22" fill="url(#stone)"/>
+    <!-- GROUND shadow cast by house (long golden-hour shadow going left) -->
+    <path d="M88,542 L780,542 L640,820 L-120,820Z" fill="url(#shg)" opacity="0.55"/>
+    <!-- Second softer shadow layer -->
+    <path d="M88,542 L750,542 L600,820 L-80,820Z" fill="rgba(15,25,55,0.20)" filter="url(#blur12)"/>
 
-      <!-- Glass panel LL-1 (large sliding doors) -->
-      <rect x="82" y="420" width="195" height="115" fill="url(#glass1)"/>
-      <rect x="82" y="420" width="195" height="115" fill="url(#refl)" opacity="0.4"/>
-      <rect x="80" y="418" width="3" height="119" fill="#252830"/>
-      <rect x="275" y="418" width="3" height="119" fill="#252830"/>
-      <rect x="80" y="418" width="198" height="3" fill="#252830"/>
-      <rect x="80" y="533" width="198" height="3" fill="#252830"/>
-      <rect x="145" y="420" width="2" height="115" fill="#354050" opacity="0.6"/>
-      <rect x="212" y="420" width="2" height="115" fill="#354050" opacity="0.6"/>
+    <!-- ══ GROUND PLANE ══ -->
+    <rect x="0" y="555" width="1600" height="265" fill="url(#gnd)"/>
+    <!-- Ground colour gradient near-to-far -->
+    <rect x="0" y="555" width="1600" height="265" fill="url(#pd)" opacity="0.0"/>
 
-      <!-- Glass panel LL-2 -->
-      <rect x="360" y="422" width="225" height="113" fill="url(#glass1)"/>
-      <rect x="360" y="422" width="225" height="113" fill="url(#refl)" opacity="0.38"/>
-      <rect x="358" y="420" width="3" height="116" fill="#252830"/>
-      <rect x="583" y="420" width="3" height="116" fill="#252830"/>
-      <rect x="358" y="420" width="228" height="3" fill="#252830"/>
-      <rect x="358" y="533" width="228" height="3" fill="#252830"/>
-      <rect x="435" y="422" width="2" height="113" fill="#354050" opacity="0.55"/>
-      <rect x="510" y="422" width="2" height="113" fill="#354050" opacity="0.55"/>
+    <!-- ══ POOL TERRACE DECK ══ -->
+    <path d="M80,570 L900,555 L1020,820 L0,820Z" fill="url(#pd)"/>
+    <!-- Paving joints on deck -->
+    <line x1="80" y1="590" x2="870" y2="576" stroke="#c0b080" stroke-width="0.8" opacity="0.5"/>
+    <line x1="80" y1="612" x2="850" y2="597" stroke="#c0b080" stroke-width="0.8" opacity="0.5"/>
+    <line x1="80" y1="635" x2="840" y2="619" stroke="#c0b080" stroke-width="0.8" opacity="0.5"/>
+    <line x1="80" y1="658" x2="820" y2="640" stroke="#c0b080" stroke-width="0.8" opacity="0.5"/>
+    <line x1="80" y1="682" x2="808" y2="663" stroke="#c0b080" stroke-width="0.8" opacity="0.5"/>
+    <line x1="80" y1="706" x2="795" y2="685" stroke="#c0b080" stroke-width="0.8" opacity="0.5"/>
+    <line x1="200" y1="568" x2="200" y2="820" stroke="#c0b080" stroke-width="0.8" opacity="0.4"/>
+    <line x1="380" y1="563" x2="380" y2="820" stroke="#c0b080" stroke-width="0.8" opacity="0.4"/>
+    <line x1="560" y1="558" x2="640" y2="820" stroke="#c0b080" stroke-width="0.8" opacity="0.4"/>
+    <line x1="740" y1="556" x2="860" y2="820" stroke="#c0b080" stroke-width="0.8" opacity="0.4"/>
 
-      <!-- Window LL-3 -->
-      <rect x="660" y="428" width="150" height="90" fill="url(#glass1)"/>
-      <rect x="658" y="426" width="3" height="94" fill="#252830"/>
-      <rect x="808" y="426" width="3" height="94" fill="#252830"/>
-      <rect x="658" y="426" width="154" height="3" fill="#252830"/>
-      <rect x="658" y="516" width="154" height="3" fill="#252830"/>
-      <rect x="733" y="428" width="2" height="90" fill="#354050" opacity="0.5"/>
+    <!-- ══ SWIMMING POOL ══ -->
+    <!-- Pool shadow/reflection on deck -->
+    <ellipse cx="490" cy="588" rx="310" ry="15" fill="rgba(5,120,180,0.18)" filter="url(#blur6)"/>
+    <!-- Pool coping (travertine edge) -->
+    <path d="M148,580 L860,564 L880,648 L130,666Z" fill="#d8cc9a" opacity="0.9"/>
+    <!-- Pool water -->
+    <path d="M158,585 L858,570 L874,642 L140,659Z" fill="url(#pw)"/>
+    <!-- Pool light bottom patterns (caustics) -->
+    <path d="M158,585 L858,570 L874,642 L140,659Z" fill="url(#pbl)"/>
+    <!-- Water shimmer lines -->
+    <line x1="175" y1="596" x2="845" y2="581" stroke="rgba(255,255,255,0.50)" stroke-width="1.8"/>
+    <line x1="172" y1="606" x2="848" y2="591" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+    <line x1="168" y1="617" x2="850" y2="601" stroke="rgba(255,255,255,0.45)" stroke-width="1.6"/>
+    <line x1="165" y1="628" x2="852" y2="612" stroke="rgba(255,255,255,0.28)" stroke-width="1.0"/>
+    <line x1="162" y1="638" x2="854" y2="622" stroke="rgba(255,255,255,0.42)" stroke-width="1.5"/>
+    <line x1="158" y1="649" x2="856" y2="633" stroke="rgba(255,255,255,0.22)" stroke-width="0.9"/>
+    <!-- Pool sky reflection (blue sky reflected) -->
+    <path d="M158,585 L858,570 L874,642 L140,659Z" fill="rgba(180,220,255,0.08)"/>
+    <!-- Pool near edge coping -->
+    <path d="M140,659 L874,642 L888,660 L130,678Z" fill="#c8bc8a"/>
+    <!-- Pool far edge (underwater visible) -->
+    <path d="M158,585 L858,570 L862,578 L162,593Z" fill="#40e0f8" opacity="0.3"/>
+    <!-- Pool wall visible at far end -->
+    <rect x="851" y="570" width="23" height="72" fill="#08a8c0" opacity="0.5"/>
+    <!-- Pool overflow channel / infinity hint left -->
+    <rect x="130" y="659" width="18" height="72" fill="#08a8c0" opacity="0.35"/>
 
-      <!-- Window LL-4 -->
-      <rect x="900" y="428" width="130" height="90" fill="url(#glass1)"/>
-      <rect x="898" y="426" width="3" height="94" fill="#252830"/>
-      <rect x="1028" y="426" width="3" height="94" fill="#252830"/>
-      <rect x="898" y="426" width="134" height="3" fill="#252830"/>
-      <rect x="898" y="516" width="134" height="3" fill="#252830"/>
-      <rect x="963" y="428" width="2" height="90" fill="#354050" opacity="0.5"/>
+    <!-- Sunloungers -->
+    <!-- Lounger 1 -->
+    <rect x="200" y="682" width="85" height="26" rx="5" fill="#ede0c0" transform="rotate(-2,242,695)"/>
+    <rect x="198" y="680" width="6" height="30" rx="2" fill="#d4c8a0" transform="rotate(-2,201,695)"/>
+    <rect x="279" y="680" width="6" height="30" rx="2" fill="#d4c8a0" transform="rotate(-2,282,695)"/>
+    <rect x="200" y="682" width="85" height="9" rx="3" fill="#e8d8b0" transform="rotate(-2,242,686)"/>
+    <!-- Lounger 2 -->
+    <rect x="302" y="685" width="85" height="26" rx="5" fill="#ede0c0" transform="rotate(-2,344,698)"/>
+    <rect x="300" y="683" width="6" height="30" rx="2" fill="#d4c8a0"/>
+    <rect x="381" y="683" width="6" height="30" rx="2" fill="#d4c8a0"/>
+    <rect x="302" y="685" width="85" height="9" rx="3" fill="#e8d8b0"/>
+    <!-- Side table between loungers -->
+    <circle cx="292" cy="694" r="20" fill="#ddd0a8"/>
+    <circle cx="292" cy="694" r="14" fill="#e8ddb8"/>
+    <!-- Drink on table -->
+    <rect x="287" y="683" width="10" height="16" rx="3" fill="#d0e8f8" opacity="0.8"/>
+    <!-- Lounger 3 right side -->
+    <rect x="580" y="688" width="85" height="26" rx="5" fill="#ede0c0" transform="rotate(-1,622,701)"/>
+    <rect x="578" y="686" width="6" height="30" rx="2" fill="#d4c8a0"/>
+    <rect x="659" y="686" width="6" height="30" rx="2" fill="#d4c8a0"/>
+    <rect x="580" y="688" width="85" height="9" rx="3" fill="#e8d8b0"/>
 
-      <!-- Glass panel LL-5 -->
-      <rect x="1090" y="420" width="210" height="115" fill="url(#glass1)"/>
-      <rect x="1090" y="420" width="210" height="115" fill="url(#refl)" opacity="0.35"/>
-      <rect x="1088" y="418" width="3" height="119" fill="#252830"/>
-      <rect x="1298" y="418" width="3" height="119" fill="#252830"/>
-      <rect x="1088" y="418" width="213" height="3" fill="#252830"/>
-      <rect x="1088" y="533" width="213" height="3" fill="#252830"/>
-      <rect x="1158" y="420" width="2" height="115" fill="#354050" opacity="0.55"/>
-      <rect x="1228" y="420" width="2" height="115" fill="#354050" opacity="0.55"/>
+    <!-- Parasol -->
+    <rect x="456" y="570" width="5" height="130" fill="#c8a870"/>
+    <!-- Canopy -->
+    <path d="M380,580 Q460,545 540,580Z" fill="#d8b050" opacity="0.92"/>
+    <path d="M380,580 Q460,560 540,580" fill="none" stroke="#c09838" stroke-width="1.5"/>
+    <path d="M388,580 Q460,555 532,580" fill="none" stroke="#c09838" stroke-width="0.8" opacity="0.5"/>
 
-      <!-- Window LL-6 -->
-      <rect x="1355" y="428" width="160" height="90" fill="url(#glass1)"/>
-      <rect x="1353" y="426" width="3" height="94" fill="#252830"/>
-      <rect x="1513" y="426" width="3" height="94" fill="#252830"/>
-      <rect x="1353" y="426" width="163" height="3" fill="#252830"/>
-      <rect x="1353" y="516" width="163" height="3" fill="#252830"/>
-      <rect x="1433" y="428" width="2" height="90" fill="#354050" opacity="0.5"/>
+    <!-- ══ HOUSE EAST FACE (in shadow, right side) ══ -->
+    <!-- East face: from SE corner (1098,523) going right to NE corner (1310,498) -->
+    <!-- Top: SE(1098,220) → NE(1310,248) -->
+    <path d="M1098,523 L1320,498 L1320,248 L1098,220Z" fill="url(#ef)"/>
+    <!-- East face: floor division line (1F/2F) -->
+    <line x1="1098" y1="375" x2="1320" y2="368" stroke="#c8c0a8" stroke-width="2" opacity="0.6"/>
+    <!-- East face: stone plinth -->
+    <path d="M1098,498 L1320,476 L1320,498 L1098,523Z" fill="url(#sp)"/>
+    <!-- East face 2F window -->
+    <rect x="1140" y="272" width="80" height="75" fill="url(#gl)"/>
+    <rect x="1140" y="272" width="80" height="75" fill="url(#gr)" opacity="0.5"/>
+    <rect x="1138" y="270" width="3" height="79" fill="#1e2228"/>
+    <rect x="1218" y="270" width="3" height="79" fill="#1e2228"/>
+    <rect x="1138" y="270" width="83" height="3" fill="#1e2228"/>
+    <rect x="1138" y="345" width="83" height="3" fill="#1e2228"/>
+    <!-- Interior warm glow east window -->
+    <rect x="1141" y="273" width="78" height="73" fill="url(#ig)"/>
+    <!-- East face shadow overlay (it's in shadow vs south face) -->
+    <path d="M1098,523 L1320,498 L1320,248 L1098,220Z" fill="rgba(20,30,60,0.25)"/>
+    <!-- East face: parapet cap -->
+    <path d="M1098,220 L1320,248 L1328,240 L1106,212Z" fill="#e8e0d0"/>
 
-      <!-- Lower terrace slab -->
-      <rect x="30" y="390" width="1540" height="22" fill="#ede5d2"/>
-      <rect x="30" y="410" width="1540" height="5" fill="#c0b89a" opacity="0.4"/>
+    <!-- ══ HOUSE SOUTH FACE ══ -->
+    <!-- ── Lower floor (Planta Baja) ── -->
+    <!-- Stone plinth base (0.6m) -->
+    <path d="M90,523 L1098,523 L1098,498 L90,498Z" fill="url(#sp)"/>
+    <!-- Stone joint lines -->
+    <line x1="90" y1="508" x2="1098" y2="508" stroke="#c0b080" stroke-width="0.8" opacity="0.5"/>
+    <line x1="90" y1="518" x2="1098" y2="518" stroke="#c0b080" stroke-width="0.8" opacity="0.3"/>
+    <!-- Lower floor main wall body -->
+    <path d="M90,498 L1098,498 L1098,378 L90,402Z" fill="url(#ws)"/>
+    <!-- LOWER FLOOR GLASS PANELS (large sliding doors, floor-to-ceiling) -->
+    <!-- Panel 1: far left (2.8m, two sliding panels) -->
+    <rect x="102" y="412" width="175" height="88" fill="url(#gl)"/>
+    <rect x="102" y="412" width="175" height="88" fill="url(#gr)" opacity="0.45"/>
+    <rect x="100" y="410" width="3" height="90" fill="#1e2228"/>
+    <rect x="275" y="410" width="3" height="90" fill="#1e2228"/>
+    <rect x="100" y="410" width="178" height="3" fill="#1e2228"/>
+    <rect x="100" y="497" width="178" height="3" fill="#1e2228"/>
+    <rect x="160" y="412" width="2" height="88" fill="#2c3040" opacity="0.7"/>
+    <rect x="218" y="412" width="2" height="88" fill="#2c3040" opacity="0.7"/>
+    <!-- Interior warm glow P1 -->
+    <rect x="103" y="413" width="173" height="87" fill="url(#ig)"/>
 
-      <!-- Lower railing (glass with posts) -->
-      <rect x="30" y="360" width="1540" height="34" fill="#b8d8f0" opacity="0.16"/>
-      <rect x="30" y="358" width="1540" height="5" fill="#ccd4de"/>
-      <!-- Posts -->
-      <rect x="30" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="158" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="286" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="414" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="542" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="670" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="798" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="926" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="1054" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="1182" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="1310" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="1438" y="358" width="3" height="38" fill="#8898a8"/>
-      <rect x="1567" y="358" width="3" height="38" fill="#8898a8"/>
+    <!-- Wall segment P1→P2 -->
+    <rect x="278" y="390" width="48" height="108" fill="url(#ws)"/>
 
-      <!-- ═══ MIDDLE LEVEL (Planta Primera) y=235-362 ═══ -->
-      <rect x="150" y="235" width="1300" height="127" fill="url(#wall2)" filter="url(#dshadow)"/>
-      <!-- Stone plinth middle -->
-      <rect x="150" y="355" width="1300" height="20" fill="url(#stone)"/>
+    <!-- Panel 2 (3.5m wide, three panels) -->
+    <rect x="326" y="406" width="218" height="92" fill="url(#gl)"/>
+    <rect x="326" y="406" width="218" height="92" fill="url(#gr)" opacity="0.40"/>
+    <rect x="324" y="404" width="3" height="94" fill="#1e2228"/>
+    <rect x="542" y="404" width="3" height="94" fill="#1e2228"/>
+    <rect x="324" y="404" width="220" height="3" fill="#1e2228"/>
+    <rect x="324" y="497" width="220" height="3" fill="#1e2228"/>
+    <rect x="397" y="406" width="2" height="92" fill="#2c3040" opacity="0.65"/>
+    <rect x="470" y="406" width="2" height="92" fill="#2c3040" opacity="0.65"/>
+    <!-- Interior glow P2 -->
+    <rect x="327" y="407" width="216" height="91" fill="url(#ig)"/>
 
-      <!-- Glass ML-1 (master bedroom) -->
-      <rect x="185" y="248" width="210" height="112" fill="url(#glass1)"/>
-      <rect x="185" y="248" width="210" height="112" fill="url(#refl)" opacity="0.42"/>
-      <rect x="183" y="246" width="3" height="115" fill="#252830"/>
-      <rect x="393" y="246" width="3" height="115" fill="#252830"/>
-      <rect x="183" y="246" width="213" height="3" fill="#252830"/>
-      <rect x="183" y="358" width="213" height="3" fill="#252830"/>
-      <rect x="255" y="248" width="2" height="112" fill="#354050" opacity="0.6"/>
-      <rect x="325" y="248" width="2" height="112" fill="#354050" opacity="0.6"/>
+    <!-- Wall P2→P3 -->
+    <rect x="545" y="386" width="42" height="112" fill="url(#ws)"/>
 
-      <!-- Window ML-2 -->
-      <rect x="468" y="252" width="145" height="90" fill="url(#glass1)"/>
-      <rect x="466" y="250" width="3" height="94" fill="#252830"/>
-      <rect x="611" y="250" width="3" height="94" fill="#252830"/>
-      <rect x="466" y="250" width="148" height="3" fill="#252830"/>
-      <rect x="466" y="340" width="148" height="3" fill="#252830"/>
-      <rect x="539" y="252" width="2" height="90" fill="#354050" opacity="0.5"/>
+    <!-- Panel 3 (2.5m, two panels) -->
+    <rect x="587" y="400" width="162" height="98" fill="url(#gl)"/>
+    <rect x="587" y="400" width="162" height="98" fill="url(#gr)" opacity="0.40"/>
+    <rect x="585" y="398" width="3" height="100" fill="#1e2228"/>
+    <rect x="747" y="398" width="3" height="100" fill="#1e2228"/>
+    <rect x="585" y="398" width="164" height="3" fill="#1e2228"/>
+    <rect x="585" y="497" width="164" height="3" fill="#1e2228"/>
+    <rect x="666" y="400" width="2" height="98" fill="#2c3040" opacity="0.6"/>
+    <!-- Interior glow P3 -->
+    <rect x="588" y="401" width="160" height="97" fill="url(#ig)"/>
 
-      <!-- Glass ML-3 (large living view) -->
-      <rect x="680" y="244" width="240" height="116" fill="url(#glass1)"/>
-      <rect x="680" y="244" width="240" height="116" fill="url(#refl)" opacity="0.38"/>
-      <rect x="678" y="242" width="3" height="119" fill="#252830"/>
-      <rect x="918" y="242" width="3" height="119" fill="#252830"/>
-      <rect x="678" y="242" width="243" height="3" fill="#252830"/>
-      <rect x="678" y="358" width="243" height="3" fill="#252830"/>
-      <rect x="760" y="244" width="2" height="116" fill="#354050" opacity="0.55"/>
-      <rect x="838" y="244" width="2" height="116" fill="#354050" opacity="0.55"/>
+    <!-- Wall P3→P4 -->
+    <rect x="750" y="384" width="44" height="114" fill="url(#ws)"/>
 
-      <!-- Window ML-4 -->
-      <rect x="990" y="252" width="140" height="90" fill="url(#glass1)"/>
-      <rect x="988" y="250" width="3" height="94" fill="#252830"/>
-      <rect x="1128" y="250" width="3" height="94" fill="#252830"/>
-      <rect x="988" y="250" width="143" height="3" fill="#252830"/>
-      <rect x="988" y="340" width="143" height="3" fill="#252830"/>
-      <rect x="1058" y="252" width="2" height="90" fill="#354050" opacity="0.5"/>
+    <!-- Panel 4 (3m, three panels) -->
+    <rect x="794" y="396" width="188" height="102" fill="url(#gl)"/>
+    <rect x="794" y="396" width="188" height="102" fill="url(#gr)" opacity="0.38"/>
+    <rect x="792" y="394" width="3" height="104" fill="#1e2228"/>
+    <rect x="980" y="394" width="3" height="104" fill="#1e2228"/>
+    <rect x="792" y="394" width="191" height="3" fill="#1e2228"/>
+    <rect x="792" y="497" width="191" height="3" fill="#1e2228"/>
+    <rect x="855" y="396" width="2" height="102" fill="#2c3040" opacity="0.6"/>
+    <rect x="918" y="396" width="2" height="102" fill="#2c3040" opacity="0.6"/>
+    <!-- Interior glow P4 -->
+    <rect x="795" y="397" width="186" height="101" fill="url(#ig)"/>
 
-      <!-- Glass ML-5 -->
-      <rect x="1200" y="248" width="205" height="112" fill="url(#glass1)"/>
-      <rect x="1200" y="248" width="205" height="112" fill="url(#refl)" opacity="0.35"/>
-      <rect x="1198" y="246" width="3" height="115" fill="#252830"/>
-      <rect x="1403" y="246" width="3" height="115" fill="#252830"/>
-      <rect x="1198" y="246" width="208" height="3" fill="#252830"/>
-      <rect x="1198" y="358" width="208" height="3" fill="#252830"/>
-      <rect x="1268" y="248" width="2" height="112" fill="#354050" opacity="0.55"/>
-      <rect x="1336" y="248" width="2" height="112" fill="#354050" opacity="0.55"/>
+    <!-- Right wall to corner -->
+    <rect x="983" y="382" width="115" height="116" fill="url(#ws)"/>
 
-      <!-- Middle terrace slab -->
-      <rect x="128" y="218" width="1344" height="20" fill="#ede5d2"/>
-      <rect x="128" y="236" width="1344" height="5" fill="#c0b89a" opacity="0.35"/>
+    <!-- ── TERRACE SLAB (between floors) ── -->
+    <!-- Slab soffit (visible from below looking up) -->
+    <path d="M90,402 L1098,378 L1098,400 L90,424Z" fill="#e8e2d2"/>
+    <!-- Slab top (terrace deck) -->
+    <path d="M62,390 L1110,366 L1110,380 L62,404Z" fill="#ddd0aa"/>
+    <!-- Slab edge (front face of slab) -->
+    <path d="M62,404 L62,390 L90,390 L90,402Z" fill="#c8ba88"/>
 
-      <!-- Middle railing -->
-      <rect x="128" y="188" width="1344" height="33" fill="#b8d8f0" opacity="0.14"/>
-      <rect x="128" y="186" width="1344" height="5" fill="#ccd4de"/>
-      <rect x="128" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="246" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="364" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="482" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="600" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="718" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="836" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="954" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="1072" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="1190" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="1308" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="1426" y="186" width="3" height="37" fill="#8898a8"/>
-      <rect x="1469" y="186" width="3" height="37" fill="#8898a8"/>
+    <!-- Terrace glass railing posts + glass -->
+    <rect x="62" y="360" width="1050" height="32" fill="rgba(180,220,255,0.12)"/>
+    <!-- Railing glass shine -->
+    <rect x="62" y="360" width="1050" height="8" fill="rgba(255,255,255,0.15)"/>
+    <!-- Posts -->
+    <rect x="62" y="358" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="165" y="356" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="268" y="354" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="371" y="352" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="474" y="350" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="577" y="348" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="680" y="346" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="783" y="344" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="886" y="342" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="989" y="340" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <rect x="1095" y="338" width="3" height="36" fill="#8090a0" opacity="0.9"/>
+    <!-- Top rail cap -->
+    <path d="M62,359 L1097,337 L1100,342 L62,364Z" fill="#c8d0d8"/>
 
-      <!-- ═══ UPPER LEVEL (Planta Alta - Calle) y=58-192 ═══ -->
-      <rect x="280" y="58" width="1040" height="133" fill="url(#wall1)" filter="url(#dshadow)"/>
-      <!-- Stone plinth upper -->
-      <rect x="280" y="180" width="1040" height="18" fill="url(#stone)"/>
-      <!-- Flat roof + parapet -->
-      <rect x="278" y="42" width="1044" height="20" fill="#eee6d8"/>
-      <rect x="275" y="38" width="1050" height="10" fill="#e0d8c8"/>
+    <!-- ── UPPER FLOOR (Planta Alta) ── -->
+    <!-- LEFT THIRD: WOOD CLADDING FEATURE WALL -->
+    <path d="M90,402 L420,387 L420,242 L90,255Z" fill="url(#wc)"/>
+    <!-- Wood horizontal slats -->
+    <line x1="90" y1="398" x2="420" y2="383" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="389" x2="420" y2="374" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="380" x2="420" y2="365" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="371" x2="420" y2="356" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="362" x2="420" y2="347" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="353" x2="420" y2="338" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="344" x2="420" y2="329" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="335" x2="420" y2="320" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="326" x2="420" y2="311" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="317" x2="420" y2="302" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="308" x2="420" y2="293" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="299" x2="420" y2="284" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="290" x2="420" y2="275" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="281" x2="420" y2="266" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <line x1="90" y1="272" x2="420" y2="257" stroke="#6a4010" stroke-width="0.8" opacity="0.6"/>
+    <!-- Lighter highlight on wood (sun hitting left face) -->
+    <path d="M90,402 L180,398 L180,255 L90,255Z" fill="rgba(255,200,100,0.12)"/>
+    <!-- Window in wood section -->
+    <rect x="118" y="285" width="100" height="80" fill="url(#gl)"/>
+    <rect x="118" y="285" width="100" height="80" fill="url(#ig)"/>
+    <rect x="116" y="283" width="3" height="84" fill="#1e2228"/>
+    <rect x="216" y="283" width="3" height="84" fill="#1e2228"/>
+    <rect x="116" y="283" width="103" height="3" fill="#1e2228"/>
+    <rect x="116" y="363" width="103" height="3" fill="#1e2228"/>
+    <rect x="116" y="283" width="103" height="84" fill="url(#gr)" opacity="0.4"/>
+    <!-- Small window right of big window in wood section -->
+    <rect x="262" y="294" width="80" height="60" fill="url(#gl)"/>
+    <rect x="262" y="294" width="80" height="60" fill="url(#ig)"/>
+    <rect x="260" y="292" width="3" height="63" fill="#1e2228"/>
+    <rect x="340" y="292" width="3" height="63" fill="#1e2228"/>
+    <rect x="260" y="292" width="83" height="3" fill="#1e2228"/>
+    <rect x="260" y="352" width="83" height="3" fill="#1e2228"/>
+    <rect x="260" y="292" width="83" height="63" fill="url(#gr)" opacity="0.35"/>
 
-      <!-- PERGOLA -->
-      <rect x="280" y="22" width="1040" height="10" fill="#7a5818"/>
-      <!-- Pergola slats -->
-      <rect x="280" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="370" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="460" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="550" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="640" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="730" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="820" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="910" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="1000" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="1090" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="1180" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="1270" y="23" width="8" height="22" fill="url(#wood)"/>
-      <rect x="1312" y="23" width="8" height="22" fill="url(#wood)"/>
-      <!-- Pergola shadow lines -->
-      <rect x="280" y="30" width="1040" height="4" fill="#5a3808" opacity="0.5"/>
-      <rect x="280" y="36" width="1040" height="3" fill="#5a3808" opacity="0.3"/>
+    <!-- CENTER+RIGHT: WHITE STUCCO UPPER FLOOR -->
+    <path d="M420,387 L1098,378 L1098,220 L420,242Z" fill="url(#wu)" filter="url(#dshadow)"/>
 
-      <!-- Glass UL-1 large living -->
-      <rect x="315" y="70" width="220" height="120" fill="url(#glass1)"/>
-      <rect x="315" y="70" width="220" height="120" fill="url(#refl)" opacity="0.44"/>
-      <rect x="313" y="68" width="3" height="124" fill="#252830"/>
-      <rect x="533" y="68" width="3" height="124" fill="#252830"/>
-      <rect x="313" y="68" width="223" height="3" fill="#252830"/>
-      <rect x="313" y="188" width="223" height="3" fill="#252830"/>
-      <rect x="388" y="70" width="2" height="120" fill="#354050" opacity="0.6"/>
-      <rect x="460" y="70" width="2" height="120" fill="#354050" opacity="0.6"/>
+    <!-- CENTER UPPER: Large balcony sliding glass (master bedroom/living) -->
+    <rect x="438" y="256" width="225" height="130" fill="url(#gl)"/>
+    <rect x="438" y="256" width="225" height="130" fill="url(#ig)"/>
+    <rect x="436" y="254" width="3" height="133" fill="#1e2228"/>
+    <rect x="661" y="254" width="3" height="133" fill="#1e2228"/>
+    <rect x="436" y="254" width="227" height="3" fill="#1e2228"/>
+    <rect x="436" y="385" width="227" height="3" fill="#1e2228"/>
+    <rect x="512" y="256" width="2" height="130" fill="#2c3040" opacity="0.65"/>
+    <rect x="587" y="256" width="2" height="130" fill="#2c3040" opacity="0.65"/>
+    <!-- Glass reflection diagonal on master window -->
+    <path d="M438,256 L530,256 L438,310Z" fill="rgba(255,255,255,0.18)"/>
+    <!-- Warm glow interior -->
+    <rect x="439" y="257" width="223" height="129" fill="url(#ig)"/>
 
-      <!-- Glass UL-2 kitchen/dining -->
-      <rect x="600" y="72" width="200" height="115" fill="url(#glass1)"/>
-      <rect x="600" y="72" width="200" height="115" fill="url(#refl)" opacity="0.38"/>
-      <rect x="598" y="70" width="3" height="118" fill="#252830"/>
-      <rect x="798" y="70" width="3" height="118" fill="#252830"/>
-      <rect x="598" y="70" width="203" height="3" fill="#252830"/>
-      <rect x="598" y="185" width="203" height="3" fill="#252830"/>
-      <rect x="665" y="72" width="2" height="115" fill="#354050" opacity="0.55"/>
-      <rect x="731" y="72" width="2" height="115" fill="#354050" opacity="0.55"/>
+    <!-- Wall segment center -->
+    <rect x="664" y="252" width="54" height="136" fill="url(#wu)"/>
 
-      <!-- Window UL-3 -->
-      <rect x="865" y="78" width="160" height="100" fill="url(#glass1)"/>
-      <rect x="863" y="76" width="3" height="104" fill="#252830"/>
-      <rect x="1023" y="76" width="3" height="104" fill="#252830"/>
-      <rect x="863" y="76" width="163" height="3" fill="#252830"/>
-      <rect x="863" y="176" width="163" height="3" fill="#252830"/>
-      <rect x="943" y="78" width="2" height="100" fill="#354050" opacity="0.5"/>
+    <!-- CENTER RIGHT: Bedroom sliding -->
+    <rect x="718" y="260" width="172" height="125" fill="url(#gl)"/>
+    <rect x="718" y="260" width="172" height="125" fill="url(#ig)"/>
+    <rect x="716" y="258" width="3" height="128" fill="#1e2228"/>
+    <rect x="888" y="258" width="3" height="128" fill="#1e2228"/>
+    <rect x="716" y="258" width="175" height="3" fill="#1e2228"/>
+    <rect x="716" y="383" width="175" height="3" fill="#1e2228"/>
+    <rect x="775" y="260" width="2" height="125" fill="#2c3040" opacity="0.6"/>
+    <rect x="833" y="260" width="2" height="125" fill="#2c3040" opacity="0.6"/>
+    <path d="M718,260 L795,260 L718,305Z" fill="rgba(255,255,255,0.15)"/>
+    <rect x="719" y="261" width="170" height="124" fill="url(#ig)"/>
 
-      <!-- Glass UL-4 -->
-      <rect x="1082" y="70" width="200" height="120" fill="url(#glass1)"/>
-      <rect x="1082" y="70" width="200" height="120" fill="url(#refl)" opacity="0.35"/>
-      <rect x="1080" y="68" width="3" height="124" fill="#252830"/>
-      <rect x="1280" y="68" width="3" height="124" fill="#252830"/>
-      <rect x="1080" y="68" width="203" height="3" fill="#252830"/>
-      <rect x="1080" y="188" width="203" height="3" fill="#252830"/>
-      <rect x="1147" y="70" width="2" height="120" fill="#354050" opacity="0.55"/>
-      <rect x="1214" y="70" width="2" height="120" fill="#354050" opacity="0.55"/>
+    <!-- Wall segment right -->
+    <rect x="891" y="248" width="50" height="140" fill="url(#wu)"/>
 
-      <!-- Upper terrace slab -->
-      <rect x="258" y="198" width="1084" height="20" fill="#ede5d2"/>
-      <rect x="258" y="216" width="1084" height="5" fill="#bbb09a" opacity="0.35"/>
+    <!-- RIGHT UPPER: Sliding to terrace -->
+    <rect x="941" y="252" width="148" height="135" fill="url(#gl)"/>
+    <rect x="941" y="252" width="148" height="135" fill="url(#ig)"/>
+    <rect x="939" y="250" width="3" height="138" fill="#1e2228"/>
+    <rect x="1087" y="250" width="3" height="138" fill="#1e2228"/>
+    <rect x="939" y="250" width="151" height="3" fill="#1e2228"/>
+    <rect x="939" y="385" width="151" height="3" fill="#1e2228"/>
+    <rect x="1013" y="252" width="2" height="135" fill="#2c3040" opacity="0.6"/>
+    <path d="M941,252 L1005,252 L941,294Z" fill="rgba(255,255,255,0.15)"/>
+    <rect x="942" y="253" width="146" height="134" fill="url(#ig)"/>
 
-      <!-- Upper terrace railing -->
-      <rect x="258" y="168" width="1084" height="33" fill="#b8d8f0" opacity="0.13"/>
-      <rect x="258" y="166" width="1084" height="5" fill="#ccd4de"/>
-      <rect x="258" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="366" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="474" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="582" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="690" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="798" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="906" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="1014" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="1122" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="1230" y="166" width="3" height="37" fill="#8898a8"/>
-      <rect x="1338" y="166" width="3" height="37" fill="#8898a8"/>
+    <!-- ── PARAPET + FLAT ROOF ── -->
+    <!-- Parapet wall (white, catching golden sun) -->
+    <path d="M90,255 L1098,220 L1108,210 L98,246Z" fill="#f0ece0"/>
+    <!-- Sun specular on parapet top -->
+    <path d="M90,246 L1098,212 L1108,210 L98,244Z" fill="#fff5d8" opacity="0.6"/>
+    <!-- East face parapet cap -->
+    <path d="M1098,220 L1320,248 L1330,238 L1106,210Z" fill="#e8e2d2"/>
 
-      <!-- ═══ GROUND / POOL AREA ═══ -->
-      <!-- Pool terrace paving -->
-      <rect x="0" y="552" width="1600" height="90" fill="url(#pave)"/>
-      <!-- Paving joints -->
-      <line x1="0" y1="568" x2="1600" y2="568" stroke="#b8a880" stroke-width="0.7" opacity="0.5"/>
-      <line x1="0" y1="584" x2="1600" y2="584" stroke="#b8a880" stroke-width="0.7" opacity="0.5"/>
-      <line x1="0" y1="600" x2="1600" y2="600" stroke="#b8a880" stroke-width="0.7" opacity="0.5"/>
-      <line x1="0" y1="616" x2="1600" y2="616" stroke="#b8a880" stroke-width="0.7" opacity="0.5"/>
-      <line x1="0" y1="632" x2="1600" y2="632" stroke="#b8a880" stroke-width="0.7" opacity="0.5"/>
-      <line x1="200" y1="552" x2="200" y2="642" stroke="#b8a880" stroke-width="0.7" opacity="0.4"/>
-      <line x1="400" y1="552" x2="400" y2="642" stroke="#b8a880" stroke-width="0.7" opacity="0.4"/>
-      <line x1="600" y1="552" x2="600" y2="642" stroke="#b8a880" stroke-width="0.7" opacity="0.4"/>
-      <line x1="800" y1="552" x2="800" y2="642" stroke="#b8a880" stroke-width="0.7" opacity="0.4"/>
-      <line x1="1000" y1="552" x2="1000" y2="642" stroke="#b8a880" stroke-width="0.7" opacity="0.4"/>
-      <line x1="1200" y1="552" x2="1200" y2="642" stroke="#b8a880" stroke-width="0.7" opacity="0.4"/>
-      <line x1="1400" y1="552" x2="1400" y2="642" stroke="#b8a880" stroke-width="0.7" opacity="0.4"/>
+    <!-- ══ EXTERIOR PERGOLA / LOUVRES on upper terrace ══ -->
+    <!-- Louvre posts/fins extending from parapet -->
+    <rect x="102" y="218" width="8" height="30" fill="#9a7228"/>
+    <rect x="200" y="213" width="8" height="35" fill="#9a7228"/>
+    <rect x="298" y="208" width="8" height="40" fill="#9a7228"/>
+    <rect x="396" y="205" width="8" height="43" fill="#9a7228"/>
+    <!-- Horizontal louvre beam -->
+    <path d="M98,214 L1098,182 L1100,192 L98,224Z" fill="#8a6420"/>
+    <!-- Shadow from louvres -->
+    <path d="M98,224 L1098,192 L1100,198 L98,230Z" fill="#5a3808" opacity="0.4"/>
 
-      <!-- POOL -->
-      <rect x="330" y="564" width="940" height="14" rx="2" fill="#d8c8a8"/>
-      <rect x="330" y="578" width="940" height="70" fill="url(#pool)"/>
-      <!-- Water shimmer -->
-      <line x1="350" y1="590" x2="1250" y2="590" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
-      <line x1="345" y1="602" x2="1252" y2="602" stroke="rgba(255,255,255,0.32)" stroke-width="1"/>
-      <line x1="352" y1="614" x2="1248" y2="614" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-      <line x1="347" y1="626" x2="1251" y2="626" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
-      <line x1="351" y1="638" x2="1249" y2="638" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
-      <!-- Pool far coping -->
-      <rect x="330" y="645" width="940" height="10" rx="2" fill="#d8c8a8"/>
-      <!-- Pool sides -->
-      <rect x="330" y="564" width="14" height="91" fill="#c8b898"/>
-      <rect x="1256" y="564" width="14" height="91" fill="#c8b898"/>
+    <!-- Wall-mounted light sconces -->
+    <rect x="358" y="470" width="16" height="10" rx="2" fill="#d0c898"/>
+    <circle cx="366" cy="468" r="6" fill="#ffe090" opacity="0.9"/>
+    <ellipse cx="366" cy="475" rx="28" ry="12" fill="#ffe090" opacity="0.10" filter="url(#blur6)"/>
+    <rect x="812" y="466" width="16" height="10" rx="2" fill="#d0c898"/>
+    <circle cx="820" cy="464" r="6" fill="#ffe090" opacity="0.9"/>
+    <ellipse cx="820" cy="471" rx="28" ry="12" fill="#ffe090" opacity="0.10" filter="url(#blur6)"/>
 
-      <!-- Lawn -->
-      <rect x="0" y="642" width="1600" height="108" fill="url(#grass)"/>
+    <!-- ══ VEGETATION ══ -->
+    <!-- BIG OLIVE TREE LEFT (behind left, creates depth) -->
+    <rect x="18" y="310" width="16" height="248" fill="#5a3e20"/>
+    <!-- Gnarly trunk detail -->
+    <rect x="14" y="440" width="8" height="110" fill="#4a3218" opacity="0.7"/>
+    <circle cx="26" cy="288" r="88" fill="#3a6415" opacity="0.92"/>
+    <circle cx="0" cy="315" r="62" fill="#4a7420" opacity="0.84"/>
+    <circle cx="54" cy="300" r="72" fill="#326012" opacity="0.88"/>
+    <circle cx="22" cy="262" r="56" fill="#4a7420" opacity="0.74"/>
+    <circle cx="44" cy="272" r="44" fill="#5a8430" opacity="0.62"/>
+    <!-- Sun glint on tree top -->
+    <circle cx="8" cy="272" r="30" fill="#78c040" opacity="0.25"/>
+    <!-- Golden backlight on olive -->
+    <circle cx="26" cy="280" r="90" fill="rgba(255,200,50,0.08)" filter="url(#blur12)"/>
 
-      <!-- Ground shadow from building -->
-      <ellipse cx="800" cy="556" rx="750" ry="22" fill="rgba(0,0,0,0.12)"/>
+    <!-- COLUMNAR CYPRESS / DARK ACCENT right far -->
+    <rect x="1380" y="310" width="22" height="268" fill="#2a4012"/>
+    <ellipse cx="1391" cy="310" rx="32" ry="120" fill="#2a4010" opacity="0.92"/>
+    <ellipse cx="1391" cy="300" rx="28" ry="110" fill="#324818" opacity="0.85"/>
+    <!-- Backlit golden edge -->
+    <ellipse cx="1405" cy="305" rx="10" ry="100" fill="rgba(255,200,50,0.20)"/>
 
-      <!-- Left hedge / border -->
-      <ellipse cx="140" cy="556" rx="110" ry="35" fill="#3d7818" opacity="0.75"/>
-      <ellipse cx="80" cy="548" rx="70" ry="28" fill="#4a8a20" opacity="0.7"/>
-      <!-- Right hedge -->
-      <ellipse cx="1460" cy="556" rx="110" ry="35" fill="#3d7818" opacity="0.75"/>
-      <ellipse cx="1520" cy="548" rx="70" ry="28" fill="#4a8a20" opacity="0.7"/>
+    <!-- SECOND CYPRESS background -->
+    <rect x="1460" y="380" width="16" height="190" fill="#2a4012"/>
+    <ellipse cx="1468" cy="385" rx="22" ry="85" fill="#2a4010" opacity="0.85"/>
 
-      <!-- LEFT BIG OLIVE TREE -->
-      <rect x="54" y="420" width="14" height="140" fill="#6a4e2a"/>
-      <circle cx="61" cy="400" r="72" fill="#3e6c1a" opacity="0.92"/>
-      <circle cx="38" cy="418" r="52" fill="#4e7c22" opacity="0.82"/>
-      <circle cx="84" cy="412" r="56" fill="#366014" opacity="0.88"/>
-      <circle cx="55" cy="380" r="44" fill="#4e7c22" opacity="0.72"/>
-      <circle cx="70" cy="390" r="36" fill="#5e9030" opacity="0.55"/>
+    <!-- OLIVE TREE MID RIGHT -->
+    <rect x="1250" y="360" width="12" height="220" fill="#5a3e20"/>
+    <circle cx="1256" cy="338" r="64" fill="#3a6415" opacity="0.9"/>
+    <circle cx="1238" cy="352" r="46" fill="#4a7420" opacity="0.82"/>
+    <circle cx="1274" cy="346" r="55" fill="#326012" opacity="0.87"/>
 
-      <!-- RIGHT BIG OLIVE TREE -->
-      <rect x="1532" y="428" width="14" height="132" fill="#6a4e2a"/>
-      <circle cx="1539" cy="408" r="68" fill="#3e6c1a" opacity="0.92"/>
-      <circle cx="1516" cy="424" r="50" fill="#4e7c22" opacity="0.82"/>
-      <circle cx="1560" cy="420" r="54" fill="#366014" opacity="0.88"/>
-      <circle cx="1535" cy="388" r="42" fill="#4e7c22" opacity="0.72"/>
+    <!-- AGAVE PLANTS flanking pool deck (architectural feature) -->
+    <!-- Agave 1 left -->
+    <g transform="translate(120,665)">
+      <path d="M0,-45 L8,-8 L0,5 L-8,-8Z" fill="#6a9a30"/>
+      <path d="M-42,-18 L-8,-4 L0,5 L-8,10Z" fill="#5a8820"/>
+      <path d="M42,-18 L8,-4 L0,5 L8,10Z" fill="#6a9a30"/>
+      <path d="M0,-50 L-35,-25 L-40,-10 L-12,-5Z" fill="#5a8820"/>
+      <path d="M0,-50 L35,-25 L40,-10 L12,-5Z" fill="#6a9a30"/>
+      <path d="M-20,-48 L-48,-8 L-38,2 L-6,-6Z" fill="#5a8820"/>
+      <path d="M20,-48 L48,-8 L38,2 L6,-6Z" fill="#6a9a30"/>
+    </g>
+    <!-- Agave 2 right of pool -->
+    <g transform="translate(920,640)">
+      <path d="M0,-38 L7,-7 L0,4 L-7,-7Z" fill="#6a9a30"/>
+      <path d="M-36,-15 L-7,-3 L0,4 L-7,8Z" fill="#5a8820"/>
+      <path d="M36,-15 L7,-3 L0,4 L7,8Z" fill="#6a9a30"/>
+      <path d="M0,-42 L-30,-20 L-34,-8 L-10,-4Z" fill="#5a8820"/>
+      <path d="M0,-42 L30,-20 L34,-8 L10,-4Z" fill="#6a9a30"/>
+    </g>
+    <!-- Ornamental grasses near pool left -->
+    <g transform="translate(72,650)">
+      <path d="M0,0 Q-15,-55 -8,-80" fill="none" stroke="#8aaa40" stroke-width="2.5"/>
+      <path d="M0,0 Q5,-50 12,-75" fill="none" stroke="#7a9838" stroke-width="2"/>
+      <path d="M0,0 Q-5,-45 2,-72" fill="none" stroke="#8aaa40" stroke-width="2"/>
+      <path d="M0,0 Q18,-48 22,-68" fill="none" stroke="#7a9838" stroke-width="1.5"/>
+      <path d="M0,0 Q-22,-42 -20,-60" fill="none" stroke="#8aaa40" stroke-width="2"/>
+    </g>
+    <!-- Ornamental grasses right of pool -->
+    <g transform="translate(958,635)">
+      <path d="M0,0 Q-12,-50 -6,-72" fill="none" stroke="#8aaa40" stroke-width="2"/>
+      <path d="M0,0 Q4,-45 10,-68" fill="none" stroke="#7a9838" stroke-width="2"/>
+      <path d="M0,0 Q18,-42 20,-62" fill="none" stroke="#8aaa40" stroke-width="1.5"/>
+      <path d="M0,0 Q-18,-38 -16,-55" fill="none" stroke="#7a9838" stroke-width="2"/>
+    </g>
+    <!-- Small lavender/rosemary bushes near house -->
+    <ellipse cx="900" cy="557" rx="40" ry="18" fill="#5a9028" opacity="0.75"/>
+    <ellipse cx="940" cy="555" rx="28" ry="14" fill="#9070a8" opacity="0.5"/><!-- lavender -->
+    <ellipse cx="968" cy="554" rx="22" ry="12" fill="#5a9028" opacity="0.7"/>
+    <ellipse cx="1020" cy="552" rx="35" ry="16" fill="#5a9028" opacity="0.72"/>
 
-      <!-- MEDIUM TREES flanking -->
-      <rect x="182" y="462" width="10" height="100" fill="#6a4e2a"/>
-      <circle cx="187" cy="444" r="52" fill="#3a6618" opacity="0.9"/>
-      <circle cx="168" cy="456" r="38" fill="#4a7620" opacity="0.82"/>
-      <circle cx="206" cy="452" r="44" fill="#386018" opacity="0.85"/>
+    <!-- Foreground lawn / grass transition -->
+    <path d="M0,738 Q200,720 400,728 Q600,736 800,722 Q1000,708 1200,720 Q1400,732 1600,718 L1600,820 L0,820Z"
+          fill="#4a9820" opacity="0.4"/>
+    <!-- Grass tufts foreground -->
+    <path d="M30,780 Q28,755 25,748 Q32,756 38,748 Q35,755 40,780Z" fill="#5aac28"/>
+    <path d="M80,785 Q78,758 74,750 Q82,759 88,750 Q84,758 90,785Z" fill="#5aac28"/>
+    <path d="M1500,790 Q1498,762 1494,754 Q1502,763 1508,754 Q1504,762 1510,790Z" fill="#5aac28"/>
 
-      <rect x="1408" y="462" width="10" height="100" fill="#6a4e2a"/>
-      <circle cx="1413" cy="444" r="52" fill="#3a6618" opacity="0.9"/>
-      <circle cx="1430" cy="452" r="42" fill="#4a7620" opacity="0.82"/>
-      <circle cx="1394" cy="456" r="38" fill="#386018" opacity="0.85"/>
+    <!-- ══ SUN GLOW on parapet/building top ══ -->
+    <ellipse cx="1350" cy="160" rx="180" ry="180" fill="rgba(255,200,50,0.10)" filter="url(#blur12)"/>
+    <ellipse cx="1350" cy="158" rx="80" ry="80" fill="rgba(255,220,80,0.18)" filter="url(#blur12)"/>
 
-      <!-- Pool SUNBEDS -->
-      <!-- Sunbed 1 -->
-      <rect x="400" y="574" width="72" height="22" rx="4" fill="#f0e8d5"/>
-      <rect x="398" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="467" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="400" y="573" width="72" height="7" rx="2" fill="#e8d8c0"/>
+    <!-- Ambient golden light overlay on right side of building (sun direction) -->
+    <path d="M820,220 L1098,220 L1098,523 L820,523Z" fill="rgba(255,180,50,0.06)"/>
 
-      <!-- Sunbed 2 -->
-      <rect x="492" y="574" width="72" height="22" rx="4" fill="#f0e8d5"/>
-      <rect x="490" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="559" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="492" y="573" width="72" height="7" rx="2" fill="#e8d8c0"/>
-
-      <!-- Side table -->
-      <circle cx="478" cy="585" r="16" fill="#e0d4b8"/>
-      <circle cx="478" cy="585" r="11" fill="#ece4cc"/>
-
-      <!-- Sunbed 3 (right) -->
-      <rect x="1036" y="574" width="72" height="22" rx="4" fill="#f0e8d5"/>
-      <rect x="1034" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="1103" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="1036" y="573" width="72" height="7" rx="2" fill="#e8d8c0"/>
-
-      <!-- Sunbed 4 (right) -->
-      <rect x="1128" y="574" width="72" height="22" rx="4" fill="#f0e8d5"/>
-      <rect x="1126" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="1195" y="572" width="5" height="26" rx="2" fill="#d8c8a5"/>
-      <rect x="1128" y="573" width="72" height="7" rx="2" fill="#e8d8c0"/>
-
-      <circle cx="1114" cy="585" r="16" fill="#e0d4b8"/>
-      <circle cx="1114" cy="585" r="11" fill="#ece4cc"/>
-
-      <!-- Planters on terraces -->
-      <!-- Lower level planters -->
-      <rect x="62" y="407" width="16" height="24" rx="1" fill="#c8a870"/>
-      <rect x="59" y="403" width="22" height="6" rx="1" fill="#d8b880"/>
-      <ellipse cx="70" cy="405" rx="16" ry="9" fill="#4e8a20"/>
-      <ellipse cx="70" cy="399" rx="11" ry="7" fill="#62a030"/>
-
-      <rect x="1522" y="407" width="16" height="24" rx="1" fill="#c8a870"/>
-      <rect x="1519" y="403" width="22" height="6" rx="1" fill="#d8b880"/>
-      <ellipse cx="1530" cy="405" rx="16" ry="9" fill="#4e8a20"/>
-      <ellipse cx="1530" cy="399" rx="11" ry="7" fill="#62a030"/>
-
-      <!-- Outdoor parasol -->
-      <rect x="796" y="522" width="5" height="44" fill="#c8a870"/>
-      <path d="M738,527 Q800,494 862,527Z" fill="#e8c870" opacity="0.88"/>
-      <path d="M738,527 Q800,512 862,527" fill="none" stroke="#d0b450" stroke-width="1.5"/>
-
-      <!-- Wall lights on lower level -->
-      <rect x="158" y="432" width="14" height="9" rx="2" fill="#c0b898"/>
-      <circle cx="165" cy="430" r="5" fill="#ffe080" opacity="0.9"/>
-      <ellipse cx="165" cy="438" rx="20" ry="8" fill="#ffe080" opacity="0.08"/>
-
-      <rect x="1428" y="432" width="14" height="9" rx="2" fill="#c0b898"/>
-      <circle cx="1435" cy="430" r="5" fill="#ffe080" opacity="0.9"/>
-      <ellipse cx="1435" cy="438" rx="20" ry="8" fill="#ffe080" opacity="0.08"/>
     </svg>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ 02 FACHADA PRINCIPAL -->
+<!-- ══ 02 VISTA ACCESO ══ -->
 <div class="section">
-  <div class="sec-hdr">
-    <div class="sec-num">02</div>
-    <div class="sec-info"><h2>Fachada Principal</h2><p>Vista Norte · Acceso desde Calle Roble</p></div>
+  <div class="shdr">
+    <div class="snum">02</div>
+    <div class="sinfo"><h2>Vista Acceso &amp; Entrada</h2><p>Perspectiva Noroeste · Calle Roble · Mañana</p></div>
   </div>
   <div class="rcard">
-    <div class="rhdr"><span class="rtitle">Fachada Norte — Acceso Rodado y Peatonal</span><span class="rscale">Escala Conceptual · E:1/100</span></div>
-    <svg viewBox="0 0 1600 600" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#3580b8"/>
-          <stop offset="55%" stop-color="#70aad8"/>
-          <stop offset="100%" stop-color="#c8e2f5"/>
-        </linearGradient>
-        <linearGradient id="ret" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#c8b898"/>
-          <stop offset="100%" stop-color="#a89878"/>
-        </linearGradient>
-        <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#8c8c8c"/>
-          <stop offset="100%" stop-color="#6c6c6c"/>
-        </linearGradient>
-      </defs>
+    <div class="rhdr"><span class="rt">Fachada Norte — Acceso desde Calle Roble</span><span class="rs">Perspectiva 3D · Luz de Mañana</span></div>
+    <svg viewBox="0 0 1600 740" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1a3a68"/>
+        <stop offset="35%" stop-color="#3a70b8"/>
+        <stop offset="75%" stop-color="#88bce0"/>
+        <stop offset="100%" stop-color="#c8dff0"/>
+      </linearGradient>
+      <linearGradient id="ret2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c8b880"/>
+        <stop offset="100%" stop-color="#a09060"/>
+      </linearGradient>
+      <linearGradient id="road2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#888078"/>
+        <stop offset="100%" stop-color="#686058"/>
+      </linearGradient>
+      <linearGradient id="wn" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#ede8e0"/>
+        <stop offset="50%" stop-color="#faf9f7"/>
+        <stop offset="100%" stop-color="#e0d8c8"/>
+      </linearGradient>
+      <linearGradient id="ef2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#d8d0b8"/>
+        <stop offset="100%" stop-color="#c0b898"/>
+      </linearGradient>
+      <linearGradient id="gd2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c8b880"/>
+        <stop offset="100%" stop-color="#a89060"/>
+      </linearGradient>
+      <linearGradient id="gl2" x1="0.1" y1="0" x2="0.9" y2="1">
+        <stop offset="0%" stop-color="#cce8f8" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#88c0e0" stop-opacity="0.78"/>
+      </linearGradient>
+      <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+      <filter id="ds2"><feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="rgba(0,0,0,0.3)"/></filter>
+    </defs>
 
-      <rect width="1600" height="600" fill="url(#sky2)"/>
+    <rect width="1600" height="740" fill="url(#sky2)"/>
+    <!-- Clouds daytime -->
+    <ellipse cx="300" cy="100" rx="180" ry="45" fill="white" opacity="0.55" filter="url(#blur8)"/>
+    <ellipse cx="420" cy="88" rx="110" ry="35" fill="white" opacity="0.50"/>
+    <ellipse cx="1100" cy="120" rx="200" ry="50" fill="white" opacity="0.50" filter="url(#blur8)"/>
+    <ellipse cx="1240" cy="105" rx="120" ry="38" fill="white" opacity="0.45"/>
+    <ellipse cx="750" cy="140" rx="140" ry="40" fill="white" opacity="0.40" filter="url(#blur8)"/>
 
-      <!-- Clouds -->
-      <ellipse cx="180" cy="80" rx="120" ry="34" fill="white" opacity="0.6" filter="url(#blur8)"/>
-      <ellipse cx="1380" cy="100" rx="140" ry="38" fill="white" opacity="0.55" filter="url(#blur8)"/>
+    <!-- Distant hills -->
+    <path d="M0,295 Q300,265 600,278 Q900,290 1200,268 Q1400,255 1600,270 L1600,320 L0,320Z"
+          fill="#6a8848" opacity="0.30"/>
 
-      <!-- Retaining walls / slope left and right -->
-      <path d="M0,280 L280,280 L280,340 L0,600 Z" fill="url(#ret)"/>
-      <path d="M1600,280 L1320,280 L1320,340 L1600,600 Z" fill="url(#ret)"/>
-      <!-- Retaining wall texture lines -->
-      <line x1="0" y1="310" x2="280" y2="310" stroke="#a8987a" stroke-width="1" opacity="0.5"/>
-      <line x1="0" y1="340" x2="280" y2="340" stroke="#a8987a" stroke-width="1" opacity="0.5"/>
-      <line x1="0" y1="370" x2="230" y2="370" stroke="#a8987a" stroke-width="0.8" opacity="0.4"/>
-      <line x1="1320" y1="310" x2="1600" y2="310" stroke="#a8987a" stroke-width="1" opacity="0.5"/>
-      <line x1="1320" y1="340" x2="1600" y2="340" stroke="#a8987a" stroke-width="1" opacity="0.5"/>
+    <!-- ROAD -->
+    <rect x="0" y="590" width="1600" height="150" fill="url(#road2)"/>
+    <rect x="0" y="583" width="1600" height="10" fill="#787060"/>
+    <!-- Road markings -->
+    <line x1="800" y1="590" x2="800" y2="740" stroke="white" stroke-width="4" stroke-dasharray="25,18" opacity="0.5"/>
+    <!-- Pavement / curb -->
+    <rect x="0" y="578" width="1600" height="8" fill="#909090"/>
 
-      <!-- Street / road -->
-      <rect x="0" y="540" width="1600" height="60" fill="url(#road)"/>
-      <line x1="800" y1="540" x2="800" y2="600" stroke="white" stroke-width="3" stroke-dasharray="20,15" opacity="0.6"/>
-      <!-- Curb -->
-      <rect x="0" y="534" width="1600" height="8" fill="#9a9a9a"/>
+    <!-- RETAINING WALLS (slope) left and right -->
+    <path d="M0,300 L280,300 L280,370 L0,578Z" fill="url(#ret2)"/>
+    <!-- Stone lines on retaining wall -->
+    <line x1="0" y1="330" x2="278" y2="330" stroke="#b0a070" stroke-width="1" opacity="0.5"/>
+    <line x1="0" y1="360" x2="278" y2="360" stroke="#b0a070" stroke-width="0.8" opacity="0.4"/>
+    <line x1="0" y1="395" x2="240" y2="395" stroke="#b0a070" stroke-width="0.8" opacity="0.4"/>
+    <line x1="0" y1="430" x2="200" y2="430" stroke="#b0a070" stroke-width="0.8" opacity="0.4"/>
+    <line x1="0" y1="465" x2="155" y2="465" stroke="#b0a070" stroke-width="0.8" opacity="0.3"/>
 
-      <!-- Ground / entrance paving -->
-      <rect x="280" y="450" width="1040" height="90" fill="#cdc0a0"/>
-      <rect x="280" y="534" width="1040" height="8" fill="#b8a888"/>
+    <path d="M1600,300 L1320,300 L1320,370 L1600,578Z" fill="url(#ret2)"/>
+    <line x1="1322" y1="330" x2="1600" y2="330" stroke="#b0a070" stroke-width="1" opacity="0.5"/>
+    <line x1="1322" y1="360" x2="1600" y2="360" stroke="#b0a070" stroke-width="0.8" opacity="0.4"/>
+    <line x1="1360" y1="395" x2="1600" y2="395" stroke="#b0a070" stroke-width="0.8" opacity="0.4"/>
 
-      <!-- HOUSE UPPER LEVEL - main visible face from street -->
-      <!-- Garage left wing -->
-      <rect x="280" y="180" width="350" height="275" fill="url(#wall1)"/>
-      <!-- Garage door -->
-      <rect x="310" y="250" width="290" height="195" fill="#3a3a3a"/>
-      <rect x="310" y="250" width="290" height="6" fill="#555"/>
-      <rect x="310" y="266" width="290" height="6" fill="#555"/>
-      <rect x="310" y="282" width="290" height="6" fill="#555"/>
-      <rect x="310" y="298" width="290" height="6" fill="#555"/>
-      <rect x="310" y="314" width="290" height="6" fill="#555"/>
-      <rect x="310" y="330" width="290" height="6" fill="#555"/>
-      <rect x="310" y="346" width="290" height="6" fill="#555"/>
-      <rect x="310" y="362" width="290" height="6" fill="#555"/>
-      <rect x="310" y="378" width="290" height="6" fill="#555"/>
-      <rect x="310" y="394" width="290" height="6" fill="#555"/>
-      <rect x="310" y="410" width="290" height="6" fill="#555"/>
-      <rect x="310" y="426" width="290" height="6" fill="#555"/>
-      <!-- Garage frame -->
-      <rect x="308" y="248" width="4" height="199" fill="#2a2a2a"/>
-      <rect x="598" y="248" width="4" height="199" fill="#2a2a2a"/>
-      <rect x="308" y="248" width="294" height="4" fill="#2a2a2a"/>
-      <rect x="308" y="444" width="294" height="4" fill="#2a2a2a"/>
+    <!-- DRIVEWAY -->
+    <path d="M310,370 L510,370 L530,578 L280,578Z" fill="url(#gd2)"/>
+    <!-- Driveway pavers -->
+    <line x1="312" y1="395" x2="508" y2="395" stroke="#b8a870" stroke-width="0.8" opacity="0.5"/>
+    <line x1="316" y1="420" x2="510" y2="420" stroke="#b8a870" stroke-width="0.8" opacity="0.5"/>
+    <line x1="320" y1="448" x2="512" y2="448" stroke="#b8a870" stroke-width="0.8" opacity="0.5"/>
+    <line x1="324" y1="478" x2="516" y2="478" stroke="#b8a870" stroke-width="0.8" opacity="0.5"/>
+    <line x1="328" y1="510" x2="520" y2="510" stroke="#b8a870" stroke-width="0.8" opacity="0.5"/>
+    <line x1="332" y1="545" x2="524" y2="545" stroke="#b8a870" stroke-width="0.8" opacity="0.5"/>
 
-      <!-- Entrance door center -->
-      <rect x="700" y="180" width="200" height="275" fill="url(#wall2)"/>
-      <!-- Door -->
-      <rect x="740" y="300" width="120" height="155" fill="#2c2c2c"/>
-      <rect x="738" y="298" width="3" height="159" fill="#1a1a1a"/>
-      <rect x="859" y="298" width="3" height="159" fill="#1a1a1a"/>
-      <rect x="738" y="298" width="126" height="3" fill="#1a1a1a"/>
-      <!-- Door sidelight windows -->
-      <rect x="710" y="310" width="28" height="60" fill="url(#glass1)"/>
-      <rect x="862" y="310" width="28" height="60" fill="url(#glass1)"/>
-      <!-- Entrance canopy -->
-      <rect x="685" y="275" width="230" height="14" fill="#e0d8c8"/>
-      <rect x="692" y="289" width="5" height="15" fill="#c0b8a0"/>
-      <rect x="903" y="289" width="5" height="15" fill="#c0b8a0"/>
-      <!-- Doorbell/intercom panel -->
-      <rect x="869" y="360" width="12" height="25" rx="2" fill="#d0c8b0"/>
+    <!-- Entrance paving / forecourt -->
+    <rect x="280" y="495" width="1040" height="90" fill="url(#gd2)"/>
+    <line x1="280" y1="510" x2="1320" y2="510" stroke="#b8a870" stroke-width="0.8" opacity="0.4"/>
+    <line x1="280" y1="530" x2="1320" y2="530" stroke="#b8a870" stroke-width="0.8" opacity="0.4"/>
+    <line x1="280" y1="550" x2="1320" y2="550" stroke="#b8a870" stroke-width="0.8" opacity="0.4"/>
+    <line x1="280" y1="570" x2="1320" y2="570" stroke="#b8a870" stroke-width="0.8" opacity="0.4"/>
 
-      <!-- Right wing -->
-      <rect x="970" y="180" width="350" height="275" fill="url(#wall1)"/>
-      <!-- Window right 1 -->
-      <rect x="1005" y="240" width="120" height="90" fill="url(#glass1)"/>
-      <rect x="1003" y="238" width="3" height="94" fill="#252830"/>
-      <rect x="1123" y="238" width="3" height="94" fill="#252830"/>
-      <rect x="1003" y="238" width="123" height="3" fill="#252830"/>
-      <rect x="1003" y="328" width="123" height="3" fill="#252830"/>
-      <rect x="1063" y="240" width="2" height="90" fill="#354050" opacity="0.5"/>
+    <!-- HOUSE NORTH FACADE (only upper floor visible from street) -->
+    <!-- The building is embedded into hill: from street, only planta alta visible -->
+    <!-- West face (right side) -->
+    <path d="M1320,300 L1320,493 L1200,493 L1200,300Z" fill="url(#ef2)"/>
+    <!-- shadow on side -->
+    <path d="M1320,300 L1320,493 L1200,493 L1200,300Z" fill="rgba(0,0,0,0.15)"/>
 
-      <!-- Window right 2 -->
-      <rect x="1150" y="240" width="120" height="90" fill="url(#glass1)"/>
-      <rect x="1148" y="238" width="3" height="94" fill="#252830"/>
-      <rect x="1268" y="238" width="3" height="94" fill="#252830"/>
-      <rect x="1148" y="238" width="123" height="3" fill="#252830"/>
-      <rect x="1148" y="328" width="123" height="3" fill="#252830"/>
-      <rect x="1208" y="240" width="2" height="90" fill="#354050" opacity="0.5"/>
+    <!-- North facade main wall (full width) -->
+    <rect x="280" y="300" width="1040" height="193" fill="url(#wn)" filter="url(#ds2)"/>
+    <!-- Stone plinth base of north face -->
+    <rect x="280" y="468" width="1040" height="28" fill="url(#sp)"/>
+    <!-- Stone joint lines -->
+    <line x1="280" y1="479" x2="1320" y2="479" stroke="#b0a060" stroke-width="0.8" opacity="0.4"/>
+    <line x1="280" y1="490" x2="1320" y2="490" stroke="#b0a060" stroke-width="0.8" opacity="0.3"/>
 
-      <!-- Flat roof parapet full width -->
-      <rect x="278" y="162" width="1044" height="22" fill="#e8e0d0"/>
-      <rect x="275" y="155" width="1050" height="12" fill="#ddd4c2"/>
+    <!-- Flat roof parapet -->
+    <rect x="278" y="282" width="1044" height="22" fill="#ece5d5"/>
+    <rect x="275" y="275" width="1050" height="12" fill="#e0d8c5"/>
+    <!-- Parapet top highlight (sun from left) -->
+    <rect x="275" y="275" width="1050" height="5" fill="#f5f0e5" opacity="0.7"/>
 
-      <!-- Stone base -->
-      <rect x="280" y="445" width="1040" height="18" fill="url(#stone)"/>
+    <!-- GARAGE SECTION (left) -->
+    <rect x="290" y="305" width="380" height="165" fill="#2c3040"/>
+    <!-- Garage door panels (modern, ribbed) -->
+    <rect x="292" y="307" width="376" height="161" fill="#262830"/>
+    <line x1="292" y1="320" x2="668" y2="320" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="333" x2="668" y2="333" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="346" x2="668" y2="346" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="359" x2="668" y2="359" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="372" x2="668" y2="372" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="385" x2="668" y2="385" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="398" x2="668" y2="398" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="411" x2="668" y2="411" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="424" x2="668" y2="424" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="437" x2="668" y2="437" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="450" x2="668" y2="450" stroke="#3a3c48" stroke-width="2.5"/>
+    <line x1="292" y1="463" x2="668" y2="463" stroke="#3a3c48" stroke-width="2.5"/>
+    <!-- Garage frame -->
+    <rect x="290" y="305" width="4" height="165" fill="#1a1c28"/>
+    <rect x="666" y="305" width="4" height="165" fill="#1a1c28"/>
+    <rect x="290" y="305" width="380" height="4" fill="#1a1c28"/>
+    <!-- Subtle reflection on garage door -->
+    <path d="M292,307 L500,307 L292,420Z" fill="rgba(255,255,255,0.04)"/>
 
-      <!-- Fence / gate left -->
-      <rect x="0" y="280" width="282" height="8" fill="#b8a880"/>
-      <rect x="0" y="280" width="6" height="170" fill="#c8b890"/>
-      <rect x="60" y="280" width="6" height="120" fill="#c8b890"/>
-      <rect x="120" y="280" width="6" height="90" fill="#c8b890"/>
-      <rect x="180" y="280" width="6" height="70" fill="#c8b890"/>
-      <rect x="240" y="280" width="6" height="55" fill="#c8b890"/>
+    <!-- ENTRANCE SECTION (center-right) -->
+    <!-- Feature stone wall beside entrance -->
+    <rect x="676" y="305" width="148" height="165" fill="url(#sp)"/>
+    <!-- Stone texture lines -->
+    <line x1="676" y1="318" x2="824" y2="318" stroke="#a89060" stroke-width="0.8" opacity="0.5"/>
+    <line x1="676" y1="332" x2="824" y2="332" stroke="#a89060" stroke-width="0.8" opacity="0.5"/>
+    <line x1="676" y1="346" x2="824" y2="346" stroke="#a89060" stroke-width="0.8" opacity="0.5"/>
+    <line x1="676" y1="360" x2="824" y2="360" stroke="#a89060" stroke-width="0.8" opacity="0.4"/>
+    <line x1="676" y1="374" x2="824" y2="374" stroke="#a89060" stroke-width="0.8" opacity="0.4"/>
+    <line x1="676" y1="388" x2="824" y2="388" stroke="#a89060" stroke-width="0.8" opacity="0.4"/>
+    <line x1="676" y1="402" x2="824" y2="402" stroke="#a89060" stroke-width="0.8" opacity="0.4"/>
+    <line x1="676" y1="416" x2="824" y2="416" stroke="#a89060" stroke-width="0.8" opacity="0.4"/>
+    <line x1="676" y1="430" x2="824" y2="430" stroke="#a89060" stroke-width="0.8" opacity="0.3"/>
+    <line x1="676" y1="444" x2="824" y2="444" stroke="#a89060" stroke-width="0.8" opacity="0.3"/>
+    <!-- Stone shadow line (divider between stone and door) -->
+    <line x1="712" y1="305" x2="712" y2="468" stroke="#a89060" stroke-width="0.8" opacity="0.5"/>
 
-      <!-- Fence right -->
-      <rect x="1318" y="280" width="282" height="8" fill="#b8a880"/>
-      <rect x="1594" y="280" width="6" height="170" fill="#c8b890"/>
-      <rect x="1534" y="280" width="6" height="120" fill="#c8b890"/>
-      <rect x="1474" y="280" width="6" height="90" fill="#c8b890"/>
-      <rect x="1414" y="280" width="6" height="70" fill="#c8b890"/>
-      <rect x="1354" y="280" width="6" height="55" fill="#c8b890"/>
+    <!-- Main entrance door (pivot door, dark) -->
+    <rect x="826" y="358" width="105" height="112" fill="#1a1e28"/>
+    <rect x="824" y="356" width="3" height="114" fill="#121418"/>
+    <rect x="929" y="356" width="3" height="114" fill="#121418"/>
+    <rect x="824" y="356" width="108" height="3" fill="#121418"/>
+    <!-- Door handle -->
+    <rect x="926" y="405" width="18" height="6" rx="3" fill="#c8a850"/>
+    <rect x="924" y="403" width="4" height="10" rx="2" fill="#b89840"/>
+    <!-- Sidelights flanking door -->
+    <rect x="832" y="368" width="28" height="82" fill="url(#gl2)" opacity="0.9"/>
+    <rect x="905" y="368" width="24" height="82" fill="url(#gl2)" opacity="0.9"/>
+    <!-- Door number plaque -->
+    <rect x="940" y="440" width="36" height="24" rx="3" fill="#c8a850"/>
+    <text x="958" y="457" text-anchor="middle" font-family="Georgia" font-size="13" fill="#201008">46</text>
 
-      <!-- Trees in front -->
-      <rect x="215" y="330" width="8" height="110" fill="#6a4e2a"/>
-      <circle cx="219" cy="312" r="42" fill="#3a6618" opacity="0.9"/>
-      <circle cx="200" cy="325" r="30" fill="#4a7620" opacity="0.82"/>
-      <circle cx="238" cy="320" r="35" fill="#386018" opacity="0.85"/>
+    <!-- Entrance CANOPY -->
+    <rect x="812" y="345" width="145" height="16" rx="2" fill="#ddd5c0"/>
+    <rect x="824" y="361" width="5" height="14" fill="#c0b890"/>
+    <rect x="946" y="361" width="5" height="14" fill="#c0b890"/>
+    <!-- Canopy shadow underneath -->
+    <rect x="812" y="359" width="145" height="6" fill="#b0a870" opacity="0.4"/>
 
-      <rect x="1377" y="330" width="8" height="110" fill="#6a4e2a"/>
-      <circle cx="1381" cy="312" r="42" fill="#3a6618" opacity="0.9"/>
-      <circle cx="1362" cy="325" r="30" fill="#4a7620" opacity="0.82"/>
-      <circle cx="1399" cy="320" r="35" fill="#386018" opacity="0.85"/>
+    <!-- RIGHT SECTION (windows) -->
+    <!-- Window 1 -->
+    <rect x="1000" y="325" width="150" height="105" fill="url(#gl2)"/>
+    <rect x="998" y="323" width="3" height="108" fill="#1e2228"/>
+    <rect x="1148" y="323" width="3" height="108" fill="#1e2228"/>
+    <rect x="998" y="323" width="153" height="3" fill="#1e2228"/>
+    <rect x="998" y="428" width="153" height="3" fill="#1e2228"/>
+    <rect x="1074" y="325" width="2" height="105" fill="#2c3040" opacity="0.6"/>
+    <path d="M1000,325 L1060,325 L1000,365Z" fill="rgba(255,255,255,0.2)"/>
+    <!-- Window 2 -->
+    <rect x="1164" y="325" width="140" height="105" fill="url(#gl2)"/>
+    <rect x="1162" y="323" width="3" height="108" fill="#1e2228"/>
+    <rect x="1302" y="323" width="3" height="108" fill="#1e2228"/>
+    <rect x="1162" y="323" width="143" height="3" fill="#1e2228"/>
+    <rect x="1162" y="428" width="143" height="3" fill="#1e2228"/>
+    <rect x="1234" y="325" width="2" height="105" fill="#2c3040" opacity="0.6"/>
+    <path d="M1164,325 L1220,325 L1164,358Z" fill="rgba(255,255,255,0.2)"/>
 
-      <!-- House number -->
-      <rect x="870" y="450" width="30" height="22" rx="2" fill="#c8a870"/>
-      <text x="885" y="465" text-anchor="middle" font-size="12" fill="#2a1808" font-family="Georgia">46</text>
+    <!-- Fence / gate left of driveway -->
+    <rect x="0" y="300" width="282" height="7" fill="#c0b080"/>
+    <rect x="0" y="300" width="6" height="175" fill="#c8b888"/>
+    <rect x="50" y="300" width="5" height="140" fill="#c8b888"/>
+    <rect x="100" y="300" width="5" height="120" fill="#c8b888"/>
+    <rect x="150" y="300" width="5" height="100" fill="#c8b888"/>
+    <rect x="200" y="300" width="5" height="85" fill="#c8b888"/>
+    <rect x="250" y="300" width="5" height="72" fill="#c8b888"/>
+    <!-- Fence right -->
+    <rect x="1318" y="300" width="282" height="7" fill="#c0b080"/>
+    <rect x="1594" y="300" width="6" height="175" fill="#c8b888"/>
+    <rect x="1550" y="300" width="5" height="140" fill="#c8b888"/>
+    <rect x="1500" y="300" width="5" height="120" fill="#c8b888"/>
+    <rect x="1450" y="300" width="5" height="100" fill="#c8b888"/>
+    <rect x="1400" y="300" width="5" height="85" fill="#c8b888"/>
+    <rect x="1350" y="300" width="5" height="72" fill="#c8b888"/>
+
+    <!-- GATE at driveway -->
+    <rect x="280" y="354" width="15" height="120" fill="#b8a870"/>
+    <rect x="295" y="358" width="215" height="6" fill="#b8a870"/>
+    <rect x="295" y="379" width="215" height="6" fill="#b8a870"/>
+    <rect x="295" y="400" width="215" height="6" fill="#b8a870"/>
+    <rect x="295" y="421" width="215" height="6" fill="#b8a870"/>
+    <rect x="295" y="442" width="215" height="6" fill="#b8a870"/>
+    <rect x="295" y="463" width="215" height="6" fill="#b8a870"/>
+    <rect x="500" y="358" width="12" height="114" fill="#b8a870"/>
+    <!-- Gate post lights -->
+    <rect x="268" y="332" width="28" height="28" rx="3" fill="#c8a850"/>
+    <circle cx="282" cy="330" r="5" fill="#fff8d0" opacity="0.9"/>
+    <ellipse cx="282" cy="338" rx="22" ry="10" fill="#ffe880" opacity="0.15"/>
+    <rect x="498" y="332" width="28" height="28" rx="3" fill="#c8a850"/>
+    <circle cx="512" cy="330" r="5" fill="#fff8d0" opacity="0.9"/>
+
+    <!-- Trees flanking entrance -->
+    <!-- Left olive -->
+    <rect x="172" y="348" width="11" height="150" fill="#5a3e20"/>
+    <circle cx="177" cy="328" r="55" fill="#3a6415" opacity="0.9"/>
+    <circle cx="158" cy="342" r="38" fill="#4a7420" opacity="0.82"/>
+    <circle cx="196" cy="336" r="46" fill="#326012" opacity="0.87"/>
+    <!-- Right olive -->
+    <rect x="1417" y="348" width="11" height="150" fill="#5a3e20"/>
+    <circle cx="1422" cy="328" r="55" fill="#3a6415" opacity="0.9"/>
+    <circle cx="1404" cy="342" r="38" fill="#4a7420" opacity="0.82"/>
+    <circle cx="1440" cy="336" r="46" fill="#326012" opacity="0.87"/>
+
+    <!-- Small shrubs flanking garage/entrance -->
+    <ellipse cx="680" cy="490" rx="30" ry="18" fill="#4a8020" opacity="0.75"/>
+    <ellipse cx="820" cy="492" rx="25" ry="16" fill="#4a8020" opacity="0.7"/>
+
+    <!-- Sky sunlight glow (morning from right) -->
+    <ellipse cx="1550" cy="200" rx="200" ry="200" fill="rgba(255,240,180,0.10)" filter="url(#blur8)"/>
     </svg>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ 03 FACHADAS LATERALES -->
+<!-- ══ 03 VISTA AÉREA ══ -->
 <div class="section">
-  <div class="sec-hdr">
-    <div class="sec-num">03</div>
-    <div class="sec-info"><h2>Fachadas Laterales</h2><p>Vista Este y Vista Oeste · Perfil en Ladera</p></div>
-  </div>
-  <div class="grid2">
-    <!-- FACHADA ESTE -->
-    <div class="rcard">
-      <div class="rhdr"><span class="rtitle">Fachada Este</span><span class="rscale">E:1/100</span></div>
-      <svg viewBox="0 0 800 580" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3070b0"/>
-            <stop offset="100%" stop-color="#c0ddf5"/>
-          </linearGradient>
-          <linearGradient id="slope" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#9a8a60"/>
-            <stop offset="100%" stop-color="#7a6a40"/>
-          </linearGradient>
-        </defs>
-        <rect width="800" height="580" fill="url(#sky3)"/>
-
-        <!-- Ground slope line: from top-left (street) to bottom-right (garden) -->
-        <!-- Street level at left: y~200, garden level at right: y~430 -->
-        <path d="M0,200 L800,430 L800,580 L0,580Z" fill="#8a7a50" opacity="0.6"/>
-        <path d="M0,205 L800,435 L800,440 L0,210Z" fill="#6a5a30" opacity="0.4"/>
-
-        <!-- Road/street at left top -->
-        <rect x="0" y="168" width="80" height="38" fill="#888"/>
-        <rect x="0" y="165" width="80" height="8" fill="#999"/>
-
-        <!-- UPPER LEVEL (street level, left side) -->
-        <!-- This is at street level, visible from right side -->
-        <!-- In side view: upper level is at left (higher elevation) -->
-        <rect x="0" y="60" width="350" height="145" fill="url(#wall2)"/>
-        <!-- Flat roof -->
-        <rect x="0" y="44" width="358" height="20" fill="#e8e0d0"/>
-        <rect x="0" y="38" width="360" height="10" fill="#ddd4c2"/>
-        <!-- Pergola (side view - posts visible) -->
-        <rect x="20" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="80" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="140" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="200" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="260" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="320" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="0" y="24" width="352" height="8" fill="#7a5818"/>
-        <!-- Side windows upper level -->
-        <rect x="60" y="80" width="70" height="90" fill="url(#glass1)"/>
-        <rect x="58" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="128" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="58" y="78" width="74" height="3" fill="#252830"/>
-        <rect x="58" y="168" width="74" height="3" fill="#252830"/>
-        <rect x="210" y="80" width="70" height="90" fill="url(#glass1)"/>
-        <rect x="208" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="278" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="208" y="78" width="74" height="3" fill="#252830"/>
-        <rect x="208" y="168" width="74" height="3" fill="#252830"/>
-        <!-- Stone base upper -->
-        <rect x="0" y="196" width="352" height="16" fill="url(#stone)"/>
-        <!-- Upper terrace slab -->
-        <rect x="0" y="210" width="380" height="18" fill="#ede5d2"/>
-
-        <!-- MIDDLE LEVEL (steps down) -->
-        <rect x="50" y="228" width="380" height="145" fill="url(#wall1)"/>
-        <!-- Stone base middle -->
-        <rect x="50" y="364" width="388" height="16" fill="url(#stone)"/>
-        <!-- Middle terrace slab -->
-        <rect x="50" y="378" width="405" height="18" fill="#ede5d2"/>
-        <!-- Window middle -->
-        <rect x="100" y="255" width="80" height="80" fill="url(#glass1)"/>
-        <rect x="98" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="178" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="98" y="253" width="84" height="3" fill="#252830"/>
-        <rect x="98" y="333" width="84" height="3" fill="#252830"/>
-        <rect x="280" y="255" width="80" height="80" fill="url(#glass1)"/>
-        <rect x="278" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="358" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="278" y="253" width="84" height="3" fill="#252830"/>
-        <rect x="278" y="333" width="84" height="3" fill="#252830"/>
-
-        <!-- LOWER LEVEL (lowest, rightmost / garden level) -->
-        <rect x="160" y="396" width="420" height="120" fill="url(#wall2)"/>
-        <!-- Stone base lower -->
-        <rect x="160" y="508" width="428" height="14" fill="url(#stone)"/>
-        <!-- Window lower -->
-        <rect x="220" y="418" width="90" height="70" fill="url(#glass1)"/>
-        <rect x="218" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="308" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="218" y="416" width="94" height="3" fill="#252830"/>
-        <rect x="218" y="486" width="94" height="3" fill="#252830"/>
-        <rect x="380" y="418" width="90" height="70" fill="url(#glass1)"/>
-        <rect x="378" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="468" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="378" y="416" width="94" height="3" fill="#252830"/>
-        <rect x="378" y="486" width="94" height="3" fill="#252830"/>
-
-        <!-- Garden ground -->
-        <rect x="0" y="522" width="800" height="58" fill="url(#grass)"/>
-
-        <!-- Trees -->
-        <rect x="622" y="420" width="9" height="110" fill="#6a4e2a"/>
-        <circle cx="627" cy="402" r="48" fill="#3a6618" opacity="0.9"/>
-        <circle cx="606" cy="416" r="34" fill="#4a7620" opacity="0.82"/>
-        <circle cx="648" cy="410" r="40" fill="#386018" opacity="0.85"/>
-
-        <!-- Labels -->
-        <text x="175" y="140" text-anchor="middle" font-family="Georgia" font-size="11" fill="#a09080" letter-spacing="2">PLANTA ALTA</text>
-        <text x="245" y="310" text-anchor="middle" font-family="Georgia" font-size="11" fill="#a09080" letter-spacing="2">PLANTA PRIMERA</text>
-        <text x="370" y="462" text-anchor="middle" font-family="Georgia" font-size="11" fill="#a09080" letter-spacing="2">PLANTA BAJA</text>
-
-        <!-- Slope arrows / level indicators -->
-        <line x1="30" y1="205" x2="30" y2="395" stroke="#c8a55a" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
-        <line x1="30" y1="395" x2="30" y2="525" stroke="#c8a55a" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
-        <text x="14" y="300" font-family="Georgia" font-size="10" fill="#c8a55a" opacity="0.8">±3m</text>
-        <text x="14" y="460" font-family="Georgia" font-size="10" fill="#c8a55a" opacity="0.8">±3m</text>
-      </svg>
-    </div>
-
-    <!-- FACHADA OESTE -->
-    <div class="rcard">
-      <div class="rhdr"><span class="rtitle">Fachada Oeste</span><span class="rscale">E:1/100</span></div>
-      <svg viewBox="0 0 800 580" xmlns="http://www.w3.org/2000/svg">
-        <rect width="800" height="580" fill="url(#sky3)"/>
-
-        <!-- Ground slope: garden at left, street at right -->
-        <path d="M800,200 L0,430 L0,580 L800,580Z" fill="#8a7a50" opacity="0.6"/>
-        <path d="M800,205 L0,435 L0,440 L800,210Z" fill="#6a5a30" opacity="0.4"/>
-
-        <!-- Road at right -->
-        <rect x="720" y="168" width="80" height="38" fill="#888"/>
-        <rect x="720" y="165" width="80" height="8" fill="#999"/>
-
-        <!-- UPPER LEVEL (right side, higher) -->
-        <rect x="450" y="60" width="350" height="145" fill="url(#wall2)"/>
-        <rect x="442" y="44" width="358" height="20" fill="#e8e0d0"/>
-        <rect x="440" y="38" width="360" height="10" fill="#ddd4c2"/>
-        <!-- Pergola west -->
-        <rect x="472" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="532" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="592" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="652" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="712" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="772" y="28" width="8" height="20" fill="url(#wood)"/>
-        <rect x="448" y="24" width="352" height="8" fill="#7a5818"/>
-        <!-- Windows -->
-        <rect x="670" y="80" width="70" height="90" fill="url(#glass1)"/>
-        <rect x="668" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="738" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="668" y="78" width="74" height="3" fill="#252830"/>
-        <rect x="668" y="168" width="74" height="3" fill="#252830"/>
-        <rect x="520" y="80" width="70" height="90" fill="url(#glass1)"/>
-        <rect x="518" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="588" y="78" width="3" height="93" fill="#252830"/>
-        <rect x="518" y="78" width="74" height="3" fill="#252830"/>
-        <rect x="518" y="168" width="74" height="3" fill="#252830"/>
-        <rect x="448" y="196" width="352" height="16" fill="url(#stone)"/>
-        <rect x="420" y="210" width="380" height="18" fill="#ede5d2"/>
-
-        <!-- MIDDLE LEVEL -->
-        <rect x="370" y="228" width="380" height="145" fill="url(#wall1)"/>
-        <rect x="362" y="364" width="388" height="16" fill="url(#stone)"/>
-        <rect x="345" y="378" width="405" height="18" fill="#ede5d2"/>
-        <!-- Windows middle -->
-        <rect x="622" y="255" width="80" height="80" fill="url(#glass1)"/>
-        <rect x="620" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="700" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="620" y="253" width="84" height="3" fill="#252830"/>
-        <rect x="620" y="333" width="84" height="3" fill="#252830"/>
-        <rect x="442" y="255" width="80" height="80" fill="url(#glass1)"/>
-        <rect x="440" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="520" y="253" width="3" height="84" fill="#252830"/>
-        <rect x="440" y="253" width="84" height="3" fill="#252830"/>
-        <rect x="440" y="333" width="84" height="3" fill="#252830"/>
-
-        <!-- LOWER LEVEL -->
-        <rect x="220" y="396" width="420" height="120" fill="url(#wall2)"/>
-        <rect x="212" y="508" width="428" height="14" fill="url(#stone)"/>
-        <!-- Windows -->
-        <rect x="310" y="418" width="90" height="70" fill="url(#glass1)"/>
-        <rect x="308" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="398" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="308" y="416" width="94" height="3" fill="#252830"/>
-        <rect x="308" y="486" width="94" height="3" fill="#252830"/>
-        <rect x="470" y="418" width="90" height="70" fill="url(#glass1)"/>
-        <rect x="468" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="558" y="416" width="3" height="74" fill="#252830"/>
-        <rect x="468" y="416" width="94" height="3" fill="#252830"/>
-        <rect x="468" y="486" width="94" height="3" fill="#252830"/>
-
-        <!-- Lawn -->
-        <rect x="0" y="522" width="800" height="58" fill="url(#grass)"/>
-
-        <!-- Trees left (garden side) -->
-        <rect x="169" y="420" width="9" height="110" fill="#6a4e2a"/>
-        <circle cx="174" cy="402" r="48" fill="#3a6618" opacity="0.9"/>
-        <circle cx="153" cy="416" r="34" fill="#4a7620" opacity="0.82"/>
-        <circle cx="195" cy="410" r="40" fill="#386018" opacity="0.85"/>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════ 04 PLANTA SITUACIÓN -->
-<div class="section">
-  <div class="sec-hdr">
-    <div class="sec-num">04</div>
-    <div class="sec-info"><h2>Planta de Situación</h2><p>Vista Aérea · Parcela 3.603 m² · Alcolea, Córdoba</p></div>
+  <div class="shdr">
+    <div class="snum">03</div>
+    <div class="sinfo"><h2>Vista Aérea</h2><p>Perspectiva Axonométrica · Parcela Completa</p></div>
   </div>
   <div class="rcard">
-    <div class="rhdr"><span class="rtitle">Planta Situación — Ordenación de Parcela y Jardín</span><span class="rscale">E: 1/500 · Norte ↑</span></div>
-    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="plot" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#c8b888"/>
-          <stop offset="100%" stop-color="#b0a070"/>
-        </linearGradient>
-        <linearGradient id="gardeng" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#72c040"/>
-          <stop offset="100%" stop-color="#4a8a20"/>
-        </linearGradient>
-        <linearGradient id="pool2" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#18c0f0"/>
-          <stop offset="100%" stop-color="#0898c8"/>
-        </linearGradient>
-        <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="8" stroke="#c0b080" stroke-width="0.8" opacity="0.4"/>
-        </pattern>
-      </defs>
+    <div class="rhdr"><span class="rt">Vista Aérea — Distribución de Parcela, Jardín y Piscina</span><span class="rs">Axonométrica</span></div>
+    <svg viewBox="0 0 1600 860" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1a3868"/>
+        <stop offset="50%" stop-color="#4888c8"/>
+        <stop offset="100%" stop-color="#9ec8e8"/>
+      </linearGradient>
+      <linearGradient id="gn3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#68c838"/>
+        <stop offset="100%" stop-color="#40981a"/>
+      </linearGradient>
+      <linearGradient id="pw3" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#10d8f8"/>
+        <stop offset="100%" stop-color="#08a8d0"/>
+      </linearGradient>
+      <linearGradient id="hatchg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c8b880"/>
+        <stop offset="100%" stop-color="#a89860"/>
+      </linearGradient>
+      <pattern id="pavax" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
+        <rect width="40" height="20" fill="#d8c898"/>
+        <rect width="40" height="20" fill="none" stroke="#c0ae78" stroke-width="0.8"/>
+      </pattern>
+    </defs>
 
-      <!-- Background (surrounding land / road context) -->
-      <rect width="1600" height="900" fill="#d8cca8"/>
+    <rect width="1600" height="860" fill="url(#sky3)"/>
+    <!-- Subtle clouds -->
+    <ellipse cx="1400" cy="80" rx="160" ry="40" fill="white" opacity="0.30" filter="url(#blur8)"/>
+    <ellipse cx="200" cy="100" rx="140" ry="36" fill="white" opacity="0.25" filter="url(#blur8)"/>
 
-      <!-- Road - curved (Calle Roble - matches cadastral) -->
-      <path d="M0,300 Q150,280 250,350 Q350,420 350,550 Q350,680 280,750 L0,750Z" fill="#a09070" opacity="0.5"/>
-      <!-- Road surface -->
-      <path d="M20,300 Q160,282 252,355 Q345,428 345,550 Q345,678 278,748 L30,748Z" fill="#8c8070" opacity="0.7"/>
-      <text x="120" y="520" font-family="Georgia" font-size="14" fill="#c0b090" letter-spacing="1" transform="rotate(-60,120,520)">CL. ROBLE</text>
+    <!-- PLOT BOUNDARY (aerial view, from above-slightly) -->
+    <!-- Ground surface -->
+    <path d="M380,120 L1100,80 L1110,780 L370,740Z" fill="url(#gn3)" opacity="0.95"/>
+    <!-- Plot boundary dashed -->
+    <path d="M380,120 L1100,80 L1110,780 L370,740Z" fill="none" stroke="#204080" stroke-width="3" stroke-dasharray="14,7"/>
 
-      <!-- Neighboring plots (right side) -->
-      <rect x="1100" y="80" width="280" height="200" fill="#c8b890" opacity="0.6"/>
-      <rect x="1100" y="80" width="280" height="200" fill="url(#hatch)"/>
-      <rect x="1200" y="120" width="100" height="80" fill="#a09070" opacity="0.5"/><!-- neighbor house -->
+    <!-- SURROUNDING CONTEXT -->
+    <!-- Road left -->
+    <path d="M0,310 Q150,285 250,350 Q340,415 345,545 Q348,675 280,745 L0,745Z" fill="#808070" opacity="0.6"/>
+    <path d="M22,310 Q155,288 248,354 Q334,420 338,548 Q340,672 274,742 L22,742Z" fill="#747062" opacity="0.7"/>
+    <!-- Road label -->
+    <text x="155" y="530" font-family="Georgia" font-size="13" fill="#c0b890" letter-spacing="1"
+          transform="rotate(-60,155,530)">CL. ROBLE</text>
+    <!-- Neighboring plots -->
+    <rect x="1110" y="80" width="260" height="180" fill="#c0b080" opacity="0.5"/>
+    <rect x="1140" y="110" width="110" height="80" fill="#a09070" opacity="0.6"/>
+    <rect x="1110" y="310" width="250" height="210" fill="#c0b080" opacity="0.5"/>
+    <rect x="1145" y="345" width="120" height="100" fill="#a09070" opacity="0.6"/>
+    <rect x="1112" y="370" rx="2" ry="2" width="52" height="25" fill="#18c0f0" opacity="0.5"/>
+    <rect x="1110" y="570" width="260" height="210" fill="#c0b080" opacity="0.5"/>
+    <rect x="1140" y="605" width="120" height="100" fill="#a09070" opacity="0.6"/>
 
-      <rect x="1100" y="320" width="260" height="220" fill="#c8b890" opacity="0.6"/>
-      <rect x="1100" y="320" width="260" height="220" fill="url(#hatch)"/>
-      <rect x="1150" y="360" width="120" height="100" fill="#a09070" opacity="0.5"/>
+    <!-- GARDEN (south part of plot - green) -->
+    <path d="M400,430 L1100,400 L1108,778 L360,738Z" fill="#50b020" opacity="0.85"/>
 
-      <!-- Pool neighbor (right) -->
-      <rect x="1155" y="490" width="60" height="30" rx="2" fill="#18c0f0" opacity="0.6"/>
+    <!-- POOL DECK (travertine) -->
+    <path d="M420,570 L820,555 L840,720 L410,738Z" fill="url(#pavax)"/>
+    <!-- POOL -->
+    <path d="M438,582 L802,568 L820,698 L425,714Z" fill="url(#pw3)" opacity="0.95"/>
+    <!-- Water shimmer -->
+    <line x1="450" y1="592" x2="792" y2="578" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+    <line x1="448" y1="606" x2="794" y2="592" stroke="rgba(255,255,255,0.32)" stroke-width="1"/>
+    <line x1="446" y1="621" x2="796" y2="606" stroke="rgba(255,255,255,0.40)" stroke-width="1.5"/>
+    <line x1="444" y1="636" x2="798" y2="621" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+    <line x1="442" y1="650" x2="800" y2="635" stroke="rgba(255,255,255,0.38)" stroke-width="1.5"/>
+    <line x1="440" y1="665" x2="802" y2="649" stroke="rgba(255,255,255,0.24)" stroke-width="1"/>
+    <line x1="438" y1="680" x2="804" y2="664" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+    <line x1="436" y1="695" x2="806" y2="678" stroke="rgba(255,255,255,0.20)" stroke-width="1"/>
+    <!-- Pool coping -->
+    <path d="M420,570 L820,555 L840,720 L410,738 Z" fill="none" stroke="#d8c898" stroke-width="8"/>
+    <!-- Pool label -->
+    <text x="628" y="645" text-anchor="middle" font-family="Georgia" font-size="13" fill="white" opacity="0.85" letter-spacing="2">PISCINA 10×4m</text>
 
-      <rect x="1100" y="590" width="280" height="220" fill="#c8b890" opacity="0.6"/>
-      <rect x="1100" y="590" width="280" height="220" fill="url(#hatch)"/>
-      <rect x="1140" y="630" width="130" height="110" fill="#a09070" opacity="0.5"/>
+    <!-- Solarium -->
+    <path d="M835,568 L1000,558 L1018,700 L848,712Z" fill="url(#pavax)" opacity="0.7"/>
+    <text x="920" y="640" text-anchor="middle" font-family="Georgia" font-size="11" fill="#504020">SOLARIUM</text>
 
-      <!-- THE PLOT (parcela - irregular polygon matching cadastral shape) -->
-      <!-- Based on cadastral: roughly trapezoidal with curved left side -->
-      <path d="M350,120 L1090,80 L1100,800 L350,760 Q330,680 340,550 Q348,420 350,120Z"
-            fill="url(#plot)" opacity="0.9"/>
-      <!-- Plot boundary -->
-      <path d="M350,120 L1090,80 L1100,800 L350,760 Q330,680 340,550 Q348,420 350,120Z"
-            fill="none" stroke="#2a3060" stroke-width="3" stroke-dasharray="12,6" opacity="0.8"/>
+    <!-- BBQ area -->
+    <rect x="900" y="715" width="80" height="55" rx="2" fill="#c8b880" opacity="0.75"/>
+    <text x="940" y="747" text-anchor="middle" font-family="Georgia" font-size="10" fill="#504020">BBQ</text>
 
-      <!-- GARDEN - south portion (green lawn) -->
-      <path d="M410,440 L1088,420 L1095,798 L355,758 Q340,700 345,620 Q348,530 410,440Z"
-            fill="url(#gardeng)" opacity="0.82"/>
+    <!-- HOUSE FOOTPRINT (aerial view - 2D) -->
+    <!-- Main house body (seen from above) -->
+    <rect x="435" y="135" width="640" height="260" rx="2" fill="#ece5d5" stroke="#203060" stroke-width="2.5"/>
+    <!-- Garage wing (attached north-west) -->
+    <rect x="435" y="135" width="185" height="125" rx="0" fill="#d8d0b8" stroke="#203060" stroke-width="2"/>
+    <!-- Dashed line showing levels -->
+    <line x1="620" y1="135" x2="620" y2="395" stroke="#304070" stroke-width="1" stroke-dasharray="8,5" opacity="0.6"/>
+    <line x1="435" y1="260" x2="1075" y2="260" stroke="#304070" stroke-width="1" stroke-dasharray="8,5" opacity="0.5"/>
 
-      <!-- North arrow -->
-      <g transform="translate(80,120)">
-        <circle r="28" fill="#1a1810" opacity="0.7"/>
-        <polygon points="0,-22 6,8 0,3 -6,8" fill="#c8a55a"/>
-        <polygon points="0,22 6,-8 0,-3 -6,-8" fill="#605040"/>
-        <text x="0" y="-28" text-anchor="middle" font-family="Georgia" font-size="11" fill="#c8a55a">N</text>
-      </g>
+    <!-- House labels -->
+    <text x="527" y="208" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">GARAJE</text>
+    <text x="850" y="195" text-anchor="middle" font-family="Georgia" font-size="14" fill="#504030">SALÓN · COCINA · COMEDOR</text>
+    <text x="755" y="340" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">MASTER SUITE · DORMITORIOS</text>
+    <text x="850" y="175" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">Planta Alta (acceso calle)</text>
+    <text x="755" y="320" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">Planta Baja (jardín)</text>
 
-      <!-- HOUSE FOOTPRINT (3 levels shown in plan) -->
-      <!-- Upper level footprint (northernmost, closest to road) -->
-      <rect x="440" y="128" width="610" height="210" rx="2" fill="#e0d8c5" stroke="#2a3060" stroke-width="2.5"/>
-      <!-- Upper level rooms schematic -->
-      <line x1="440" y1="220" x2="1050" y2="220" stroke="#3a4070" stroke-width="1" opacity="0.4"/>
-      <line x1="700" y1="128" x2="700" y2="338" stroke="#3a4070" stroke-width="1" opacity="0.4"/>
-      <line x1="860" y1="128" x2="860" y2="338" stroke="#3a4070" stroke-width="1" opacity="0.4"/>
-      <!-- Garage -->
-      <rect x="443" y="131" width="255" height="205" fill="#c8c0a8" opacity="0.6"/>
-      <text x="570" y="242" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">GARAJE</text>
-      <text x="780" y="242" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">SALÓN</text>
-      <text x="955" y="242" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">COCINA</text>
+    <!-- Terraces outline -->
+    <rect x="435" y="395" width="640" height="55" rx="1" fill="#ddd0a8" stroke="#203060" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.8"/>
+    <text x="755" y="428" text-anchor="middle" font-family="Georgia" font-size="11" fill="#605030">TERRAZA SUR</text>
 
-      <!-- Middle level footprint (behind/south of upper) -->
-      <rect x="420" y="338" width="650" height="200" rx="2" fill="#d8d0bc" stroke="#2a3060" stroke-width="2" opacity="0.9"/>
-      <line x1="420" y1="428" x2="1070" y2="428" stroke="#3a4070" stroke-width="1" opacity="0.35"/>
-      <line x1="630" y1="338" x2="630" y2="538" stroke="#3a4070" stroke-width="1" opacity="0.35"/>
-      <line x1="840" y1="338" x2="840" y2="538" stroke="#3a4070" stroke-width="1" opacity="0.35"/>
-      <text x="525" y="445" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">DORMIT.</text>
-      <text x="735" y="445" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">MASTER</text>
-      <text x="955" y="445" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">DORMIT.</text>
+    <!-- North arrow -->
+    <g transform="translate(90,160)">
+      <circle r="32" fill="rgba(14,13,11,0.6)"/>
+      <polygon points="0,-26 7,8 0,3 -7,8" fill="#c8a550"/>
+      <polygon points="0,26 7,-8 0,-3 -7,-8" fill="#605040"/>
+      <text x="0" y="-32" text-anchor="middle" font-family="Georgia" font-size="12" fill="#c8a550">N</text>
+    </g>
 
-      <!-- Lower level footprint (most south, at garden) -->
-      <rect x="400" y="538" width="680" height="180" rx="2" fill="#d0c8b4" stroke="#2a3060" stroke-width="2" opacity="0.85"/>
-      <line x1="400" y1="628" x2="1080" y2="628" stroke="#3a4070" stroke-width="1" opacity="0.3"/>
-      <line x1="660" y1="538" x2="660" y2="718" stroke="#3a4070" stroke-width="1" opacity="0.3"/>
-      <text x="530" y="645" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">CINE</text>
-      <text x="870" y="645" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">WELLNESS</text>
+    <!-- DRIVEWAY (aerial) -->
+    <path d="M380,145 Q400,165 430,170 L435,135" fill="none" stroke="#b0a070" stroke-width="22" opacity="0.7"/>
+    <path d="M380,145 Q400,165 430,170 L435,135" fill="none" stroke="#c0b080" stroke-width="16" opacity="0.6"/>
 
-      <!-- Pool -->
-      <rect x="440" y="730" width="350" height="120" rx="4" fill="url(#pool2)" opacity="0.9" stroke="#0070a0" stroke-width="2"/>
-      <!-- Pool shimmer -->
-      <line x1="460" y1="745" x2="770" y2="745" stroke="white" stroke-width="1" opacity="0.4"/>
-      <line x1="458" y1="758" x2="772" y2="758" stroke="white" stroke-width="1" opacity="0.35"/>
-      <line x1="460" y1="771" x2="770" y2="771" stroke="white" stroke-width="1" opacity="0.4"/>
-      <line x1="458" y1="784" x2="772" y2="784" stroke="white" stroke-width="1" opacity="0.35"/>
-      <line x1="460" y1="797" x2="770" y2="797" stroke="white" stroke-width="1" opacity="0.4"/>
-      <line x1="458" y1="810" x2="772" y2="810" stroke="white" stroke-width="1" opacity="0.35"/>
-      <line x1="460" y1="823" x2="770" y2="823" stroke="white" stroke-width="1" opacity="0.4"/>
-      <text x="615" y="798" text-anchor="middle" font-family="Georgia" font-size="14" fill="white" opacity="0.9" letter-spacing="3">PISCINA 10×4</text>
+    <!-- TREES in plan view (stylized circles) -->
+    <!-- Left side trees -->
+    <g opacity="0.85">
+      <circle cx="382" cy="560" r="32" fill="#2a5c12"/>
+      <circle cx="375" cy="545" r="22" fill="#388018" opacity="0.7"/>
+    </g>
+    <g opacity="0.85">
+      <circle cx="375" cy="660" r="28" fill="#2a5c12"/>
+      <circle cx="368" cy="648" r="18" fill="#388018" opacity="0.7"/>
+    </g>
+    <!-- Right side trees -->
+    <g opacity="0.85">
+      <circle cx="1060" cy="450" r="30" fill="#2a5c12"/>
+      <circle cx="1052" cy="438" r="20" fill="#388018" opacity="0.7"/>
+    </g>
+    <g opacity="0.85">
+      <circle cx="1065" cy="540" r="26" fill="#2a5c12"/>
+    </g>
+    <g opacity="0.85">
+      <circle cx="1058" cy="628" r="28" fill="#2a5c12"/>
+      <circle cx="1050" cy="616" r="18" fill="#388018" opacity="0.7"/>
+    </g>
 
-      <!-- Pool coping/surround -->
-      <rect x="428" y="720" width="374" height="140" rx="5" fill="none" stroke="#d8c8a0" stroke-width="5"/>
+    <!-- LEGEND -->
+    <rect x="1130" y="678" width="420" height="155" rx="3" fill="rgba(12,11,9,0.80)"/>
+    <rect x="1130" y="678" width="420" height="155" rx="3" fill="none" stroke="#c8a550" stroke-width="1" opacity="0.5"/>
+    <text x="1340" y="700" text-anchor="middle" font-family="Georgia" font-size="12" fill="#c8a550" letter-spacing="3">LEYENDA</text>
+    <line x1="1140" y1="708" x2="1540" y2="708" stroke="#c8a550" stroke-width="0.5" opacity="0.35"/>
+    <rect x="1148" y="716" width="20" height="12" fill="#ece5d5"/>
+    <text x="1178" y="727" font-family="Georgia" font-size="10" fill="#907060">Planta Alta (calle)</text>
+    <rect x="1148" y="734" width="20" height="12" fill="#d8d0b8"/>
+    <text x="1178" y="745" font-family="Georgia" font-size="10" fill="#907060">Garaje + Planta Baja</text>
+    <rect x="1148" y="752" width="20" height="12" fill="#10d8f8" opacity="0.7"/>
+    <text x="1178" y="763" font-family="Georgia" font-size="10" fill="#907060">Piscina 10×4m</text>
+    <rect x="1148" y="770" width="20" height="12" fill="#50b020" opacity="0.75"/>
+    <text x="1178" y="781" font-family="Georgia" font-size="10" fill="#907060">Jardín (≈2.400 m²)</text>
+    <circle cx="1158" cy="796" r="8" fill="#2a5c12" opacity="0.85"/>
+    <text x="1178" y="800" font-family="Georgia" font-size="10" fill="#907060">Arbolado</text>
 
-      <!-- Driveway -->
-      <path d="M350,180 Q390,200 420,200 L440,200 L440,130" fill="none" stroke="#a09070" stroke-width="18" opacity="0.7"/>
-      <path d="M350,180 Q390,200 420,200 L440,200 L440,130" fill="none" stroke="#b0a080" stroke-width="14" opacity="0.6"/>
-      <text x="370" y="195" font-family="Georgia" font-size="10" fill="#705030" letter-spacing="1">ACCESO</text>
-
-      <!-- Garden path -->
-      <path d="M615,718 L615,740 L615,760" fill="none" stroke="#d8c8a0" stroke-width="8" opacity="0.6" stroke-dasharray="12,6"/>
-
-      <!-- TREES in plan view (circles) -->
-      <!-- Left trees -->
-      <circle cx="390" cy="600" r="30" fill="#3a6818" opacity="0.75"/>
-      <circle cx="375" cy="680" r="25" fill="#4a7820" opacity="0.7"/>
-      <!-- Right trees -->
-      <circle cx="1050" cy="560" r="28" fill="#3a6818" opacity="0.7"/>
-      <circle cx="1060" cy="650" r="24" fill="#4a7820" opacity="0.65"/>
-      <circle cx="1045" cy="730" r="22" fill="#3a6818" opacity="0.7"/>
-      <!-- Top trees -->
-      <circle cx="1060" cy="150" r="20" fill="#3a6818" opacity="0.6"/>
-      <circle cx="1070" cy="280" r="18" fill="#4a7820" opacity="0.6"/>
-
-      <!-- Sunbathing area / terrace beside pool -->
-      <rect x="800" y="730" width="160" height="120" fill="#d8c8a0" opacity="0.6"/>
-      <text x="880" y="800" text-anchor="middle" font-family="Georgia" font-size="11" fill="#705030">SOLARIUM</text>
-
-      <!-- BBQ area -->
-      <rect x="970" y="760" width="80" height="60" fill="#c8b890" opacity="0.7"/>
-      <text x="1010" y="798" text-anchor="middle" font-family="Georgia" font-size="10" fill="#705030">BBQ</text>
-
-      <!-- LEGEND -->
-      <rect x="1120" y="680" width="420" height="185" rx="4" fill="rgba(14,13,11,0.75)"/>
-      <rect x="1120" y="680" width="420" height="185" rx="4" fill="none" stroke="#c8a55a" stroke-width="1" opacity="0.5"/>
-      <text x="1330" y="704" text-anchor="middle" font-family="Georgia" font-size="13" fill="#c8a55a" letter-spacing="3">LEYENDA</text>
-      <line x1="1130" y1="712" x2="1530" y2="712" stroke="#c8a55a" stroke-width="0.5" opacity="0.4"/>
-      <!-- Legend items -->
-      <rect x="1138" y="722" width="20" height="12" fill="#e0d8c5"/>
-      <text x="1168" y="733" font-family="Georgia" font-size="11" fill="#a09070">Planta Alta (Calle)</text>
-      <rect x="1138" y="742" width="20" height="12" fill="#d8d0bc"/>
-      <text x="1168" y="753" font-family="Georgia" font-size="11" fill="#a09070">Planta Primera</text>
-      <rect x="1138" y="762" width="20" height="12" fill="#d0c8b4"/>
-      <text x="1168" y="773" font-family="Georgia" font-size="11" fill="#a09070">Planta Baja (Jardín)</text>
-      <rect x="1138" y="782" width="20" height="12" fill="#18c0f0" opacity="0.7"/>
-      <text x="1168" y="793" font-family="Georgia" font-size="11" fill="#a09070">Piscina</text>
-      <circle cx="1148" cy="806" r="7" fill="#3a6818" opacity="0.75"/>
-      <text x="1168" y="812" font-family="Georgia" font-size="11" fill="#a09070">Arbolado</text>
-      <line x1="1138" y1="832" x2="1158" y2="832" stroke="#2a3060" stroke-width="2.5" stroke-dasharray="6,3"/>
-      <text x="1168" y="836" font-family="Georgia" font-size="11" fill="#a09070">Límite parcela</text>
-
-      <!-- Scale bar -->
-      <rect x="420" y="858" width="200" height="8" fill="#2a3060" opacity="0.7"/>
-      <rect x="520" y="858" width="2" height="8" fill="white" opacity="0.8"/>
-      <rect x="620" y="858" width="2" height="8" fill="white" opacity="0.8"/>
-      <text x="420" y="882" font-family="Georgia" font-size="11" fill="#a09070">0</text>
-      <text x="514" y="882" text-anchor="middle" font-family="Georgia" font-size="11" fill="#a09070">10m</text>
-      <text x="618" y="882" text-anchor="middle" font-family="Georgia" font-size="11" fill="#a09070">20m</text>
+    <!-- Scale bar -->
+    <rect x="420" y="828" width="180" height="7" fill="#304070" opacity="0.7"/>
+    <rect x="510" y="825" width="2" height="13" fill="white" opacity="0.7"/>
+    <rect x="600" y="825" width="2" height="13" fill="white" opacity="0.7"/>
+    <text x="420" y="848" font-family="Georgia" font-size="10" fill="#a09070">0</text>
+    <text x="504" y="848" text-anchor="middle" font-family="Georgia" font-size="10" fill="#a09070">10m</text>
+    <text x="598" y="848" text-anchor="middle" font-family="Georgia" font-size="10" fill="#a09070">20m</text>
     </svg>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ 05 PLANTAS -->
+<!-- ══ 04 PLANTAS ══ -->
 <div class="section">
-  <div class="sec-hdr">
-    <div class="sec-num">05</div>
-    <div class="sec-info"><h2>Plantas por Nivel</h2><p>Distribución Interior · 3 Niveles Escalonados</p></div>
+  <div class="shdr">
+    <div class="snum">04</div>
+    <div class="sinfo"><h2>Plantas por Nivel</h2><p>Distribución Interior · 2 Plantas + Garaje · Máx. 350 m²</p></div>
   </div>
-  <div class="grid3">
-    <!-- PLANTA ALTA -->
+  <div class="g2">
+    <!-- PLANTA ALTA (CALLE) -->
     <div class="rcard">
-      <div class="rhdr"><span class="rtitle">Planta Alta — Acceso</span><span class="rscale">E:1/150</span></div>
-      <svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg">
-        <rect width="520" height="440" fill="#0a0906"/>
-        <!-- Walls -->
-        <rect x="30" y="50" width="460" height="310" fill="#e8e0d0" rx="2"/>
-        <!-- Interior walls -->
-        <rect x="30" y="50" width="12" height="310" fill="#c8c0b0"/>
-        <rect x="478" y="50" width="12" height="310" fill="#c8c0b0"/>
-        <rect x="30" y="50" width="460" height="12" fill="#c8c0b0"/>
-        <rect x="30" y="348" width="460" height="12" fill="#c8c0b0"/>
+      <div class="rhdr"><span class="rt">Planta Alta — Nivel Calle</span><span class="rs">~160 m² · E:1/150</span></div>
+      <svg viewBox="0 0 760 540" xmlns="http://www.w3.org/2000/svg">
+        <rect width="760" height="540" fill="#080705"/>
+        <!-- Outer walls -->
+        <rect x="30" y="40" width="700" height="420" fill="#e8e2d5" rx="2"/>
+        <rect x="30" y="40" width="700" height="14" fill="#c8c0a8"/>
+        <rect x="30" y="446" width="700" height="14" fill="#c8c0a8"/>
+        <rect x="30" y="40" width="14" height="420" fill="#c8c0a8"/>
+        <rect x="716" y="40" width="14" height="420" fill="#c8c0a8"/>
         <!-- Interior partition walls -->
-        <rect x="160" y="50" width="10" height="200" fill="#c8c0b0"/>
-        <rect x="30" y="248" width="360" height="10" fill="#c8c0b0"/>
-        <rect x="340" y="50" width="10" height="200" fill="#c8c0b0"/>
-        <!-- Garage area -->
-        <rect x="35" y="55" width="118" height="190" fill="#d8d0b8"/>
-        <!-- Garage door (opening in wall) -->
-        <rect x="35" y="344" width="118" height="5" fill="#3a3a3a"/>
-        <text x="95" y="160" text-anchor="middle" font-family="Georgia" font-size="13" fill="#706050">GARAJE</text>
-        <text x="95" y="178" text-anchor="middle" font-family="Georgia" font-size="10" fill="#908070">2 plazas</text>
-        <!-- Living room -->
-        <text x="250" y="130" text-anchor="middle" font-family="Georgia" font-size="14" fill="#504030">SALÓN-COMEDOR</text>
-        <text x="250" y="150" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">cocina americana</text>
+        <rect x="215" y="40" width="10" height="255" fill="#c8c0a8"/>
+        <rect x="30" y="293" width="820" height="10" fill="#c8c0a8"/>
+        <rect x="30" y="293" width="450" height="10" fill="#c8c0a8"/>
+        <rect x="440" y="40" width="10" height="165" fill="#c8c0a8"/>
+        <rect x="560" y="205" width="10" height="100" fill="#c8c0a8"/>
+        <rect x="440" y="205" width="130" height="10" fill="#c8c0a8"/>
+        <!-- GARAGE -->
+        <rect x="36" y="46" width="173" height="240" fill="#d0c8b0"/>
+        <text x="122" y="158" text-anchor="middle" font-family="Georgia" font-size="16" fill="#504030">GARAJE</text>
+        <text x="122" y="180" text-anchor="middle" font-family="Georgia" font-size="11" fill="#807060">2 plazas · 40 m²</text>
+        <!-- Garage door marking -->
+        <rect x="36" y="280" width="173" height="5" fill="#3a3a3a" opacity="0.5"/>
+        <!-- Car symbols in garage -->
+        <rect x="50" y="80" width="68" height="120" rx="6" fill="#c0b898" opacity="0.4"/>
+        <rect x="130" y="80" width="68" height="120" rx="6" fill="#c0b898" opacity="0.35"/>
+        <!-- HALL ENTRADA -->
+        <rect x="222" y="46" width="212" height="160" fill="#ddd5c5"/>
+        <text x="328" y="130" text-anchor="middle" font-family="Georgia" font-size="14" fill="#504030">HALL</text>
+        <text x="328" y="150" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">entrada · 18 m²</text>
+        <!-- COCINA-COMEDOR -->
+        <rect x="447" y="46" width="262" height="160" fill="#ddd8c8"/>
+        <text x="578" y="108" text-anchor="middle" font-family="Georgia" font-size="14" fill="#504030">COCINA-COMEDOR</text>
+        <text x="578" y="126" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">open plan · 48 m²</text>
+        <!-- Kitchen furniture hints -->
+        <rect x="455" y="52" width="120" height="30" rx="2" fill="#c8c0a8" opacity="0.5"/><!-- counter -->
+        <rect x="455" y="52" width="30" height="30" rx="2" fill="#c0b8a0" opacity="0.7"/><!-- sink -->
+        <rect x="584" y="54" width="50" height="22" rx="2" fill="#d0c8b0" opacity="0.5"/><!-- table -->
+        <!-- SALÓN -->
+        <rect x="222" y="212" width="338" height="245" fill="#e0d8c8"/>
+        <text x="391" y="325" text-anchor="middle" font-family="Georgia" font-size="16" fill="#504030">SALÓN</text>
+        <text x="391" y="345" text-anchor="middle" font-family="Georgia" font-size="11" fill="#807060">34 m²</text>
         <!-- Furniture hints -->
-        <rect x="175" y="110" width="60" height="40" rx="3" fill="#d0c8b0" opacity="0.6"/><!-- sofa -->
-        <rect x="245" y="110" width="80" height="40" rx="3" fill="#d0c8b0" opacity="0.6"/><!-- sofa -->
-        <rect x="215" y="158" width="40" height="40" rx="2" fill="#c8c0a8" opacity="0.5"/><!-- table -->
-        <!-- Kitchen island -->
-        <rect x="345" y="90" width="100" height="50" rx="2" fill="#c8c0a8" opacity="0.6"/>
-        <text x="395" y="120" text-anchor="middle" font-family="Georgia" font-size="10" fill="#706050">COCINA</text>
-        <!-- Bathroom -->
-        <rect x="170" y="255" width="100" height="95" fill="#d4e8f0" opacity="0.7"/>
-        <rect x="170" y="255" width="100" height="8" fill="#c8c0b0"/>
-        <text x="220" y="310" text-anchor="middle" font-family="Georgia" font-size="11" fill="#506070">ASEO</text>
-        <!-- Entrance hall -->
-        <rect x="280" y="255" width="190" height="95" fill="#ddd8c8" opacity="0.7"/>
-        <text x="375" y="308" text-anchor="middle" font-family="Georgia" font-size="11" fill="#504030">HALL</text>
-        <!-- Stairs -->
-        <rect x="35" y="255" width="130" height="95" fill="#c8d0d8" opacity="0.5"/>
-        <line x1="35" y1="268" x2="160" y2="268" stroke="#808898" stroke-width="1"/>
-        <line x1="35" y1="281" x2="160" y2="281" stroke="#808898" stroke-width="1"/>
-        <line x1="35" y1="294" x2="160" y2="294" stroke="#808898" stroke-width="1"/>
-        <line x1="35" y1="307" x2="160" y2="307" stroke="#808898" stroke-width="1"/>
-        <line x1="35" y1="320" x2="160" y2="320" stroke="#808898" stroke-width="1"/>
-        <line x1="35" y1="333" x2="160" y2="333" stroke="#808898" stroke-width="1"/>
-        <text x="97" y="308" text-anchor="middle" font-family="Georgia" font-size="10" fill="#5a6070">ESCALERA</text>
-        <!-- Terrace (south) -->
-        <rect x="30" y="360" width="460" height="60" fill="#d8d0b8" opacity="0.5" rx="2"/>
-        <text x="260" y="395" text-anchor="middle" font-family="Georgia" font-size="12" fill="#706050">TERRAZA PRINCIPAL 60 m²</text>
-        <!-- Windows -->
-        <rect x="175" y="46" width="80" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <rect x="290" y="46" width="80" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <rect x="380" y="46" width="80" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <!-- Pergola hatching on terrace -->
-        <line x1="60" y1="360" x2="60" y2="418" stroke="#a07030" stroke-width="1.5" opacity="0.4"/>
-        <line x1="90" y1="360" x2="90" y2="418" stroke="#a07030" stroke-width="1.5" opacity="0.4"/>
-        <line x1="120" y1="360" x2="120" y2="418" stroke="#a07030" stroke-width="1.5" opacity="0.4"/>
-        <line x1="150" y1="360" x2="150" y2="418" stroke="#a07030" stroke-width="1.5" opacity="0.4"/>
-        <line x1="180" y1="360" x2="180" y2="418" stroke="#a07030" stroke-width="1.5" opacity="0.4"/>
-        <!-- Label -->
-        <text x="260" y="430" text-anchor="middle" font-family="Georgia" font-size="10" fill="#c8a55a" letter-spacing="2">PLANTA ALTA · ~230 m²</text>
+        <rect x="240" y="250" width="100" height="55" rx="4" fill="#c8c0a8" opacity="0.45"/>
+        <rect x="350" y="250" width="110" height="55" rx="4" fill="#c8c0a8" opacity="0.40"/>
+        <rect x="288" y="312" width="100" height="55" rx="3" fill="#c0b8a0" opacity="0.40"/>
+        <!-- ASEO -->
+        <rect x="568" y="215" width="160" height="90" fill="#d0e5f0"/>
+        <text x="648" y="265" text-anchor="middle" font-family="Georgia" font-size="12" fill="#405060">ASEO</text>
+        <!-- LAVANDERÍA -->
+        <rect x="568" y="310" width="160" height="148" fill="#d5d0c8"/>
+        <text x="648" y="390" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">LAVAND.</text>
+        <!-- SOUTH TERRAZA opening -->
+        <rect x="222" y="454" width="508" height="4" fill="#e8d0a0"/>
+        <!-- WINDOWS / DOORS openings on south -->
+        <rect x="250" y="455" width="65" height="6" fill="#60a8d0" opacity="0.9"/>
+        <rect x="345" y="455" width="80" height="6" fill="#60a8d0" opacity="0.9"/>
+        <rect x="455" y="455" width="80" height="6" fill="#60a8d0" opacity="0.9"/>
+        <rect x="565" y="455" width="80" height="6" fill="#60a8d0" opacity="0.9"/>
+        <rect x="665" y="455" width="40" height="6" fill="#60a8d0" opacity="0.9"/>
+        <!-- North entry door -->
+        <rect x="265" y="40" width="80" height="6" fill="#60a8d0" opacity="0.9"/>
+        <!-- Garage door N -->
+        <rect x="48" y="282" width="160" height="6" fill="#404050" opacity="0.7"/>
+        <text x="380" y="524" text-anchor="middle" font-family="Georgia" font-size="10" fill="#c8a550" letter-spacing="2">PLANTA ALTA · ~160 m² CONSTRUIDOS</text>
       </svg>
     </div>
-
-    <!-- PLANTA PRIMERA -->
+    <!-- PLANTA BAJA (JARDÍN) -->
     <div class="rcard">
-      <div class="rhdr"><span class="rtitle">Planta Primera — Dormitorios</span><span class="rscale">E:1/150</span></div>
-      <svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg">
-        <rect width="520" height="440" fill="#0a0906"/>
-        <rect x="30" y="50" width="460" height="310" fill="#e8e0d0" rx="2"/>
-        <!-- Walls -->
-        <rect x="30" y="50" width="12" height="310" fill="#c8c0b0"/>
-        <rect x="478" y="50" width="12" height="310" fill="#c8c0b0"/>
-        <rect x="30" y="50" width="460" height="12" fill="#c8c0b0"/>
-        <rect x="30" y="348" width="460" height="12" fill="#c8c0b0"/>
-        <!-- Partition walls -->
-        <rect x="220" y="50" width="10" height="200" fill="#c8c0b0"/>
-        <rect x="350" y="50" width="10" height="200" fill="#c8c0b0"/>
-        <rect x="30" y="248" width="460" height="10" fill="#c8c0b0"/>
-        <rect x="180" y="248" width="10" height="110" fill="#c8c0b0"/>
-        <rect x="340" y="248" width="10" height="110" fill="#c8c0b0"/>
-        <!-- Master bedroom -->
-        <text x="125" y="140" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">MASTER</text>
-        <text x="125" y="158" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">suite + vestidor</text>
-        <!-- Bed master -->
-        <rect x="50" y="90" width="100" height="70" rx="4" fill="#d0c8b5" opacity="0.7"/>
-        <rect x="50" y="90" width="100" height="18" rx="3" fill="#c0b8a5" opacity="0.8"/><!-- headboard -->
-        <!-- Wardrobe/dressing -->
-        <rect x="42" y="200" width="90" height="30" fill="#c0b8a0" opacity="0.6"/>
-        <!-- En-suite bathroom master -->
-        <rect x="148" y="62" width="62" height="185" fill="#d0e5f0" opacity="0.6"/>
-        <rect x="148" y="62" width="8" height="185" fill="#c0b0b8"/>
-        <text x="179" y="160" text-anchor="middle" font-family="Georgia" font-size="10" fill="#405060" transform="rotate(-90,179,160)">BAÑO SUITE</text>
-        <!-- Dorm 2 -->
-        <text x="285" y="140" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">DORMIT. 2</text>
-        <rect x="235" y="85" width="80" height="60" rx="3" fill="#d0c8b5" opacity="0.7"/>
-        <rect x="235" y="85" width="80" height="15" rx="2" fill="#c0b8a5" opacity="0.8"/>
-        <!-- Dorm 3 -->
-        <text x="415" y="140" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">DORMIT. 3</text>
-        <rect x="365" y="85" width="80" height="60" rx="3" fill="#d0c8b5" opacity="0.7"/>
-        <rect x="365" y="85" width="80" height="15" rx="2" fill="#c0b8a5" opacity="0.8"/>
-        <!-- Bathrooms lower row -->
-        <rect x="42" y="258" width="128" height="98" fill="#d0e5f0" opacity="0.6"/>
-        <text x="106" y="315" text-anchor="middle" font-family="Georgia" font-size="11" fill="#405060">BAÑO 2</text>
-        <rect x="350" y="258" width="128" height="98" fill="#d0e5f0" opacity="0.6"/>
-        <text x="414" y="315" text-anchor="middle" font-family="Georgia" font-size="11" fill="#405060">ESTUDIO</text>
-        <!-- Hall / landing -->
-        <rect x="190" y="258" width="152" height="98" fill="#ddd8c8" opacity="0.5"/>
-        <text x="266" y="315" text-anchor="middle" font-family="Georgia" font-size="11" fill="#504030">DISTRIBUI.</text>
-        <!-- Stairs -->
-        <rect x="30" y="258" width="8" height="98" fill="#c8d0d8" opacity="0.5"/>
-        <!-- Terrace south -->
-        <rect x="30" y="360" width="460" height="60" fill="#d8d0b8" opacity="0.5" rx="2"/>
-        <text x="260" y="395" text-anchor="middle" font-family="Georgia" font-size="12" fill="#706050">TERRAZA DORMITORIOS 55 m²</text>
-        <!-- Windows -->
-        <rect x="90" y="46" width="80" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <rect x="240" y="46" width="80" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <rect x="370" y="46" width="80" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <text x="260" y="430" text-anchor="middle" font-family="Georgia" font-size="10" fill="#c8a55a" letter-spacing="2">PLANTA PRIMERA · ~220 m²</text>
-      </svg>
-    </div>
-
-    <!-- PLANTA BAJA -->
-    <div class="rcard">
-      <div class="rhdr"><span class="rtitle">Planta Baja — Jardín</span><span class="rscale">E:1/150</span></div>
-      <svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg">
-        <rect width="520" height="440" fill="#0a0906"/>
-        <rect x="30" y="50" width="460" height="310" fill="#e8e0d0" rx="2"/>
-        <!-- Walls -->
-        <rect x="30" y="50" width="12" height="310" fill="#c8c0b0"/>
-        <rect x="478" y="50" width="12" height="310" fill="#c8c0b0"/>
-        <rect x="30" y="50" width="460" height="12" fill="#c8c0b0"/>
-        <rect x="30" y="348" width="460" height="12" fill="#c8c0b0"/>
-        <!-- Interior walls -->
-        <rect x="240" y="50" width="10" height="200" fill="#c8c0b0"/>
-        <rect x="30" y="248" width="460" height="10" fill="#c8c0b0"/>
-        <rect x="360" y="248" width="10" height="110" fill="#c8c0b0"/>
-        <!-- Cinema / sala multimedia -->
-        <text x="135" y="140" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">CINE / SALA</text>
-        <text x="135" y="158" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">multimedia</text>
-        <!-- Screen hint -->
-        <rect x="42" y="68" width="185" height="12" fill="#404040" opacity="0.5" rx="2"/>
-        <!-- Seats -->
-        <rect x="55" y="130" width="160" height="18" rx="3" fill="#d0c8b5" opacity="0.7"/>
-        <rect x="55" y="155" width="160" height="18" rx="3" fill="#d0c8b5" opacity="0.65"/>
-        <rect x="55" y="180" width="160" height="18" rx="3" fill="#d0c8b5" opacity="0.6"/>
-        <!-- Wellness / gym -->
-        <text x="370" y="140" text-anchor="middle" font-family="Georgia" font-size="13" fill="#504030">WELLNESS</text>
-        <text x="370" y="158" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">gym + spa</text>
-        <!-- Equipment hints -->
-        <rect x="255" y="70" width="50" height="35" rx="3" fill="#d0c8b5" opacity="0.6"/>
-        <rect x="315" y="70" width="50" height="35" rx="3" fill="#d0c8b5" opacity="0.6"/>
-        <rect x="375" y="70" width="50" height="35" rx="3" fill="#d0c8b5" opacity="0.6"/>
-        <!-- Guest suite -->
-        <rect x="30" y="258" width="190" height="98" fill="#ddd5c5" opacity="0.7"/>
-        <text x="125" y="315" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">SUITE INVIT.</text>
-        <!-- Bathroom lower level -->
-        <rect x="225" y="258" width="130" height="98" fill="#d0e5f0" opacity="0.6"/>
-        <text x="290" y="315" text-anchor="middle" font-family="Georgia" font-size="11" fill="#405060">BAÑO</text>
-        <!-- Storage / utility -->
-        <rect x="362" y="258" width="126" height="98" fill="#c8c0a8" opacity="0.6"/>
-        <text x="425" y="315" text-anchor="middle" font-family="Georgia" font-size="11" fill="#504030">ALMACÉN</text>
-        <!-- Wide terrace / access to garden -->
-        <rect x="30" y="360" width="460" height="60" fill="#c8e0c0" opacity="0.5" rx="2"/>
-        <text x="260" y="395" text-anchor="middle" font-family="Georgia" font-size="12" fill="#406030">TERRAZA JARDÍN + ACCESO PISCINA</text>
-        <!-- Windows/openings to garden -->
-        <rect x="50" y="344" width="90" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <rect x="160" y="344" width="90" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <rect x="270" y="344" width="90" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <rect x="380" y="344" width="90" height="6" fill="#6ab8e0" opacity="0.8"/>
-        <text x="260" y="430" text-anchor="middle" font-family="Georgia" font-size="10" fill="#c8a55a" letter-spacing="2">PLANTA BAJA · ~230 m²</text>
+      <div class="rhdr"><span class="rt">Planta Baja — Nivel Jardín</span><span class="rs">~160 m² · E:1/150</span></div>
+      <svg viewBox="0 0 760 540" xmlns="http://www.w3.org/2000/svg">
+        <rect width="760" height="540" fill="#080705"/>
+        <!-- Outer walls -->
+        <rect x="30" y="40" width="700" height="420" fill="#e8e2d5" rx="2"/>
+        <rect x="30" y="40" width="700" height="14" fill="#c8c0a8"/>
+        <rect x="30" y="446" width="700" height="14" fill="#c8c0a8"/>
+        <rect x="30" y="40" width="14" height="420" fill="#c8c0a8"/>
+        <rect x="716" y="40" width="14" height="420" fill="#c8c0a8"/>
+        <!-- Partitions -->
+        <rect x="30" y="275" width="460" height="10" fill="#c8c0a8"/>
+        <rect x="270" y="40" width="10" height="245" fill="#c8c0a8"/>
+        <rect x="488" y="40" width="10" height="245" fill="#c8c0a8"/>
+        <rect x="488" y="275" width="242" height="10" fill="#c8c0a8"/>
+        <rect x="600" y="40" width="10" height="245" fill="#c8c0a8"/>
+        <!-- MASTER SUITE -->
+        <rect x="36" y="46" width="228" height="222" fill="#ede5d5"/>
+        <text x="150" y="140" text-anchor="middle" font-family="Georgia" font-size="14" fill="#504030">MASTER SUITE</text>
+        <text x="150" y="160" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">dormitorio 24 m²</text>
+        <!-- Bed -->
+        <rect x="50" y="80" width="100" height="76" rx="4" fill="#d0c8b5" opacity="0.7"/>
+        <rect x="50" y="80" width="100" height="20" rx="3" fill="#c0b8a5" opacity="0.8"/>
+        <!-- Wardrobe -->
+        <rect x="38" y="220" width="80" height="42" fill="#c0b898" opacity="0.5"/>
+        <rect x="130" y="220" width="50" height="42" fill="#c0b898" opacity="0.5"/>
+        <!-- BAÑO ENSUITE -->
+        <rect x="278" y="46" width="204" height="222" fill="#cce0ec"/>
+        <text x="380" y="155" text-anchor="middle" font-family="Georgia" font-size="12" fill="#405060">BAÑO ENSUITE</text>
+        <text x="380" y="173" text-anchor="middle" font-family="Georgia" font-size="10" fill="#607080">+ vestidor · 18 m²</text>
+        <!-- Bathtub -->
+        <rect x="290" y="58" width="90" height="48" rx="6" fill="#e8f4fa" opacity="0.7"/>
+        <!-- Shower -->
+        <rect x="395" y="58" width="55" height="55" rx="3" fill="#d0e8f8" opacity="0.6"/>
+        <!-- Basin -->
+        <ellipse cx="335" cy="135" rx="22" ry="16" fill="#e0f0f8" opacity="0.7"/>
+        <ellipse cx="390" cy="135" rx="22" ry="16" fill="#e0f0f8" opacity="0.7"/>
+        <!-- DORMITORIO 2 -->
+        <rect x="496" y="46" width="98" height="222" fill="#e8e0d0"/>
+        <text x="545" y="155" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">DORM.</text>
+        <text x="545" y="173" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">2 · 16 m²</text>
+        <rect x="506" y="62" width="76" height="54" rx="3" fill="#d0c8b5" opacity="0.65"/>
+        <rect x="506" y="62" width="76" height="16" rx="2" fill="#c0b8a5" opacity="0.8"/>
+        <!-- DORMITORIO 3 -->
+        <rect x="608" y="46" width="100" height="222" fill="#e8e0d0"/>
+        <text x="658" y="155" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">DORM.</text>
+        <text x="658" y="173" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">3 · 14 m²</text>
+        <rect x="618" y="62" width="78" height="54" rx="3" fill="#d0c8b5" opacity="0.65"/>
+        <rect x="618" y="62" width="78" height="16" rx="2" fill="#c0b8a5" opacity="0.8"/>
+        <!-- DISTRIBUIDOR -->
+        <rect x="36" y="285" width="454" height="170" fill="#ddd8c8"/>
+        <text x="263" y="378" text-anchor="middle" font-family="Georgia" font-size="14" fill="#504030">SALA POLIVALENTE</text>
+        <text x="263" y="398" text-anchor="middle" font-family="Georgia" font-size="10" fill="#807060">cine / gimnasio / sala de juegos · 44 m²</text>
+        <!-- BAÑO 2 -->
+        <rect x="498" y="285" width="228" height="85" fill="#cce0ec"/>
+        <text x="612" y="334" text-anchor="middle" font-family="Georgia" font-size="12" fill="#405060">BAÑO 2</text>
+        <!-- ALMACEN -->
+        <rect x="498" y="374" width="228" height="80" fill="#d5d0c8"/>
+        <text x="612" y="418" text-anchor="middle" font-family="Georgia" font-size="12" fill="#504030">ALMACÉN</text>
+        <!-- South openings to garden -->
+        <rect x="55" y="454" width="100" height="6" fill="#60a8d0" opacity="0.9"/>
+        <rect x="185" y="454" width="100" height="6" fill="#60a8d0" opacity="0.9"/>
+        <rect x="315" y="454" width="100" height="6" fill="#60a8d0" opacity="0.9"/>
+        <rect x="445" y="454" width="100" height="6" fill="#60a8d0" opacity="0.9"/>
+        <!-- Terrace south label -->
+        <text x="380" y="524" text-anchor="middle" font-family="Georgia" font-size="10" fill="#c8a550" letter-spacing="2">PLANTA BAJA · ~160 m² CONSTRUIDOS</text>
       </svg>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ 06 MEMORIA DESCRIPTIVA -->
+<!-- ══ 05 MEMORIA DESCRIPTIVA ══ -->
 <div class="section">
-  <div class="sec-hdr">
-    <div class="sec-num">06</div>
-    <div class="sec-info"><h2>Memoria Descriptiva</h2><p>Concepto · Materiales · Programa</p></div>
+  <div class="shdr">
+    <div class="snum">05</div>
+    <div class="sinfo"><h2>Memoria Descriptiva</h2><p>Concepto · Normativa · Materiales · Programa</p></div>
   </div>
   <div class="cgrid">
-    <div class="citem">
+    <div class="ci">
+      <h3>Normativa y Programa</h3>
+      <ul>
+        <li>Superficie máxima permitida: 350 m² (cumple)</li>
+        <li>Número de plantas: 2 + garaje (cumple)</li>
+        <li>Planta Alta (calle): 160 m² — garaje + entrada + salón-cocina + aseo + lavandería</li>
+        <li>Planta Baja (jardín): 160 m² — master suite + 2 dormitorios + 2 baños + sala polivalente</li>
+        <li>Total construido: ~320 m² (30 m² de margen)</li>
+        <li>Terraza cubierta (pergolada): ~40 m² no computable</li>
+        <li>Piscina: 40 m² exterior (no computa)</li>
+        <li>Jardín ajardinado: ~2.400 m²</li>
+      </ul>
+    </div>
+    <div class="ci">
       <h3>Concepto Arquitectónico</h3>
       <ul>
-        <li>Villa contemporánea mediterránea que abraza la topografía natural de la ladera</li>
-        <li>3 plantas escalonadas siguiendo el desnivel ~6m norte-sur</li>
-        <li>Cada planta genera una terraza sobre el nivel inferior</li>
-        <li>Apertura total al sur para captación solar y vistas al valle</li>
-        <li>Efecto "cascada de terrazas" visible desde el jardín</li>
-        <li>Integración paisajística con olivar mediterráneo preexistente</li>
+        <li>Villa mediterránea contemporánea integrada en la ladera sur</li>
+        <li>2 niveles escalonados: planta alta a cota calle (norte), planta baja a cota jardín (sur)</li>
+        <li>Apertura total al sur con grandes paños de vidrio y terraza continua</li>
+        <li>Feature wall en madera tropical (iroko) en fachada sur — contraste con estuco blanco</li>
+        <li>Louvres de madera en cubierta plana — control solar y privacidad</li>
+        <li>Muros de contención en piedra caliza integrando el jardín</li>
+        <li>Orientación sur: máximo aprovechamiento solar y vistas al valle</li>
       </ul>
     </div>
-    <div class="citem">
+    <div class="ci">
       <h3>Materiales y Acabados</h3>
       <ul>
-        <li>Fachadas: enfoscado blanco con árido fino (tradición andaluza)</li>
-        <li>Zócalos: piedra caliza natural de Córdoba</li>
-        <li>Carpintería: aluminio lacado antracita con rotura puente térmico</li>
-        <li>Vidrios: doble acristalamiento bajo emisivo con control solar</li>
-        <li>Pérgola: madera de pino tratado o iroko, lamelada</li>
-        <li>Barandillas: vidrio templado laminado con perfil mínimo en acero</li>
-        <li>Pavimento terraza: travertino 60×60 rectificado crema</li>
-        <li>Piscina: gresite azul cobalto, 10×4 m</li>
-      </ul>
-    </div>
-    <div class="citem">
-      <h3>Programa y Superficies</h3>
-      <ul>
-        <li>Parcela total: 3.603 m²</li>
-        <li>Planta Alta (calle): Garaje 2pl + Salón-Cocina + Aseo · ~230 m²</li>
-        <li>Planta Primera: Master Suite + 2 Dormitorios + 2 Baños + Estudio · ~220 m²</li>
-        <li>Planta Baja (jardín): Cine + Wellness + Suite Invitados · ~230 m²</li>
-        <li>Total construido estimado: ~680 m²</li>
-        <li>Terrazas y porches: ~175 m²</li>
-        <li>Piscina: 40 m² · Solarium: 80 m²</li>
-        <li>Jardín ajardinado: ~2.200 m²</li>
+        <li>Fachadas: enfoscado monocapa blanco roto (árido fino)</li>
+        <li>Feature wall: madera maciza iroko o cumaru — tablillas horizontales 200×22mm</li>
+        <li>Zócalo y muros: piedra caliza natural de la zona (Córdoba)</li>
+        <li>Carpintería exterior: aluminio lacado color antracita RAL7016 — RPT</li>
+        <li>Vidrios: triple acristalamiento bajo emisivo, control solar Factor G 0.35</li>
+        <li>Cubierta plana invertida con louvres de madera iroko</li>
+        <li>Terraza: travertino crema 60×60cm rectificado exterior</li>
+        <li>Piscina: gresite azul-turquesa con iluminación LED subacuática</li>
+        <li>Barandillas: vidrio templado laminado 12+12mm — perfil mínimo acero inox</li>
       </ul>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════ FOOTER -->
+<!-- ══ FOOTER ══ -->
 <div class="footer">
   <span>Josu Mansion · CL Roble 46 · Alcolea · Córdoba</span>
-  <span>Anteproyecto Conceptual · Render Arquitectónico · 2026</span>
-  <span>Ref. Cat. 2714062UH5021S0001IT</span>
+  <span>Anteproyecto Conceptual · Perspectiva 3D · 2026</span>
+  <span>Ref. Cat. 2714062UH5021S0001IT · 320/350 m²</span>
 </div>
 
 </body>
