@@ -599,20 +599,23 @@ poolLight3.position.set(22, PY - 0.4, 1.5);
 scene.add(poolLight3);
 
 // ─── SWIMMING POOL — 12×5m, right beside house (visible from main view) ───
-// Pool+deck zone: X=11 to 36, Z=-7 to +5 (front-right of house)
-// Wide limestone deck
-box(28, 0.32, 15, matPoolSurround, 22.5, PY + 0.16, -1);
+// Pool centre: PX=22, PZ=-1. Pool spans x:16..28, z:-3.5..1.5
+// Deck in 4 strips around the pool — leaving pool opening clear
+const PD = 1.6;
+const PX = 22, PZ = -1;
+box(7.5, 0.32, 15, matPoolSurround, 12.25, PY + 0.16, -1);  // left strip  x 8.5→16
+box(8.5, 0.32, 15, matPoolSurround, 32.25, PY + 0.16, -1);  // right strip x 28→36.5
+box(12,  0.32,  5, matPoolSurround, PX, PY + 0.16, -6);     // near strip  z -8.5→-3.5
+box(12,  0.32,  5, matPoolSurround, PX, PY + 0.16,  4);     // far strip   z 1.5→6.5
 
 // Pool basin — 12×5m with visible depth
-const PD = 1.6;
-const PX = 22, PZ = -1; // pool centre
-box(12.4, PD, 0.28, matPoolTile, PX, PY - PD*0.5, PZ - 2.64); // near edge
-box(12.4, PD, 0.28, matPoolTile, PX, PY - PD*0.5, PZ + 2.64); // far edge
-box(0.28, PD, 5.3,  matPoolTile, PX - 6.14, PY - PD*0.5, PZ); // left
-box(0.28, PD, 5.3,  matPoolTile, PX + 6.14, PY - PD*0.5, PZ); // right (infinity)
-box(12, 0.22, 5, matPoolTile, PX, PY - PD - 0.11, PZ);  // floor
-// Water surface — vivid blue
-box(12, 0.14, 5, matPoolWater, PX, PY + 0.06, PZ);
+box(12.4, PD, 0.28, matPoolTile, PX, PY - PD*0.5, PZ - 2.64); // near wall
+box(12.4, PD, 0.28, matPoolTile, PX, PY - PD*0.5, PZ + 2.64); // far wall
+box(0.28, PD, 5.3,  matPoolTile, PX - 6.14, PY - PD*0.5, PZ); // left wall
+box(0.28, PD, 5.3,  matPoolTile, PX + 6.14, PY - PD*0.5, PZ); // right wall (infinity)
+box(12, 0.22, 5, matPoolTile, PX, PY - PD - 0.11, PZ);          // floor
+// Water surface — raised to be clearly visible inside pool
+box(11.6, 0.22, 4.6, matPoolWater, PX, PY - 0.08, PZ);
 
 // Pool coping — bright white limestone lip
 box(12.8, 0.2, 0.38, matPoolSurround, PX, PY + 0.28, PZ - 2.8);
